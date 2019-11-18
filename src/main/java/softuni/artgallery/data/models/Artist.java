@@ -1,6 +1,8 @@
 package softuni.artgallery.data.models;
 
 import org.hibernate.validator.constraints.Length;
+import softuni.artgallery.constants.artistMessages.ArtistRegisterViolationMessages;
+import softuni.artgallery.constants.commonMessages.CommonConstants;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -17,13 +20,12 @@ public class Artist extends BaseEntity {
     private String livesIn;
     private String history;
     private String education;
-    private byte[] image;
+    private String imageUrl;
     private String email;
     private List<Artwork> artworks;
 
-    @NotEmpty
+
     @Column(name = "name", nullable = false, unique = true, updatable = false)
-    @Length(min = 5, max = 35)
     public String getName() {
         return name;
     }
@@ -32,9 +34,8 @@ public class Artist extends BaseEntity {
         this.name = name;
     }
 
-    @NotEmpty
+
     @Column(name = "lives_in", nullable = false)
-    @Length(max = 35)
     public String getLivesIn() {
         return livesIn;
     }
@@ -43,9 +44,8 @@ public class Artist extends BaseEntity {
         this.livesIn = livesIn;
     }
 
-    @NotEmpty
-    @Column(name = "info", nullable = false)
-    @Length(max = 255)
+
+    @Column(name = "history", nullable = false)
     public String getHistory() {
         return history;
     }
@@ -55,7 +55,6 @@ public class Artist extends BaseEntity {
     }
 
     @Column(name = "education")
-    @Length(max = 30)
     public String getEducation() {
         return education;
     }
@@ -64,17 +63,18 @@ public class Artist extends BaseEntity {
         this.education = education;
     }
 
-    @NotEmpty
-    @Column(name = "image", nullable = false)
-    public byte[] getImage() {
-        return image;
+
+    @Column(name = "imageUrl")
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    @Email
+
+
     @Column(name = "email", nullable = false, unique = true)
     public String getEmail() {
         return email;

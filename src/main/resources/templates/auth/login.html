@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/guest-navbar}"/>
+<div class="container-fluid w-15">
+    <form id="user-register-form" th:action="@{/users/login}" th:method="post" >
+        <h2 style="text-align: center;color: #563D7C">Login</h2>
+        <hr id="my-hr"/>
+
+        <p style="text-align: center">
+            <label for="username" class="floatLabel">Username</label>
+            <input id="username" name="username" type="text">
+        </p>
+        <p style="text-align: center">
+            <label for="password" class="floatLabel">Password</label>
+            <input  id="password" name="password" type="password">
+        </p>
+        <p style="text-align: center">
+            <input class="inputSubmit" type="submit" value="Login" id="login"/>
+        </p>
+    </form>
+</div>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

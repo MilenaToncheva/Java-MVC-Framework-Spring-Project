@@ -9,32 +9,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-@Entity
-@Table(name = "categories")
-public class Category extends BaseEntity {
-    private String name;
-    private List<Artwork> artworks;
+public enum Category {
+    CERAMICS,
+    PAINTING,
+    DRAWING,
+    SCULPTURE
 
-    public Category() {
-    }
-
-    @NotEmpty
-    @Column(name = "name", nullable = false, unique = true)
-    @Length(min = 5, max = 30)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @OneToMany(mappedBy = "category", targetEntity = Artwork.class)
-    public List<Artwork> getArtworks() {
-        return artworks;
-    }
-
-    public void setArtworks(List<Artwork> artworks) {
-        this.artworks = artworks;
-    }
 }

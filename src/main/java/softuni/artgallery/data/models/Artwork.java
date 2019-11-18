@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "artworks")
 public class Artwork extends BaseEntity {
     private String name;
+    private String imageUrl;
     private BigDecimal price;
     private Artist artist;
     private Category category;
@@ -28,6 +29,16 @@ public class Artwork extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @NotEmpty
+    @Column(name = "imageUrl", nullable = false)
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @NotEmpty
@@ -51,8 +62,9 @@ public class Artwork extends BaseEntity {
         this.artist = artist;
     }
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false)
     public Category getCategory() {
         return category;
     }
@@ -60,4 +72,5 @@ public class Artwork extends BaseEntity {
     public void setCategory(Category category) {
         this.category = category;
     }
+
 }

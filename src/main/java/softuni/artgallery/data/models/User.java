@@ -1,10 +1,13 @@
 package softuni.artgallery.data.models;
 
 import org.hibernate.validator.constraints.Length;
+import softuni.artgallery.constants.userMessages.UserRegistrationViolationMessages;
+import softuni.artgallery.web.validations.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,14 +20,16 @@ public class User extends BaseEntity {
     private String email;
     private String password;
     private Set<Artwork> favouriteArtworks;
-    private Set<Role> authorities;
+
 
     public User() {
+
+
     }
 
-    @NotEmpty
+
     @Column(name = "username", nullable = false, unique = true, updatable = false)
-    @Length(min = 5, max = 30)
+
     public String getUsername() {
         return username;
     }
@@ -33,9 +38,8 @@ public class User extends BaseEntity {
         this.username = username;
     }
 
-    @NotEmpty
+
     @Column(name = "first_name", nullable = false, updatable = false)
-    @Length(min = 5, max = 15)
     public String getFirstName() {
         return firstName;
     }
@@ -44,9 +48,9 @@ public class User extends BaseEntity {
         this.firstName = firstName;
     }
 
-    @NotEmpty
+
     @Column(name = "last_name", nullable = false, updatable = false)
-    @Length(min = 5, max = 15)
+
     public String getLastName() {
         return lastName;
     }
@@ -55,10 +59,8 @@ public class User extends BaseEntity {
         this.lastName = lastName;
     }
 
-    @Email
-    @NotEmpty
+
     @Column(name = "email", nullable = false, updatable = false, unique = true)
-    @Length(max = 30)
     public String getEmail() {
         return email;
     }
@@ -67,9 +69,8 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
-    @NotEmpty
+
     @Column(name = "password", nullable = false)
-    @Length(min = 5, max = 30)
     public String getPassword() {
         return password;
     }
@@ -90,15 +91,4 @@ public class User extends BaseEntity {
         this.favouriteArtworks = favouriteArtworks;
     }
 
-    @ManyToMany
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    public Set<Role> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<Role> authorities) {
-        this.authorities = authorities;
-    }
 }

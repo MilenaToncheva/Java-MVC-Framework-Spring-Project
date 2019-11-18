@@ -1,23 +1,37 @@
 <th:block th:fragment>
-    <header>
+    <header class="navbar navbar-fixed-top">
         <div class="top-line">
             <div class="container top-box row">
                 <div class="leftside col-md-1">
                 <span class="logo">
-                    <a th:href="@{/}"><img src="/../images/logo.ico" alt="MT" class="img-responsive" width="85"/></a>
+                    <a th:href="@{/home}"><img src="/../images/logo.ico" alt="MT" class="img-responsive"
+                                               width="85"/></a>
                 </span></div>
-                <div class="middleside col-md-8">
+                <div class="middleside col-md-2">
                     <p style="text-align: left">
                         Art Gallery
                     </p>
                 </div>
 
-                <div class="rightside col-md-3">
+                <div class="rightside col-md-9">
                     <div class="top-buttons">
-
-                        <button type="button" class="top-button btn-lg" id="btn-register" th:href="@{/order-history}">Order History</button>
-                        <button type="button" class="top-button btn-lg" id="btn-register" th:href="@{/favourite}">My Favourite</button>
-                        <button type="button" class="top-button btn-lg" id="btn-login" th:href="@{/login}">Logout</button>
+                        <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-logout"
+                           th:href="@{/users/logout}">Logout</a>
+                        <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-favorite"
+                           th:href="@{/artworks/favorite}">My Favorite</a>
+                        <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-order-history"
+                           th:href="@{/users/order-history}">Order History</a>
+                        <div class="btn-group">
+                            <a  type="button" class="btn dropdown-toggle top-button btn-lg"
+                               data-toggle="dropdown" id="btn-category" href="#">
+                                Category
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li  th:each="category:${T(softuni.artgallery.data.models.Category).values()}"><a tabindex="-1" href="#">[[${category.name()}]]</a></li>
+                            </ul>
+                        </div>
+                        <span class="top-buttons-link" style="font-size: large;">Welcome, <a style="color: #563D7C;"
+                                                                                             th:href="@{/users/profile/}">[[${session.username}]]</a></span>
                     </div>
                 </div>
             </div>

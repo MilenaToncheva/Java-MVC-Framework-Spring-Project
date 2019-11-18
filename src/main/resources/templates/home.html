@@ -4,7 +4,43 @@
 <th:block th:include="~{fragments/head}"/>
 <body>
 <th:block th:include="~{fragments/user-navbar}"/>
-
+<main>
+    <hr class="hr-2"/>
+        <div class="container-fluid" style="margin-top: 95px;margin-bottom: 30px; display:block" >
+            <div class="row  d-flex justify-content-center">
+                <div th:each="artwork:${artworks}">
+                    <div class="col-md-5" style="display: block;margin: 10px">
+                        <img src="${artwork.imageUrl}" class="border border-secondary" height="300px"/><br/>
+                        <a class="home-artworks-buttons btn-large" th:href="@{/artworks/details}">Details</a>
+                    </div>
+                </div>
+                <div class="col-md-5" style="display: block;margin: 10px">
+                    <img src="/../images/doll.jpg" class="border border-secondary" height="300px"/><br/>
+                    <a class="home-artworks-buttons  btn-large"  th:href="@{/artworks/details}">Details</a>
+                </div>
+                <div class="col-md-5" style="display: block;margin: 10px 10px 10px 10px">
+                    <img src="/../images/rooster.jpg" class="border border-secondary" height="300px"/>
+                    <a class="home-artworks-buttons" th:href="@{/artworks/details}">Details</a>
+                </div>
+                <div class="col-md-5" style="display: block;margin: 10px 10px 10px 10px">
+                    <img src="/../images/pots.jpg" class="border border-secondary" height="300px"/><br/>
+                    <p ><a class="home-artworks-buttons" th:href="@{/artworks/details}">Details</a></p>
+                </div>
+                <div class="col-md-5" style="display: block;margin: 10px 10px 10px 10px">
+                    <img src="/../images/pots.jpg" class="border border-secondary" height="300px"/><br/>
+                    <p ><a class="home-artworks-buttons" th:href="@{/artworks/details}">Details</a></p>
+                </div>
+                <div class="col-md-5" style="display: block;margin: 10px 10px 10px 10px">
+                    <img src="/../images/pots.jpg" class="border border-secondary" height="300px"/><br/>
+                    <p ><a class="home-artworks-buttons" th:href="@{/artworks/details}">Details</a></p>
+                </div>
+                <div class="col-md-5" style="display: block;margin: 10px 10px 10px 10px">
+                    <img src="/../images/pots.jpg" class="border border-secondary" height="300px"/><br/>
+                    <p ><a class="home-artworks-buttons" th:href="@{/artworks/details}">Details</a></p>
+                </div>
+            </div>
+        </div>
+</main>
 <th:block th:include="fragments/footer"/>
 </body>
 </html>
