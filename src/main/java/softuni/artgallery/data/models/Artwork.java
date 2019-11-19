@@ -14,7 +14,9 @@ public class Artwork extends BaseEntity {
     private String name;
     private String imageUrl;
     private BigDecimal price;
+    private String description;
     private Artist artist;
+    private Order order;
     private Category category;
 
     public Artwork() {
@@ -41,7 +43,7 @@ public class Artwork extends BaseEntity {
         this.imageUrl = imageUrl;
     }
 
-    @NotEmpty
+
     @Column(name = "price", nullable = false)
     @DecimalMin(value = "0.01")
     public BigDecimal getPrice() {
@@ -50,6 +52,15 @@ public class Artwork extends BaseEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @Column(name = "description", nullable = false)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @ManyToOne(optional = false)
@@ -62,6 +73,15 @@ public class Artwork extends BaseEntity {
         this.artist = artist;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)

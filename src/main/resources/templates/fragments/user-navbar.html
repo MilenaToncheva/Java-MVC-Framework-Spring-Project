@@ -15,11 +15,11 @@
 
                 <div class="rightside col-md-9">
                     <div class="top-buttons">
-                        <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-logout"
+                        <a type="button"  class="top-button btn-lg" id="btn-logout"
                            th:href="@{/users/logout}">Logout</a>
-                        <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-favorite"
+                        <a type="button" class="top-button btn-lg" id="btn-favorite"
                            th:href="@{/artworks/favorite}">My Favorite</a>
-                        <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-order-history"
+                        <a type="button" class="top-button btn-lg" id="btn-order-history"
                            th:href="@{/users/order-history}">Order History</a>
                         <div class="btn-group">
                             <a  type="button" class="btn dropdown-toggle top-button btn-lg"
@@ -30,8 +30,9 @@
                                 <li  th:each="category:${T(softuni.artgallery.data.models.Category).values()}"><a tabindex="-1" href="#">[[${category.name()}]]</a></li>
                             </ul>
                         </div>
-                        <span class="top-buttons-link" style="font-size: large;">Welcome, <a style="color: #563D7C;"
-                                                                                             th:href="@{/users/profile/}">[[${session.username}]]</a></span>
+                        <a type="button" class="top-button btn-lg" id="btn-events"
+                           th:href="@{/events/all}">Events</a>
+                        <span class="top-buttons-link" style="font-size: large;">Welcome, <a style="color: #563D7C;font-style: italic;" th:href="@{/users/profile/}">[[${session.username}]]</span></a></span>
                     </div>
                 </div>
             </div>

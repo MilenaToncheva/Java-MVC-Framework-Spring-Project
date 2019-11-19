@@ -6,54 +6,45 @@
 <th:block th:include="~{fragments/guest-navbar}"/>
 <div class="container-fluid w-15">
     <form id="user-register-form" th:action="@{/users/register}" th:method="post" th:object="${userRegisterModel}">
-        <h2 style="text-align: center;color: #563D7C">Register</h2>
+        <h2>Register</h2>
         <hr id="my-hr"/>
         <div class="form-group " th:classappend="${#fields.hasErrors('${userRegisterModel.firstName}')}?'text-danger'">
-            <p style="text-align: center">
+
                 <label for="first_name" class="floatLabel">First Name</label>
                 <input id="first_name" th:field="*{firstName}" name="firstName" type="text">
-            </p>
+
             <small id="firstNameHelp" th:each="err:${#fields.errors('${userRegisterModel.firstName}')}" th:text="${err}">
             </small>
         </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('${userRegisterModel.lastName}')}? 'text-danger'">
-            <p style="text-align: center">
+
                 <label for="last_name" class="floatLabel">Last Name</label>
                 <input id="last_name" name="lastName" th:field="*{lastName}" type="text">
-            </p>
+
             <small th:each="err:${#fields.errors('${userRegisterModel.lastName}')}" th:text="${err}"></small>
         </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('${userRegisterModel.username}')}?'text-danger'">
-            <p style="text-align: center">
+
                 <label for="username" class="floatLabel">Username</label>
                 <input type="text" id="username" name="username" th:field="*{username}">
-            </p>
             <small th:each="err:${#fields.errors('${userRegisterModel.username}')}" th:text="${err}"></small>
         </div>
 <div class="form-group" th:classappend="${#fields.hasErrors('${userRegisterModel.email}')}?'text-danger'">
-    <p style="text-align: center">
         <label for="email" class="floatLabel">Email </label>
         <input type="email" id="email" name="email" th:field="*{email}">
-    </p>
     <small th:each="err:${#fields.errors('${userRegisterModel.email}')}" th:text="${err}"></small>
 </div>
       <div class="form-group" th:classappend="${#fields.hasErrors('${userRegisterModel.password}')}?'text-danger'">
-          <p style="text-align: center">
               <label for="password" class="floatLabel">Password</label>
               <input id="password" name="password" type="password" th:field="*{password}">
-          </p>
           <small th:each="err:${#fields.errors('${userRegisterModel.password}')}" th:text="${err}"></small>
       </div>
       <div class="form-group" th:classappend="${#fields.hasErrors('${userRegisterModel.confirmPassword}')}?'text-danger'">
-          <p style="text-align: center">
               <label for="confirm_password" class="floatLabel">Confirm Password</label>
               <input id="confirm_password" name="confirmPassword" type="password" th:field="*{confirmPassword}">
-          </p>
           <small th:each="err:${#fields.errors('${userRegisterModel.confirmPassword}')}" th:text="${err}"></small>
       </div>
-        <p style="text-align: center">
             <input class="inputSubmit" type="submit" value="Register" id="register"/>
-        </p>
     </form>
 
 

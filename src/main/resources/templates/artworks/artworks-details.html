@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
 <body>
+<th:block th:include="~{fragments/user-navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="artwork-details-parent" class="row  d-flex justify-content-around">
+            <div class="artwork-details-parent">
+                <div id="artwork-name" class="col-md-12">
+                    <h2 class="artwork-name">[[${artwork.name}]]</h2>
+                    <hr class="hr-2"/>
+                </div>
+                <div id="artwork-img" class="col-md-6">
+                    <img th:src="@{${artwork.imageUrl}}" class="border border-secondary" height="590px"/><br/></div>
+                <div id="artwork-details" class="col-md-5 col-md-offset-1">
+                    <br/>
+                    <br/>
+                    <label for="artwork-description" style="text-align: left">Description:</label>
+                    <br/>
+                    <textarea id="artwork-description" rows="10" cols="70" th:text="${artwork.description}"
+                              disabled="disabled">[[{$artwork.description}]]</textarea>
+                    <br/>
+                    <div></div>
+                    <p><a id="artwork-category"
+                          th:href="@{/artworks/bycategory/{category}(category=${artwork.category})}">[[${artwork.category}]]</a>
+                        by [[${artwork.artist.name}]]
+                    </p><br/>
+                    <p><a id="artwork-artist" th:href="@{/artists/details/{id}(id=${artwork.artist.id})}"> Artist</a> information</p>
+                    <br/>
+                    <br/>
+                    <div id="artwork-price">Price: [[${artwork.price}]] BGN</div>
 
+                    <br/>
+                    <br/>
+                    <div id="div-btn-artworks">
+                        <a class="btn-artworks" th:href="@{/user/favorite/add(id=${artwork.id})}">Add To Favorite</a>
+                        <a class="btn-artworks" th:href="@{/Order/add(id=${artwork.id})}">Order</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
 </body>
 </html>

@@ -9,11 +9,11 @@ import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="events")
-public class Event extends BaseEntity{
+@Table(name = "events")
+public class Event extends BaseEntity {
     private String name;
     private String description;
-    private byte[]image;
+    private String imageUrl;
     private LocalDateTime startsOn;
     private LocalDateTime endsOn;
     private boolean isExpired;
@@ -21,9 +21,10 @@ public class Event extends BaseEntity{
 
     public Event() {
     }
+
     @NotEmpty
-@Column(name="name",nullable = false)
-    @Length(min=5,max=30)
+    @Column(name = "name", nullable = false)
+    @Length(min = 5, max = 30)
     public String getName() {
         return name;
     }
@@ -31,9 +32,10 @@ public class Event extends BaseEntity{
     public void setName(String name) {
         this.name = name;
     }
+
     @NotEmpty
-    @Column(name="description",nullable = false)
-    @Length(min=5,max=30)
+    @Column(name = "description", nullable = false)
+    @Length(min = 5, max = 30)
     public String getDescription() {
         return description;
     }
@@ -41,17 +43,20 @@ public class Event extends BaseEntity{
     public void setDescription(String description) {
         this.description = description;
     }
+
     @NotEmpty
-    @Column(name="image",nullable = false)
-    public byte[] getImage() {
-        return image;
+    @Column(name = "imageUrl", nullable = false)
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
+
+
     @NotEmpty
-    @Column(name="starts_on",nullable = false)
+    @Column(name = "starts_on", nullable = false)
 
     public LocalDateTime getStartsOn() {
         return startsOn;
@@ -62,7 +67,7 @@ public class Event extends BaseEntity{
     }
 
     @NotEmpty
-    @Column(name="ends_on",nullable = false)
+    @Column(name = "ends_on", nullable = false)
     public LocalDateTime getEndsOn() {
         return endsOn;
     }
@@ -72,7 +77,7 @@ public class Event extends BaseEntity{
     }
 
     @NotEmpty
-    @Column(name="isExpired",nullable = false)
+    @Column(name = "isExpired", nullable = false)
     public boolean isExpired() {
         return isExpired;
     }
@@ -82,7 +87,7 @@ public class Event extends BaseEntity{
     }
 
     @NotEmpty
-    @Column(name="is_upcoming",nullable = false)
+    @Column(name = "is_upcoming", nullable = false)
     public boolean isUpcoming() {
         return isUpcoming;
     }

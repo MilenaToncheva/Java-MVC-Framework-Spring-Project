@@ -20,6 +20,7 @@ public class User extends BaseEntity {
     private String email;
     private String password;
     private Set<Artwork> favouriteArtworks;
+    private List<Order> orders;
 
 
     public User() {
@@ -91,4 +92,12 @@ public class User extends BaseEntity {
         this.favouriteArtworks = favouriteArtworks;
     }
 
+    @OneToMany(mappedBy = "user", targetEntity = Order.class)
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 }
