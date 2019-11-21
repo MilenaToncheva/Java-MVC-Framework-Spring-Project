@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import softuni.artgallery.services.services.ArtworkService;
-import softuni.artgallery.web.models.ArtworkViewModel;
+import softuni.artgallery.web.models.artwork.ArtworkViewModel;
 
 import java.util.Arrays;
 import java.util.List;

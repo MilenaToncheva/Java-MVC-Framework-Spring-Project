@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import softuni.artgallery.services.models.UserLoginServiceModel;
 import softuni.artgallery.services.models.UserRegisterServiceModel;
-import softuni.artgallery.web.models.UserLoginModel;
-import softuni.artgallery.web.models.UserRegisterModel;
-import softuni.artgallery.services.models.UserServiceModel;
+import softuni.artgallery.web.models.auth.UserLoginModel;
+import softuni.artgallery.web.models.auth.UserRegisterModel;
 import softuni.artgallery.services.services.AuthService;
 
 import javax.servlet.http.HttpSession;

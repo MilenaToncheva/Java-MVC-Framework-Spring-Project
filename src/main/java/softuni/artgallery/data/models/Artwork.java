@@ -24,7 +24,7 @@ public class Artwork extends BaseEntity {
 
     @NotEmpty
     @Column(name = "name", nullable = false)
-    @Length(min = 5, max = 30)
+    @Length(min = 2, max = 30)
     public String getName() {
         return name;
     }
