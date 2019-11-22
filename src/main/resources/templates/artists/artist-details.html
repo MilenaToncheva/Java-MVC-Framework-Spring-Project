@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
 <body>
+<th:block th:include="~{fragments/user-navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="artist-details-parent" class="row  d-flex justify-content-around">
+            <div class="artist-details-parent">
+                <div id="artist-name" class="col-md-12">
+                    <h2 class="artist-name">[[${artist.name}]]</h2>
+                    <hr class="hr-2"/>
+                </div>
+                <div id="artist-img" class="col-md-6">
+                    <img th:src="@{${artist.imageUrl}}" class="border border-secondary" height="500px"/><br/></div>
+                <div id="artist-details" class="col-md-5 col-md-offset-1">
+                    <br/>
+                    <label for="artist-history" style="text-align: left">History:</label>
+                    <br/>
+                    <textarea id="artist-history" rows="10" cols="70" th:text="${artist.history}"
+                              disabled="disabled">[[{$artist.history}]]</textarea>
+                    <br/>
+                    <label for="livesIn" style="text-align: left"></label>
+                    <br/>
+                    <div id="education" disabled>Education: [[${artist.education}]]</div>
+                    <br/>
+                    <div id="livesIn" disabled>Lives in: [[${artist.livesIn}]]</div>
+                    <br/>
+                    <div id="artist-email" disabled>Email: [[${artist.email}]]</div>
 
+                    <br/>
+                    <p><a id="artist-artworks" th:href="@{/artworks/artworks-by-artist/{id}(id=${artist.id})}"> Artworks</a>
+                       by [[${artist.name}]] </p>
+                    <br/>
+                    <div id="div-btn-artists">
+                        <a class="btn-artist" th:href="@{/artists/edit/{id}(id=${artist.id})}">Edit</a>
+                        <a class="btn-artist" th:href="@{/artists/delete/{id}(id=${artist.id})}">Delete</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
 </body>
 </html>

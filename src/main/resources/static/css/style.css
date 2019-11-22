@@ -1073,8 +1073,11 @@ li:hover {
     background-color: rgba(103, 29, 124, 0.45);
     color: white;
 }
+div > a.btn-delete-all-artworks{
+    margin-top: 20px;
+}
+.btn-artworks ,.btn-artist, .btn-delete-all-artworks{
 
-.btn-artworks {
     min-height: 46px;
     min-width: 134px;
     max-width: 134px;
@@ -1131,11 +1134,11 @@ li:hover {
 
 }
 
-#div-btn-artworks > a {
+#div-btn-artworks > a, #div-btn-artists >a {
     display: inline-block
 }
 
-#artworks-all-parent,#artwork-details-parent {
+#artworks-all-parent,#artwork-details-parent,#artist-details-parent,#artworks-all-by-artist-parent {
     margin-top: 80px;
     margin-bottom: 60px;
 }
@@ -1168,5 +1171,8 @@ li:hover {
 }
 
 #artwork-delete-form >input, #artwork-delete-form>textarea{
+    background-color: white;
+}
+#artist-history{
     background-color: white;
 }
