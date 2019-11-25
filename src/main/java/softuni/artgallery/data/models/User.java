@@ -12,19 +12,18 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User extends BaseEntity {
+
     private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private Set<Artwork> favouriteArtworks;
     private List<Order> orders;
-
+    private List<Artwork> favourites;
 
     public User() {
-
 
     }
 
@@ -39,8 +38,7 @@ public class User extends BaseEntity {
         this.username = username;
     }
 
-
-    @Column(name = "first_name", nullable = false, updatable = false)
+    @Column(name = "first_name", nullable = false)
     public String getFirstName() {
         return firstName;
     }
@@ -50,7 +48,7 @@ public class User extends BaseEntity {
     }
 
 
-    @Column(name = "last_name", nullable = false, updatable = false)
+    @Column(name = "last_name", nullable = false)
 
     public String getLastName() {
         return lastName;
@@ -61,7 +59,7 @@ public class User extends BaseEntity {
     }
 
 
-    @Column(name = "email", nullable = false, updatable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     public String getEmail() {
         return email;
     }
@@ -80,17 +78,6 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    @ManyToMany
-    @JoinTable(name = "users_artworks",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "artwork_id", referencedColumnName = "id"))
-    public Set<Artwork> getFavouriteArtworks() {
-        return favouriteArtworks;
-    }
-
-    public void setFavouriteArtworks(Set<Artwork> favouriteArtworks) {
-        this.favouriteArtworks = favouriteArtworks;
-    }
 
     @OneToMany(mappedBy = "user", targetEntity = Order.class)
     public List<Order> getOrders() {
@@ -99,5 +86,14 @@ public class User extends BaseEntity {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    @ManyToMany(mappedBy = "followers", targetEntity = Artwork.class)
+    public List<Artwork> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(List<Artwork> favourites) {
+        this.favourites = favourites;
     }
 }

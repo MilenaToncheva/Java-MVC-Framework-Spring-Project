@@ -28,7 +28,8 @@
                           th:href="@{/artworks/bycategory/{category}(category=${artwork.category})}">[[${artwork.category}]]</a>
                         by [[${artwork.artist.name}]]
                     </p><br/>
-                    <p><a id="artwork-artist" th:href="@{/artists/details/{id}(id=${artwork.artist.id})}"> Artist</a> information</p>
+                    <p><a id="artwork-artist" th:href="@{/artists/details/{id}(id=${artwork.artist.id})}"> Artist</a>
+                        information</p>
                     <br/>
                     <br/>
                     <div id="artwork-price">Price: [[${artwork.price}]] BGN</div>
@@ -36,15 +37,17 @@
                     <br/>
                     <br/>
                     <div id="div-btn-artworks">
-                        <a class="btn-artworks" th:href="@{/user/favorite/add(id=${artwork.id})}">Add To Favorite</a>
-                        <a class="btn-artworks" th:href="@{/Order/add(id=${artwork.id})}">Order</a>
+                        <form th:method="post" th:action="@{/users/favorite/add-artwork(id=${artwork.id})}"  object="${artwork}">
+                            <button  class="btn-artworks" >Add To Favourite</button>
+                        </form>
+                        <form th:action="@{/Order/add(id=${artwork.id})}" th:method="post" th:object="${artwork}">
+                            <button class="btn-artworks" >Add To Cart></button>
+                        </form>
+
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
-    </div>
     </div>
 </main>
 <th:block th:include="fragments/footer"/>

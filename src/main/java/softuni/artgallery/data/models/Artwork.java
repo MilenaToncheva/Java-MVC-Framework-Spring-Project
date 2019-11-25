@@ -7,6 +7,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "artworks")
@@ -18,6 +19,7 @@ public class Artwork extends BaseEntity {
     private Artist artist;
     private Order order;
     private Category category;
+    private List<User> followers;
 
     public Artwork() {
     }
@@ -93,4 +95,16 @@ public class Artwork extends BaseEntity {
         this.category = category;
     }
 
+    @ManyToMany
+    @JoinTable(name = "favourites_followers",
+            joinColumns = @JoinColumn(name = "favourite_id", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name="follower_id",referencedColumnName="id")
+    )
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<User> followers) {
+        this.followers = followers;
+    }
 }

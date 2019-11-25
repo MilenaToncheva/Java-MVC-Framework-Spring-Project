@@ -18,10 +18,10 @@
                         <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-logout" th:href="@{/users/logout}">Logout</a>
                         <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-favorite" th:href="@{/artworks/all}">All Artworks</a>
                         <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-order-history" th:href="@{/artworks/create}">Artwork Create</a>
-                        <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-favorite" th:href="@{/artists/all}">All Artists</a>
-                        <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-favorite" th:href="@{/artists/create}">Artist Register</a>
+                        <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-all-artists" th:href="@{/artists/all}">All Artists</a>
+                        <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-artist-register" th:href="@{/artists/create}">Artist Register</a>
 
-                        <span class="top-buttons-link"style="font-size: large;">Welcome, <a style="color: #563D7C; " th:href="@{/users/profile}">[[${session.username}]]</a></span>
+                        <span class="top-buttons-link"style="font-size: large;">Welcome, <a style="color: #563D7C; " th:href="@{/users/profile/{username}(username=${session.username})}">[[${session.username}]]</a></span>
                     </div>
                 </div>
             </div>
