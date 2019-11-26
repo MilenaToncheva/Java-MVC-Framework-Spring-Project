@@ -12,14 +12,15 @@ import java.time.LocalDateTime;
 @Table(name = "events")
 public class Event extends BaseEntity {
     private String name;
+    private String location;
     private String description;
     private String imageUrl;
     private LocalDateTime startsOn;
     private LocalDateTime endsOn;
-    private boolean isExpired;
-    private boolean isUpcoming;
+
 
     public Event() {
+        super();
     }
 
     @NotEmpty
@@ -31,6 +32,16 @@ public class Event extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+    @NotEmpty
+    @Column(name = "location", nullable = false)
+    @Length(min = 5, max = 15)
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @NotEmpty
@@ -76,23 +87,4 @@ public class Event extends BaseEntity {
         this.endsOn = endsOn;
     }
 
-    @NotEmpty
-    @Column(name = "isExpired", nullable = false)
-    public boolean isExpired() {
-        return isExpired;
-    }
-
-    public void setExpired(boolean expired) {
-        isExpired = expired;
-    }
-
-    @NotEmpty
-    @Column(name = "is_upcoming", nullable = false)
-    public boolean isUpcoming() {
-        return isUpcoming;
-    }
-
-    public void setUpcoming(boolean upcoming) {
-        isUpcoming = upcoming;
-    }
 }

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:include="~{fragments/head}"/>
 <body>
-<th:block th:include="~{fragments/guest-navbar}"/>
+<th:block th:include="~{fragments/navbar}"/>
 <div id="container">
     <div class="container">
         <div class="row">
@@ -22,18 +23,18 @@
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner" role="listbox">
                             <div class="item active">
-                                <img src="/../images/rooster.jpg" class="img-responsive" alt="rooster">
+                                <img th:src="@{/images/rooster.jpg} " class="img-responsive" alt="rooster">
                             </div>
 
                             <div class="item">
-                                <img src="/../images/tree.jpg" class="img-responsive" alt="tree">
+                                <img th:src="@{/images/tree.jpg}" class="img-responsive" alt="tree">
                             </div>
 
                             <div class="item">
-                                <img src="/../images/doll.jpg" class="img-responsive" alt="doll">
+                                <img th:src="@{/images/doll.jpg}" class="img-responsive" alt="doll">
                             </div>
                             <div class="item">
-                                <img src="/../images/pots.jpg" class="img-responsive" alt="pots">
+                                <img th:src="@{/images/pots.jpg}" class="img-responsive" alt="pots">
                             </div>
                         </div>
                         <!-- left and right controls -->

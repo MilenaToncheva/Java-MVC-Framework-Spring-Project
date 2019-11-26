@@ -2,19 +2,18 @@ package softuni.artgallery.web.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import softuni.artgallery.services.models.UserLoginServiceModel;
+import org.springframework.web.servlet.ModelAndView;
 import softuni.artgallery.services.models.UserRegisterServiceModel;
-import softuni.artgallery.web.models.auth.UserLoginModel;
 import softuni.artgallery.web.models.auth.UserRegisterModel;
 import softuni.artgallery.services.services.AuthService;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 
@@ -29,10 +28,6 @@ public class AuthController {
         return new UserRegisterModel();
     }
 
-    @ModelAttribute("userLoginModel")
-    public UserLoginModel userLoginModel() {
-        return new UserLoginModel();
-    }
 
     @Autowired
     public AuthController(AuthService authService, ModelMapper modelMapper) {
@@ -41,17 +36,21 @@ public class AuthController {
     }
 
     @GetMapping("/register")
+    @PreAuthorize("isAnonymous()")
     public String getRegisterForm(@ModelAttribute("userRegisterModel") UserRegisterModel userRegisterModel) {
         return "auth/register.html";
     }
 
     @PostMapping("/register")
+    @PreAuthorize("isAnonymous()")
     public String registerUser(@Valid @ModelAttribute("userRegisterModel") UserRegisterModel userRegisterModel, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "auth/register";
         }
-
+        if (!userRegisterModel.getConfirmPassword().equals(userRegisterModel.getPassword())) {
+            return "auth/register";
+        }
         UserRegisterServiceModel userRegisterServiceModel = this.modelMapper.map(userRegisterModel, UserRegisterServiceModel.class);
 
         this.authService.register(userRegisterServiceModel);
@@ -60,28 +59,13 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String getLoginForm(@ModelAttribute("userLoginModel") UserLoginModel userLoginModel) {
-        return "auth/login.html";
+    @PreAuthorize("isAnonymous()")
+    public ModelAndView login() {
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName( "auth/login.html");
+        return modelAndView;
     }
 
-    @PostMapping("/login")
-    public String loginUser(@ModelAttribute("userLoginModel") UserLoginModel userLoginModel, HttpSession session) throws Exception {
 
 
-        try {
-            this.authService.login(this.modelMapper.map(userLoginModel, UserLoginServiceModel.class));
-            session.setAttribute("username", userLoginModel.getUsername());
-
-            return "redirect:/home";
-        } catch (Exception e) {
-
-            return "redirect:/users/login";
-        }
-    }
-
-    @GetMapping("/logout")
-    public String logoutUser(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
-    }
 }

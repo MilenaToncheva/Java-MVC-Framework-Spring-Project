@@ -2,6 +2,7 @@ package softuni.artgallery.web.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,15 +25,17 @@ public class HomeController {
     }
 
     @GetMapping("/")
+    @PreAuthorize("isAnonymous()")
     public String index() {
         return "home/index";
     }
 
     @GetMapping("/home")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView home(ModelAndView modelAndView) {
         List<ArtworkViewModel> artworks = Arrays.stream(this.modelMapper.map(this.artworkService.findAll(), ArtworkViewModel[].class))
                 .collect(Collectors.toList());
-      modelAndView.setViewName("home/home");
+      modelAndView.setViewName("/home");
        modelAndView.addObject("artworks",artworks);
         return modelAndView;
     }

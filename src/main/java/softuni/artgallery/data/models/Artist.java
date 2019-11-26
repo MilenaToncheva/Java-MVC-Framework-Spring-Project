@@ -1,16 +1,9 @@
 package softuni.artgallery.data.models;
 
-import org.hibernate.validator.constraints.Length;
-import softuni.artgallery.constants.artistMessages.ArtistRegisterViolationMessages;
-import softuni.artgallery.constants.commonMessages.CommonConstants;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -23,6 +16,10 @@ public class Artist extends BaseEntity {
     private String imageUrl;
     private String email;
     private List<Artwork> artworks;
+
+    public Artist() {
+        super();
+    }
 
 
     @Column(name = "name", nullable = false, unique = true, updatable = false)

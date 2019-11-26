@@ -3,9 +3,10 @@
       xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="~{fragments/head}"/>
 <body>
-<th:block th:include="~{fragments/guest-navbar}"/>
+<th:block th:include="~{fragments/navbar}"/>
 <div class="container-fluid w-15">
     <form id="user-register-form" th:action="@{/users/login}" th:method="post" >
+
         <h2>Login</h2>
         <hr id="my-hr"/>
 

@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
 public abstract class BaseEntity {
     private String id;
 
-    public BaseEntity() {
+    BaseEntity() {
     }
 @Id
 @GeneratedValue(generator = "uuid-string")
