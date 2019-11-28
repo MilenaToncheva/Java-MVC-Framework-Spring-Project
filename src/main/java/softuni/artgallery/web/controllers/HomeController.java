@@ -35,7 +35,7 @@ public class HomeController {
     public ModelAndView home(ModelAndView modelAndView) {
         List<ArtworkViewModel> artworks = Arrays.stream(this.modelMapper.map(this.artworkService.findAll(), ArtworkViewModel[].class))
                 .collect(Collectors.toList());
-      modelAndView.setViewName("/home");
+      modelAndView.setViewName("home/home");
        modelAndView.addObject("artworks",artworks);
         return modelAndView;
     }

@@ -20,7 +20,8 @@ public class ApplicationBeanConfiguration {
     public class ValidationUtil {
         private Validator validator;
 
-        public ValidationUtil() {
+        public ValidationUtil()
+        {
             this.validator = Validation.buildDefaultValidatorFactory().getValidator();
         }
 

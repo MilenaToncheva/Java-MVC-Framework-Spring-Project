@@ -16,9 +16,9 @@ public class Artwork extends BaseEntity {
     private BigDecimal price;
     private String description;
     private Artist artist;
-    private Order order;
     private Category category;
-    private List<User> followers;
+    private OrderedArtwork orderedArtwork;
+
 
     public Artwork() {
         super();
@@ -75,16 +75,6 @@ public class Artwork extends BaseEntity {
         this.artist = artist;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
     public Category getCategory() {
@@ -94,17 +84,13 @@ public class Artwork extends BaseEntity {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    @ManyToMany
-    @JoinTable(name = "favourites_followers",
-            joinColumns = @JoinColumn(name = "favourite_id", referencedColumnName="id"),
-            inverseJoinColumns = @JoinColumn(name="follower_id",referencedColumnName="id")
-    )
-    public List<User> getFollowers() {
-        return followers;
+@OneToOne
+@JoinColumn(name="ordered_Artwork_id",referencedColumnName = "id")
+    public OrderedArtwork getOrderedArtwork() {
+        return orderedArtwork;
     }
 
-    public void setFollowers(List<User> followers) {
-        this.followers = followers;
+    public void setOrderedArtwork(OrderedArtwork orderedArtwork) {
+        this.orderedArtwork = orderedArtwork;
     }
 }

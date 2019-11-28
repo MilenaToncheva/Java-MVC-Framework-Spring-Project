@@ -5,22 +5,22 @@
 <body>
 <th:block th:include="~{fragments/navbar}"/>
 <div class="container-fluid w-15">
-    <form id="user-register-form" th:action="@{/users/login}" th:method="post" >
-
+    <form id="user-login-form" th:action="@{/users/login}" th:method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <h2>Login</h2>
         <hr id="my-hr"/>
-
-        <p >
-            <label for="username" class="floatLabel">Username</label>
-            <input id="username" name="username" type="text">
-        </p>
-        <p >
+        <div class="form-group">
+            <label for="username" class=" floatLabel">Username</label>
+            <input id="username" name="username" type="text"/>
+        </div>
+        <div class="form-group">
             <label for="password" class="floatLabel">Password</label>
-            <input  id="password" name="password" type="password">
-        </p>
-        <p >
+            <input id="password"   name="password" type="password"/>
+        </div>
+        <div>
             <input class="inputSubmit" type="submit" value="Login" id="login"/>
-        </p>
+        </div>
+
     </form>
 </div>
 <th:block th:include="~{fragments/footer}"/>

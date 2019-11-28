@@ -3,6 +3,8 @@ package softuni.artgallery.data.models;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,21 +18,24 @@ public class User extends BaseEntity implements UserDetails {
     private String email;
     private String password;
     private List<Order> orders;
-    private List<Artwork> favourites;
-private Set<Role> authorities;
-    public User() {
+    private Set<Role> authorities;
+    private boolean isAccountNonExpired;
+    private boolean isAccountNonLocked;
+    private boolean isCredentialsNonExpired;
+    private boolean isEnabled;
 
-        super();
+
+    public User() {
+        this.authorities=new HashSet<>();
+        this.orders=new ArrayList<>();
     }
 
-
     @Column(name = "username", nullable = false, unique = true, updatable = false)
-
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+       public void setUsername(String username) {
         this.username = username;
     }
 
@@ -64,7 +69,7 @@ private Set<Role> authorities;
         this.email = email;
     }
 
-
+@Override
     @Column(name = "password", nullable = false)
     public String getPassword() {
         return password;
@@ -84,20 +89,12 @@ private Set<Role> authorities;
         this.orders = orders;
     }
 
-    @ManyToMany(mappedBy = "followers", targetEntity = Artwork.class)
-    public List<Artwork> getFavourites() {
-        return favourites;
-    }
-
-    public void setFavourites(List<Artwork> favourites) {
-        this.favourites = favourites;
-    }
 
     @Override
-    @ManyToMany(targetEntity = Role.class,fetch = FetchType.EAGER)
-    @JoinTable(name="users_roles",
-            joinColumns = @JoinColumn(name="user_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name="role_id",referencedColumnName = "id")
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     public Set<Role> getAuthorities() {
         return authorities;
@@ -107,28 +104,45 @@ private Set<Role> authorities;
         this.authorities = authorities;
     }
 
+
     @Override
-    @Transient
+    @Column(name="is_account_non_expired")
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+    }
+
     @Override
-    @Transient
+    @Column(name="is_account_non_locked")
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
     @Override
-    @Transient
+    @Column(name="is_credential_non_expired")
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
+    }
+
     @Override
-    @Transient
+    @Column(name="is_enabled")
+
     public boolean isEnabled() {
         return true;
     }
 
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
 }
