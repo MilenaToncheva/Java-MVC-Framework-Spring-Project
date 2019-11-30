@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="~{fragments/head}"/>
 <body>
-<th:block th:include="~{fragments/user-navbar}"/>
+<th:block th:include="~{fragments/navbar}"/>
 <main>
     <hr class="hr-2"/>
     <div class="container-fluid">
@@ -37,12 +37,21 @@
                     <br/>
                     <br/>
                     <div id="div-btn-artworks">
-                        <form th:method="post" th:action="@{/users/favorite/add-artwork(id=${artwork.id})}"  object="${artwork}">
+                       <!-- <form th:method="post" th:action="@{/users/favorite/add-artwork(id=${artwork.id})}"  object="${artwork}">
                             <button  class="btn-artworks" >Add To Favourite</button>
-                        </form>
-                        <form th:action="@{/Order/add(id=${artwork.id})}" th:method="post" th:object="${artwork}">
-                            <button class="btn-artworks" >Add To Cart></button>
-                        </form>
+                        </form>-->
+                       <th:block th:if="${artwork.isAvailable()==false}">
+                           <h3>Sold</h3>
+                       </th:block>
+                        <th:block th:unless="${artwork.isAvailable()==false}">
+                            <form th:action="@{/cart/add-artwork/{id}(id=${artwork.id})}" th:method="post" th:object="${artwork}">
+                                <button type="submit" class="btn-artworks">Add To Cart</button>
+                            </form>
+                        </th:block>
+                        <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
+                            <a class="btn-artworks" th:href="@{/artworks/edit/{id}(id=${artwork.id})}">Edit</a>
+                            <a class="btn-artworks" th:href="@{/artworks/delete/{id}(id=${artwork.id})}">Delete</a>
+                        </th:block>
 
                     </div>
                 </div>

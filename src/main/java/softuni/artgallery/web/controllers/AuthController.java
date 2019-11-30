@@ -41,7 +41,8 @@ public class AuthController {
 
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
-    public String registerUser(@Valid @ModelAttribute("userRegisterModel") UserRegisterModel userRegisterModel, BindingResult bindingResult) {
+    public String registerUser(@Valid @ModelAttribute("userRegisterModel") UserRegisterModel userRegisterModel,
+                                                                                    BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "auth/register";
@@ -49,7 +50,8 @@ public class AuthController {
         if (!userRegisterModel.getConfirmPassword().equals(userRegisterModel.getPassword())) {
             return "auth/register";
         }
-        UserRegisterServiceModel userRegisterServiceModel = this.modelMapper.map(userRegisterModel, UserRegisterServiceModel.class);
+        UserRegisterServiceModel userRegisterServiceModel = this.modelMapper.map(userRegisterModel,
+                                                                                    UserRegisterServiceModel.class);
 
         this.authService.register(userRegisterServiceModel);
 

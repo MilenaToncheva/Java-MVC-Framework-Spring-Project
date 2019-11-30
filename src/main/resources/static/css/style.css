@@ -145,7 +145,7 @@ header {
 
 .rightside {
     float: right;
-    margin-top: 10px;
+
 }
 
 .leftside-remove-space {
@@ -201,8 +201,8 @@ header .dropdown-menu > li > a:focus, header .dropdown-menu > li > a:hover {
 }
 
 form {
-    margin-top: 85px;
-    margin-bottom: 55px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .top-button, #btn-category {
@@ -1266,4 +1266,20 @@ div > a.btn-delete-all-artworks{
  #heart-icon,a.heart-icon{
     max-height: 53.8px;
     max-width: 55px;
+}
+ #users-all{
+     margin-top:100px;
+     margin-bottom:20px;
+ }
+
+ div.rightside{
+     height:85px;
+ }
+
+.btn-roles-management >form{
+    display: inline-block;
+}
+
+.error-page{
+    margin-top:100px;
 }

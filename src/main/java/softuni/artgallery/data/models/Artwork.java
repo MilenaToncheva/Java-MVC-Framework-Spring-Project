@@ -16,6 +16,7 @@ public class Artwork extends BaseEntity {
     private BigDecimal price;
     private String description;
     private Artist artist;
+    private boolean isAvailable=true;
     private Category category;
     private OrderedArtwork orderedArtwork;
 
@@ -75,6 +76,15 @@ public class Artwork extends BaseEntity {
         this.artist = artist;
     }
 
+    @Column(name = "is_available")
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
     public Category getCategory() {
@@ -84,8 +94,9 @@ public class Artwork extends BaseEntity {
     public void setCategory(Category category) {
         this.category = category;
     }
-@OneToOne
-@JoinColumn(name="ordered_Artwork_id",referencedColumnName = "id")
+
+    @OneToOne
+    @JoinColumn(name = "ordered_Artwork_id", referencedColumnName = "id")
     public OrderedArtwork getOrderedArtwork() {
         return orderedArtwork;
     }

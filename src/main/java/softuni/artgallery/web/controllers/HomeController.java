@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import softuni.artgallery.services.services.ArtworkService;
 import softuni.artgallery.web.models.artwork.ArtworkViewModel;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,9 +33,10 @@ public class HomeController {
 
     @GetMapping("/home")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView home(ModelAndView modelAndView) {
+    public ModelAndView home(Principal principal, ModelAndView modelAndView) {
         List<ArtworkViewModel> artworks = Arrays.stream(this.modelMapper.map(this.artworkService.findAll(), ArtworkViewModel[].class))
                 .collect(Collectors.toList());
+        modelAndView.addObject("principal",principal);
       modelAndView.setViewName("home/home");
        modelAndView.addObject("artworks",artworks);
         return modelAndView;

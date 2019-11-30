@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="~{fragments/head}"/>
 <body>
-<th:block th:include="~{fragments/user-navbar}"/>
+<th:block th:include="~{fragments/navbar}"/>
 <main>
     <hr class="hr-2"/>
     <div class="container-fluid">
@@ -35,8 +35,11 @@
                        by [[${artist.name}]] </p>
                     <br/>
                     <div id="div-btn-artists">
-                        <a class="btn-artist" th:href="@{/artists/edit/{id}(id=${artist.id})}">Edit</a>
-                        <a class="btn-artist" th:href="@{/artists/delete/{id}(id=${artist.id})}">Delete</a>
+                        <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
+                            <a class="btn-artist" th:href="@{/artists/edit/{id}(id=${artist.id})}">Edit</a>
+                            <a class="btn-artist" th:href="@{/artists/delete/{id}(id=${artist.id})}">Delete</a>
+                        </th:block>
+
                     </div>
                 </div>
             </div>
