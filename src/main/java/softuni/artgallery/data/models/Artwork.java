@@ -18,7 +18,7 @@ public class Artwork extends BaseEntity {
     private Artist artist;
     private boolean isAvailable=true;
     private Category category;
-    private OrderedArtwork orderedArtwork;
+private OrderedArtwork orderedArtwork;
 
 
     public Artwork() {
@@ -94,9 +94,8 @@ public class Artwork extends BaseEntity {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    @OneToOne
-    @JoinColumn(name = "ordered_Artwork_id", referencedColumnName = "id")
+@OneToOne
+@JoinColumn(name="ordered_artwork_id",referencedColumnName = "id")
     public OrderedArtwork getOrderedArtwork() {
         return orderedArtwork;
     }
