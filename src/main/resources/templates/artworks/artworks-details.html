@@ -7,7 +7,7 @@
 <main>
     <hr class="hr-2"/>
     <div class="container-fluid">
-        <div id="artwork-details-parent" class="row  d-flex justify-content-around">
+        <div id="artwork-details-parent" class="row  d-flex justify-content-center">
             <div class="artwork-details-parent">
                 <div id="artwork-name" class="col-md-12">
                     <h2 class="artwork-name">[[${artwork.name}]]</h2>
@@ -20,38 +20,40 @@
                     <br/>
                     <label for="artwork-description" style="text-align: left">Description:</label>
                     <br/>
-                    <textarea id="artwork-description" rows="10" cols="70" th:text="${artwork.description}"
+                    <textarea id="artwork-description" rows="8" cols="70" th:text="${artwork.description}"
                               disabled="disabled">[[{$artwork.description}]]</textarea>
                     <br/>
                     <div></div>
                     <p><a id="artwork-category"
-                          th:href="@{/artworks/bycategory/{category}(category=${artwork.category})}">[[${artwork.category}]]</a>
+                          th:href="@{/artworks/artworks-by-category/{category}(category=${artwork.category})}">[[${artwork.category}]]</a>
                         by [[${artwork.artist.name}]]
                     </p><br/>
                     <p><a id="artwork-artist" th:href="@{/artists/details/{id}(id=${artwork.artist.id})}"> Artist</a>
                         information</p>
                     <br/>
                     <br/>
-                    <div id="artwork-price">Price: [[${artwork.price}]] BGN</div>
-
+                    <th:block th:if="${artwork.isAvailable()!=false}">
+                        <div id="artwork-price">Price: [[${artwork.price}]] BGN</div>
+                    </th:block>
                     <br/>
                     <br/>
                     <div id="div-btn-artworks">
-                       <!-- <form th:method="post" th:action="@{/users/favorite/add-artwork(id=${artwork.id})}"  object="${artwork}">
-                            <button  class="btn-artworks" >Add To Favourite</button>
-                        </form>-->
-                       <th:block th:if="${artwork.isAvailable()==false}">
-                           <h3>Sold</h3>
-                       </th:block>
+                        <th:block th:if="${artwork.isAvailable()==false}">
+                            <h3>Sold</h3>
+                        </th:block>
                         <th:block th:unless="${artwork.isAvailable()==false}">
-                            <form th:action="@{/cart/add-artwork/{id}(id=${artwork.id})}" th:method="post" th:object="${artwork}">
+                            <form th:action="@{/cart/add-artwork/{id}(id=${artwork.id})}" th:method="post"
+                                  th:object="${artwork}">
                                 <button type="submit" class="btn-artworks">Add To Cart</button>
                             </form>
                         </th:block>
-                        <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
-                            <a class="btn-artworks" th:href="@{/artworks/edit/{id}(id=${artwork.id})}">Edit</a>
-                            <a class="btn-artworks" th:href="@{/artworks/delete/{id}(id=${artwork.id})}">Delete</a>
+                        <th:block th:if="${artwork.isAvailable()==true}">
+                            <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
+                                <a class="btn-artworks" th:href="@{/artworks/edit/{id}(id=${artwork.id})}">Edit</a>
+                                <a class="btn-artworks" th:href="@{/artworks/delete/{id}(id=${artwork.id})}">Delete</a>
+                            </th:block>
                         </th:block>
+
 
                     </div>
                 </div>

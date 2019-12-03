@@ -18,7 +18,8 @@ public class Artwork extends BaseEntity {
     private Artist artist;
     private boolean isAvailable=true;
     private Category category;
-private OrderedArtwork orderedArtwork;
+   private Order order;
+
 
 
     public Artwork() {
@@ -94,13 +95,13 @@ private OrderedArtwork orderedArtwork;
     public void setCategory(Category category) {
         this.category = category;
     }
-@OneToOne
-@JoinColumn(name="ordered_artwork_id",referencedColumnName = "id")
-    public OrderedArtwork getOrderedArtwork() {
-        return orderedArtwork;
+@ManyToOne
+@JoinColumn(name="order_id",referencedColumnName = "id")
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderedArtwork(OrderedArtwork orderedArtwork) {
-        this.orderedArtwork = orderedArtwork;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
