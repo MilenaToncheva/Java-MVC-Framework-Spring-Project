@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <h2 class="text-center">[[${category}]] Artworks</h2>
+        <div th:if="${artworks.size()==0 || artworks==null}">
+            <h2 id="no-artworks-by-category"class="text-center">There are no artworks in [[${category}]] category.</h2>
+        </div>
+        <div th:unless="${artworks.size()==0 || artworks==null}">
+            <h2 id="artworks-by-category-title"class="text-center">Artworks in [[${category}]] category.</h2>
+            <div id="artworks-by-category-parent" class="row  d-flex justify-content-around">
+                <div th:each="artwork:${artworks}">
+                    <div id="artworks-by-category" class="col-md-5">
+                        <img th:src="@{${artwork.imageUrl}}" class="border border-secondary" height="300px"/><br/>
+                        <div>[[${artwork.name}]]</div>
+                        <div id="div-btn-artworks">
+                            <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
+                                <a  class="btn-artworks" th:href="@{/artworks/edit/{id}(id=${artwork.id})}">Update</a>
+                                <a class="btn-artworks" th:href="@{/artworks/delete/{id}(id=${artwork.id})}">Delete</a>
+                            </th:block>
+                            <th:block sec:authorize="isAuthenticated()">
+                                <a class="btn-artworks" th:href="@{/artworks/details/{id}(id=${artwork.id})}">Details</a>
+                            </th:block>
+                        </div>
+
+                    </div>
+                </div>
+                <br/>
+                <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
+                    <form th:action="@{/artworks/delete/all-by-artist/{id}(id=${artistId})}" th:method="DELETE">
+                        <div id="div-delete-all-artworks-btn" class="col-md-12">
+                            <button type="submit" class="btn-delete-all-artworks">Delete All</button>
+                        </div>
+                    </form>
+                </th:block>
+
+            </div>
+        </div>
+
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
+</body>
+</html>

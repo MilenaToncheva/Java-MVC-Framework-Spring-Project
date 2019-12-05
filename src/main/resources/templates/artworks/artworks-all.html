@@ -1,0 +1,29 @@
+    <!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="artworks-all-parent" class="row  d-flex justify-content-around">
+            <div th:each="artwork:${artworks}">
+                <div id="artworks-all" class="col-md-5">
+                    <img th:src="@{${artwork.imageUrl}}" class="border border-secondary" height="300px"/><br/>
+                  <div>[[${artwork.name}]]</div>
+                    <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
+                        <div id="div-btn-artworks">
+                            <a class="btn-artworks" th:href="@{/artworks/edit/{id}(id=${artwork.id})}">Update</a>
+                            <a class="btn-artworks" th:href="@{/artworks/delete/{id}(id=${artwork.id})}">Delete</a>
+                        </div>
+                    </th:block>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
+</body>
+</html>

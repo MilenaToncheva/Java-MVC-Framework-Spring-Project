@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="artworks-in-shopping-cart-parent" class="row  d-flex justify-content-around">
+            <br/>
+            <br/>
+            <br/>
+            <h2>Shopping Cart</h2>
+            <th:block th:if="${#session.getAttribute('cart').size()==0|| #session.getAttribute('cart')==null}">
+                <h2>No artworks added to the shopping cart yet!</h2>
+            </th:block>
+            <th:block th:unless="${#session.getAttribute('cart').size()==0|| #session.getAttribute('cart')==null}">
+                <div id="users-all" class="jumbotron-fluid mainBody my-4">
+                    <hr class="hr-2 bg-dark">
+                    <table id="table-cart" class="customTable table-hover mx-auto">
+                        <thead>
+                        <tr class="row mx-auto mb-4 font-weight-bold">
+                            <th class="col-md-1 text-center">#</th>
+                            <th class="col-md-1 text-center">Artwork name</th>
+                            <th class="col-md-2 text-center">Price</th>
+                            <th class="col-md-2 text-center">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="artwork, iter : ${#session.getAttribute('cart')}">
+
+                            <tr class="row mx-auto">
+                                <th class="col-md-1 customRow text-center" th:text="${iter.index+1}"></th>
+                                <td class="col-md-1 customRow text-center" th:text="${artwork.name}"></td>
+                                <td class="col-md-2 customRow text-center" th:text="${artwork.price}">
+                                    [[${artwork.price}]] BGN
+                                </td>
+                                <td class="col-md-2 customRow text-center">
+                                    <form th:action="@{/cart/remove-artwork/{id}(id=${artwork.id})}"
+                                          th:method="post">
+                                        <button type="submit" class="btn top-button btn-sm">Remove</button>
+                                    </form>
+                                </td>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+                <br/>
+                <br/>
+                <h4 class="text-center">Total price: [[${totalPrice}]]BGN </h4>
+
+
+                <th:block sec:authorize="hasRole('ROLE_USER')">
+                    <form th:action="@{/cart/checkout}" th:method="post" class="">
+                        <div id="div-cart-check-out-btn" class="row col-md-12" style="justify-content: center">
+                            <button type="submit" id="btn-cart-checkout" class="btn top-button btn-sm">Checkout</button>
+                        </div>
+                    </form>
+                </th:block>
+            </th:block>
+        </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
+</body>
+</html>

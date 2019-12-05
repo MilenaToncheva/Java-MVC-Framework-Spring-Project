@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="artwork-delete-parent" class="row  d-flex justify-content-around">
+            <form th:action="@{/artworks/delete/{id}(id=${artwork.id})}" th:method="Post" th:object="${artwork}">
+                <div class="artwork-delete-parent">
+                    <div id="artwork-name" class="col-md-12">
+                        <h2 class="artwork-name">Delete [[${artwork.name}]]</h2>
+                        <hr class="hr-2"/>
+                    </div>
+                    <div id="artwork-img" class="col-md-6">
+                        <img th:src="@{${artwork.imageUrl}}" class="border border-secondary" height="590px"/><br/></div>
+                    <div id="artwork-details" class="col-md-5 col-md-offset-1">
+                        <br/>
+                        <br/>
+                        <label for="artwork-description" style="text-align: left">Description:</label>
+                        <br/>
+                        <textarea id="artwork-description" rows="10" cols="70" th:text="${artwork.description}"
+                                  disabled="disabled">[[{$artwork.description}]]</textarea>
+                        <br/>
+                        <div></div>
+                        <p>
+                        <div id="artwork-category">[[${artwork.category}]]</div>
+                        by [[${artwork.artistName}]]
+                        </p>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div id="artwork-price">Price: [[${artwork.price}]] BGN</div>
+                        <br/>
+                        <br/>
+                        <div id="div-btn-artworks">
+                            <button class="btn-artworks btn-danger" type="submit">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
+</body>
+</html>

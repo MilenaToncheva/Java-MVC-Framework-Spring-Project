@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="order-details-parent" class="row  d-flex justify-content-around">
+            <div class="order-detail">
+                <div id="order-heading" class="col-md-12">
+                    <h2 class="order-name">Order</h2>
+                    <h3 class="order-number">Order #: [[${order.id}]]</h3>
+                    <h4 >Placed on: [[${order.placedOn}]]</h4>
+                    <h4 >Customer username: [[${order.username}]] </h4>
+                    <h4>Customer name: [[${order.firstName}]] [[${order.lastName}]]</h4>
+
+                    <table class="table table-striped w-auto">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Artwork Name</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="artwork,iter:${order.artworks}" >
+                        <tr class="table-info" style="background-color: #9971a0;color: white ">
+                            <th scope="row" th:text="${iter.index+1}"></th>
+                            <td th:text="${artwork.name}"></td>
+                            <td th:text="${artwork.price}">[[*{price]]BGN</td>
+                            <td th:text="${artwork.category.name()}"></td>
+                        </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                    <h4 class="text-center">Total Price: [[${order.totalPrice}]]BGN</h4>
+                </div>
+                <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
+                    <form th:action="@{/orders/delete/{id}(id=${order.id})}" method="post">
+                        <button class="btn top-button danger">Delete</button>
+                    </form>
+
+                </th:block>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<div class="container-fluid w-15">
+    <form id="artwork-create-form" th:action="@{/artworks/create}" th:method="post" enctype="multipart/form-data" th:object="${artworkCreateModel}">
+        <h2 style="text-align: center;color: #563D7C">Create Artwork</h2>
+        <hr id="my-hr"/>
+        <div class="form-group " th:classappend="${#fields.hasErrors('${artworkCreateModel.name}')}?'text-danger'">
+            <p style="text-align: center">
+                <label for="name" class="floatLabel">Name</label>
+                <input id="name" th:field="*{name}" name="name" type="text">
+            </p>
+            <small id="nameHelp" th:each="err:${#fields.errors('${artworkCreateModel.name}')}" th:text="${err}">
+            </small>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('${artworkCreateModel.image}')}? 'text-danger'">
+            <p style="text-align: center">
+                <label for="image" class="floatLabel">Image</label>
+                <input id="image" name="image" th:field="*{image}" type="file">
+            </p>
+            <small th:each="err:${#fields.errors('${artworkCreateModel.image}')}" th:text="${err}"></small>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('${artworkCreateModel.price}')}?'text-danger'">
+            <p style="text-align: center">
+                <label for="price" class="floatLabel">Price</label>
+                <input type="text" id="price" name="price" th:field="*{price}">
+            </p>
+            <small th:each="err:${#fields.errors('${artworkCreateModel.price}')}" th:text="${err}"></small>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('${artworkCreateModel.description}')}?'text-danger'">
+            <p style="text-align: center">
+                <label for="description" class="floatLabel">Description</label>
+                <textarea rows="10" cols="25" id="description" name="description" th:field="*{description}"></textarea>
+            </p>
+            <small th:each="err:${#fields.errors('${artworkCreateModel.description}')}" th:text="${err}"></small>
+        </div>
+        <div class="form-group text-center">
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="artistName-drop-down" class="floatLabel text-center">Artist name</label>
+            </div>
+            <select class="top-button" id="artistName-drop-down" th:field="*{artistName}">
+                <option class="text-center" value="Please select" disabled="disabled" selected="selected">Please select...</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label  for="category" class="floatLabel text-center">Category</label>
+            </div>
+            <select class="top-button" id="category" th:field="*{category}"  >
+                <option  class="text-center" th:each="category:${T(softuni.artgallery.data.models.Category).values()}" th:value="${category}" th:text="${category.name()}"></option>
+            </select>
+        </div>
+        <p style="text-align: center">
+            <input class="inputSubmit" type="submit" value="Create Artwork" id="createArtWork"/>
+        </p>
+    </form>
+</div>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+<script src="/js/artists.js"></script>
+</html>

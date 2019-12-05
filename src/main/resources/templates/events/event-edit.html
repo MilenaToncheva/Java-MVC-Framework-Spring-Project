@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<div class="container-fluid w-15">
+    <form id="event-create-form" style="margin-top: 110px" th:action="@{/events/edit/{id}(id=${event.id})}" enctype="multipart/form-data" th:method="post" th:object="${event}">
+        <h2 style="text-align: center;color: #563D7C">Edit Event</h2>
+        <hr id="my-hr"/>
+        <div class="form-group " th:classappend="${#fields.hasErrors('${eventCreateModel.name}')}?'text-danger'">
+            <p style="text-align: center">
+                <label for="name" class="floatLabel">Name</label>
+                <input placeholder="Name..." id="name" th:field="*{name}" name="name" type="text">
+            </p>
+            <small id="nameHelp" th:each="err:${#fields.errors('${eventCreateModel.name}')}" th:text="${err}">
+            </small>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('${eventCreateModel.location}')}? 'text-danger'">
+            <p style="text-align: center">
+                <label for="location" class="floatLabel">Location</label>
+                <input placeholder="Location..." id="location" name="location" th:field="*{location}" type="text">
+            </p>
+            <small th:each="err:${#fields.errors('${eventCreateModel.location}')}" th:text="${err}"></small>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('${eventCreateModel.description}')}?'text-danger'">
+            <p style="text-align: center">
+                <label for="description" class="floatLabel">Description</label>
+                <textarea placeholder="Description..." rows="7" cols="70" id="description"  name="description" th:field="*{description}" ></textarea>
+            </p>
+            <small th:each="err:${#fields.errors('${eventCreateModel.description}')}" th:text="${err}"></small>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('${eventCreateModel.image}')}?'text-danger'">
+            <p style="text-align: center">
+                <label for="image" class="floatLabel">Image</label>
+                <input placeholder="Image..." type="file" id="image" name="image" th:field="*{image}">
+            </p>
+            <small th:each="err:${#fields.errors('${eventCreateModel.image}')}" th:text="${err}"></small>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('${eventCreateModel.startsOn}')}?'text-danger'">
+            <p style="text-align: center">
+                <label for="startsOn" class="floatLabel">Starts On</label>
+                <input placeholder="Starts on..." type="datetime-local" id="startsOn" name="startsOn" th:field="*{startsOn}">
+            </p>
+            <small th:each="err:${#fields.errors('${eventCreateModel.startsOn}')}" th:text="${err}"></small>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('${eventCreateModel.endsOn}')}?'text-danger'">
+            <p style="text-align: center">
+                <label for="endsOn" class="floatLabel">Ends On</label>
+                <input placeholder="Ends on..." type="datetime-local" id="endsOn" name="startsOn" th:field="*{endsOn}">
+            </p>
+            <small th:each="err:${#fields.errors('${eventCreateModel.endsOn}')}" th:text="${err}"></small>
+        </div>
+        <p style="text-align: center">
+            <input class="inputSubmit" type="submit" value="Register Artist" id="registerArtist"/>
+        </p>
+    </form>
+
+
+</div>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

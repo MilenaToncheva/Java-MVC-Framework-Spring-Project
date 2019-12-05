@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="artist-delete-parent" class="row  d-flex justify-content-around">
+            <form th:action="@{/artists/delete/{id}(id=${artist.id})}" th:method="post" th:object="${artist}">
+            <div class="artist-delete-parent">
+                <div id="artist-name" class="col-md-12">
+                    <h2 class="artist-name">[[${artist.name}]]</h2>
+                    <hr class="hr-2"/>
+                </div>
+                <div id="artist-img" class="col-md-6">
+                    <img th:src="@{${artist.imageUrl}}" class="border border-secondary" height="500px"/><br/></div>
+                <div id="artist-delete" class="col-md-5 col-md-offset-1">
+                    <br/>
+                    <label for="artist-history" style="text-align: left">History:</label>
+                    <br/>
+                    <textarea id="artist-history" rows="10" cols="70" th:text="${artist.history}"
+                              disabled="disabled">[[{$artist.history}]]</textarea>
+                    <br/>
+                    <label for="livesIn" style="text-align: left"></label>
+                    <br/>
+                    <div id="education" disabled>Education: [[${artist.education}]]</div>
+                    <br/>
+                    <div id="livesIn" disabled>Lives in: [[${artist.livesIn}]]</div>
+                    <br/>
+                    <div id="artist-email" disabled>Email: [[${artist.email}]]</div>
+
+                    <br/>
+                    <br/>
+                    <div id="div-btn-artists">
+                        <button type="submit" class="btn-artist">Delete</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="artworks-all-parent" class="row  d-flex justify-content-around">
+            <div th:each="artist:${artists}">
+                <div id="artworks-all" class="col-md-5">
+                    <img th:src="@{${artist.imageUrl}}" class="border border-secondary" height="300px"/><br/>
+                    <div>[[${artist.name}]]</div>
+                    <div id="div-btn-artworks">
+                        <a class="btn-artworks" th:href="@{/artists/details/{id}(id=${artist.id})}">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
+</body>
+</html>

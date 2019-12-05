@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="artworks-all-by-artist-parent" class="row  d-flex justify-content-around">
+            <h2 >Artworks by [[${artistName}]] </h2>
+            <th:block th:if="${artworks.size()==0 || artworks==null}">
+                <h2>[[${artistName}]] does not have any artworks uploaded.</h2>
+            </th:block>
+            <th:block th:unless="${artworks.size()==0 || artworks==null}">
+                <div th:each="artwork:${artworks}">
+                    <div id="artworks-all-by-artist" class="col-md-5">
+                        <img th:src="@{${artwork.imageUrl}}" class="border border-secondary" height="300px"/><br/>
+                        <div>[[${artwork.name}]]</div>
+                        <div id="div-btn-artworks">
+                            <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
+                                <a class="btn-artworks" th:href="@{/artworks/edit/{id}(id=${artwork.id})}">Update</a>
+                                <a class="btn-artworks" th:href="@{/artworks/delete/{id}(id=${artwork.id})}">Delete</a>
+                            </th:block>
+                            <a class="btn-artworks" th:href="@{/artworks/details/{id}(id=${artwork.id})}">Details</a>
+                        </div>
+
+                    </div>
+                </div>
+                <br/>
+                <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
+                    <form th:action="@{/artworks/delete/all-by-artist/{id}(id=${artistId})}" th:method="DELETE">
+                        <div id="div-delete-all-artworks-btn" class="col-md-12">
+                            <button type="submit" class="btn-delete-all-artworks">Delete All</button>
+                        </div>
+                    </form>
+                </th:block>
+            </th:block>
+
+        </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
+</body>
+</html>

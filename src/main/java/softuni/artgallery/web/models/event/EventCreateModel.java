@@ -1,31 +1,27 @@
-package softuni.artgallery.data.models;
+package softuni.artgallery.web.models.event;
 
-import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "events")
-public class Event extends BaseEntity {
+public class EventCreateModel {
     private String name;
     private String location;
     private String description;
-    private String imageUrl;
+    private MultipartFile image;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startsOn;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endsOn;
 
-
-    public Event() {
-        super();
+    public EventCreateModel() {
     }
 
-    @NotEmpty
-    @Column(name = "name", nullable = false)
-    @Length(min = 5, max = 30)
     public String getName() {
         return name;
     }
@@ -33,9 +29,7 @@ public class Event extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
-    @NotEmpty
-    @Column(name = "location", nullable = false)
-    @Length(min = 5, max = 100)
+
     public String getLocation() {
         return location;
     }
@@ -44,9 +38,6 @@ public class Event extends BaseEntity {
         this.location = location;
     }
 
-    @NotEmpty
-    @Column(name = "description", nullable = false)
-    @Length(min = 5, max = 200)
     public String getDescription() {
         return description;
     }
@@ -55,19 +46,14 @@ public class Event extends BaseEntity {
         this.description = description;
     }
 
-    @NotEmpty
-    @Column(name = "imageUrl", nullable = false)
-    public String getImageUrl() {
-        return imageUrl;
+    public MultipartFile getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 
-
-
-    @Column(name = "starts_on", nullable = false)
     public LocalDateTime getStartsOn() {
         return startsOn;
     }
@@ -76,8 +62,6 @@ public class Event extends BaseEntity {
         this.startsOn = startsOn;
     }
 
-
-    @Column(name = "ends_on", nullable = false)
     public LocalDateTime getEndsOn() {
         return endsOn;
     }
@@ -85,5 +69,4 @@ public class Event extends BaseEntity {
     public void setEndsOn(LocalDateTime endsOn) {
         this.endsOn = endsOn;
     }
-
 }

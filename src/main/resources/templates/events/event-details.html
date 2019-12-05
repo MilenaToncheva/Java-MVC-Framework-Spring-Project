@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="event-details-parent" class="row  d-flex justify-content-around">
+            <div class="event-details-parent">
+                <div id="event-name" class="col-md-12">
+                    <h2 class="event-name">[[${event.name}]]</h2>
+                    <h3>by [[${artist.name}]]</h3>
+                    <hr class="hr-2"/>
+                </div>
+                <div id="event-img" class="col-md-6">
+                    <img th:src="@{${event.imageUrl}}" class="border border-secondary" height="590px"/><br/></div>
+                <div id="event-details" class="col-md-5 col-md-offset-1">
+                    <br/>
+                    <br/>
+                    <label for="event-description" style="text-align: left">Description:</label>
+                    <br/>
+                    <textarea id="event-description" rows="10" cols="70" th:text="${event.description}"
+                              disabled="disabled">[[{$event.description}]]</textarea>
+                    <br/>
+                    <div></div>
+                    <div id="event-location">
+                          <p>[[${event.name}]] will take place at [[${event.location}]]</p>
+                        <br/>
+                        <p>The Grand opening is on [[${events.startsOn}]].</p>
+                        <br/>
+                        <p>The closing ceremony will take place on [[${event.endsOn}]]</p>
+                    </div>
+
+                    </div><br/>
+
+                    <br/>
+                    <div id="div-btn-events">
+
+                        <form th:action="@{/events/events-all}" th:method="get">
+                            <button class="btn-artworks" >Close</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
+</body>
+</html>

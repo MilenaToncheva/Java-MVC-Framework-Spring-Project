@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<div class="container-fluid w-15">
+    <form id="user-edit-form" th:action="@{/users/profile/edit}" th:method="post" th:object="${user}">
+        <h2>Edit</h2>
+        <hr id="my-hr"/>
+        <div class="form-group">
+
+            <h2 class="text-center"style="color: #9971a0;" id="username" th:field="*{username}">[[${user.username}]]'s profile</h2>
+        </div>
+        <div class="form-group profile-edit">
+
+            <label for="first_name" class="floatLabel">First Name</label>
+            <input id="first_name" th:field="*{firstName}" name="firstName" type="text" readonly>
+
+        </div>
+        <div class="form-group profile-edit">
+
+            <label for="last_name" class="floatLabel">Last Name</label>
+            <input id="last_name" name="lastName" th:field="*{lastName}" type="text" readonly>
+        </div>
+
+        <div class="form-group profile-edit" th:classappend="${#fields.hasErrors('${user.email}')}?'text-danger'">
+            <label for="email" class="floatLabel">Email </label>
+            <input type="email" id="email" name="email" th:field="*{email}">
+            <small th:each="err:${#fields.errors('${user.email}')}" th:text="${err}"></small>
+        </div>
+        <div class="form-group profile-edit" >
+            <label for="oldPassword" class="floatLabel">Old password </label>
+            <input type="password" id="oldPassword" name="oldPassword" required >
+
+        </div>
+        <div class="form-group profile-edit" th:classappend="${#fields.hasErrors('${user.password}')}?'text-danger'" >
+            <label for="password" class="floatLabel">New Password </label>
+            <input type="password" id="password" name="password" th:field="*{password}">
+            <small th:each="err:${#fields.errors('${user.password}')}" th:text="${err}"></small>
+        </div>
+        <div class="form-group profile-edit" th:classappend="${#fields.hasErrors('${user.confirmPassword}')}?'text-danger'" >
+            <label for="confirmPassword" class="floatLabel">Confirm New Password </label>
+            <input type="password" id="confirmPassword" name="confirmPassword" th:field="*{confirmPassword}">
+            <small th:each="err:${#fields.errors('${user.confirmPassword}')}" th:text="${err}"></small>
+        </div>
+        <br/>
+        <input class="inputSubmit" type="submit" value="Edit" id="edit"/>
+    </form>
+
+
+</div>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

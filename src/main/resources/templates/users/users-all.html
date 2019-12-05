@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <div id="users-all" class="jumbotron-fluid mainBody my-4">
+        <h1 class="text-center">All Users</h1>
+        <hr class="hr-2 bg-dark">
+        <table id="table-users-all" class="customTable table-hover mx-auto">
+            <thead>
+            <tr class="row mx-auto mb-4 font-weight-bold">
+                <th class="col-md-1 text-center">#</th>
+                <th class="col-md-1 text-center">Username</th>
+                <th class="col-md-2 text-center">First Name</th>
+                <th class="col-md-2 text-center">Last Name</th>
+                <th class="col-md-2 text-center">Email</th>
+                <th class="col-md-2 text-center">Roles</th>
+                <th class="col-md-2 text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="user, iter : ${users}">
+
+                <tr class="row mx-auto">
+                    <th class="col-md-1 customRow text-center" th:text="${iter.index+1}"></th>
+                    <td class="col-md-1 customRow text-center" th:text="${user.username}"></td>
+                    <td class="col-md-2 customRow text-center" th:text="${user.firstName}"></td>
+                    <td class="col-md-2 customRow text-center" th:text="${user.lastName}"></td>
+                    <td class="col-md-2 customRow text-center" th:text="${user.email}"></td>
+                    <td class="col-md-2 customRow text-center"
+                        th:text="${#strings.listJoin(user.authorities,', ')}"></td>
+                    <td class="col-md-2 text-center">
+                        <th:block th:if="${#lists.contains(user.authorities,'ROLE_USER') &&
+                                    !#lists.contains(user.authorities,'ROLE_MODERATOR') &&
+                                    !#lists.contains(user.authorities,'ROLE_ADMIN')}">
+                            <div class="btn-roles-management">
+                                <form th:action="@{/users/set-role-moderator/{id}(id=${user.id})}" th:method="post">
+                                    <button class="btn top-button btn-sm">Moderator</button>
+                                </form>
+                                <form th:action="@{/users/set-role-admin/{id}(id=${user.id})}" th:method="post">
+                                    <button class="btn top-button btn-sm">Admin</button>
+                                </form>
+                                <div class="button-holder d-flex justify-content-center">
+                                    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn top-button btn-sm" >Delete</a>
+                                </div>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${#lists.contains(user.authorities,'ROLE_USER') &&
+                              #lists.contains(user.authorities,'ROLE_MODERATOR') &&
+                              !#lists.contains(user.authorities, 'ROLE_ADMIN')}">
+                            <div class="btn-roles-management">
+                                <form th:action="@{/users/set-role-user/{id}(id=${user.id})}" th:method="post">
+                                    <button class="btn top-button btn-sm">User</button>
+                                </form>
+                                <form th:action="@{/users/set-role-admin/{id}(id=${user.id})}" th:method="post">
+                                    <button class="btn top-button btn-sm">Admin</button>
+                                </form>
+                                <div class="button-holder d-flex justify-content-center">
+                                    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn top-button btn-sm" >Delete</a>
+                                </div>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${#lists.contains(user.authorities,'ROLE_USER') &&
+                              #lists.contains(user.authorities,'ROLE_MODERATOR') &&
+                              #lists.contains(user.authorities, 'ROLE_ADMIN') &&
+                                !#lists.contains(user.authorities,'ROLE_ROOT')}">
+                            <div class="btn-roles-management">
+                                <form th:action="@{/users/set-role-user/{id}(id=${user.id})}" th:method="post">
+                                    <button class="btn top-button btn-sm">User</button>
+                                </form>
+                                <form th:action="@{/users/set-role-moderator/{id}(id=${user.id})}" th:method="post">
+                                    <button class="btn top-button btn-sm">Moderator</button>
+                                </form>
+                                <div class="button-holder d-flex justify-content-center">
+                                    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn top-button btn-sm" >Delete</a>
+                                </div>
+                            </div>
+                        </th:block>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <hr class="hr-2 bg-dark">
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<th:block th:fragment xmlns="http://www.w3.org/1999/html">
+    <!-- Guest -->
+    <th:block sec:authorize="isAnonymous()">
+        <header>
+            <div class="top-line">
+                <div class="container top-box row">
+                    <div class="leftside col-md-1">
+                <span class="logo">
+                    <a th:href="@{/}"><img th:src="@{/images/logo1.ico}" alt="MT" class="img-responsive"
+                                           width="85"/></a>
+                </span></div>
+                    <div class="middleside col-md-8">
+                        <p style="text-align: left">
+                            Art Gallery
+                        </p>
+                    </div>
+
+                    <div class="rightside col-md-3">
+                        <div class="top-buttons">
+                            <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-register"
+                               th:href="@{/users/register}">Register</a>
+                            <a type="button" style="text-align: center" class="top-button btn-lg" id="btn-login"
+                               th:href="@{/users/login}">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </th:block>
+    <!-- AUTHENTICATED -->
+    <th:block sec:authorize="isAuthenticated()">
+        <header class="navbar navbar-fixed-top">
+            <div class="top-line">
+                <div class="container top-box row">
+                    <div class="leftside col-md-1">
+                <span class="logo">
+                    <a th:href="@{/home}"><img th:src="@{/images/logo1.ico}" alt="MT" class="img-responsive"
+                                               width="85"/></a>
+                </span></div>
+                    <div class="middleside col-md-2">
+                        <p style="text-align: left">
+                            Art Gallery
+                        </p>
+                    </div>
+                    <!--  <div class="rightside col-md-9"> -->
+                    <div class="rightside top-buttons col-md-9">
+                        <form th:action="@{/logout}" th:method="post">
+                            <button class="top-button btn-lg" id="btn-logout"
+                            >Logout
+                            </button>
+                        </form>
+
+                        <!-- ROLE USER --------------------------------->
+                        <th:block sec:authorize="hasRole('ROLE_USER')">
+                            <form th:action="@{/cart/details}" th:method="get">
+                                <button type="submit" class="top-button btn-lg" id="btn-shopping-cart"
+                                >Shopping Cart
+                                </button>
+                            </form>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a type="button" class="top-button btn-lg" id="btn-order-history"
+                                   th:href="@{/orders/all}">Order History</a>
+                            </th:block>
+                            <th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+                                <a type="button" class="top-button btn-lg" id="btn-order-history-non-admin"
+                                   th:href="@{/orders/my-orders}">Order History</a>
+                            </th:block>
+
+                            <div class="btn-group">
+                                <a type="button" class="btn dropdown-toggle top-button btn-lg"
+                                   data-toggle="dropdown" id="btn-category" href="#">
+                                    Category
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li th:each="category:${T(softuni.artgallery.data.models.Category).values()}">
+                                        <a tabindex="-1" th:href="@{/artworks/artworks-by-category/{category}(category=${category.name()})}">[[${category.name()}]]</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a type="button" class="top-button btn-lg" id="btn-events"
+                               th:href="@{/events/all}">Events</a>
+                            <a type="button" class="top-button btn-lg" id="btn-home"
+                               th:href="@{/home}">Home</a>
+                        </th:block>
+                        <span class="top-buttons-link" style="font-size: large;">Welcome, <a
+                                th:href="@{/users/profile}">[[${principal.getName()}]]</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="top-line1" style="background-color: transparent">
+                <div class="container top-box row" style="background-color: transparent">
+                    <div class="rightside top-buttons col-md-3" style="background-color: transparent">
+                        <!-- ROLE ADMIN ------------------------------------------>
+                        <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
+                            <div class="btn-group">
+                                <a type="button" class="btn dropdown-toggle top-button btn-lg"
+                                   data-toggle="dropdown" id="btn-category" href="#">
+                                    Admin Func
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li> <a type="button" style="text-align: center" class="dropdown-item"
+                                            id="btn-users-all"
+                                            th:href="@{/users/all}">All Users</a></li>
+                                </ul>
+                            </div>
+
+                        </th:block>
+                        <!-- ROLE MODERATOR ----------------------------------->
+                        <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
+                            <div class="btn-group">
+                                <a type="button" class="btn dropdown-toggle top-button btn-lg"
+                                   data-toggle="dropdown" id="btn-moderator-func" href="#">
+                                    Moderator func
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a type="button" style="text-align: center" class=" dropdown-item "
+                                           id="btn-artworks-all"
+                                           th:href="@{/artworks/all}">All Artworks</a></li>
+                                    <li>  <a type="button" style="text-align: center" class="dropdown-item "
+                                             id="btn-artwork-create"
+                                             th:href="@{/artworks/create}">Artwork Create</a></li>
+                                    <li> <a type="button" style="text-align: center" class="dropdown-item"
+                                            id="btn--artists-all"
+                                            th:href="@{/artists/all}">All Artists</a>
+                                    </li>
+                                    <li><a type="button" style="text-align: center" class="dropdown-item"
+                                       id="btn-artist-register"
+                                       th:href="@{/artists/create}">Artist Register</a></li>
+                                    <li> <a type="button" style="text-align: center" class="dropdown-item"
+                                            id="btn-event-create"
+                                            th:href="@{/events/create}">Event Create</a></li>
+                                </ul>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </th:block>
+</th:block>
