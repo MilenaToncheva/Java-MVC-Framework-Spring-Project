@@ -35,7 +35,7 @@ public class ArtistCreateModel {
         this.livesIn = livesIn;
     }
 
-    @Pattern(regexp = "[.]{1,255}",message = ArtistRegisterViolationMessages.ARTIST_NOT_EMPTY_HISTORY)
+
     public String getHistory() {
         return history;
     }
@@ -60,7 +60,7 @@ public class ArtistCreateModel {
         this.image = image;
     }
 
-    @Pattern(regexp = CommonConstants.EMAIL_PATTERN, message = ArtistRegisterViolationMessages.ARTIST_INCORRECT_EMAIL)
+
     public String getEmail() {
         return email;
     }

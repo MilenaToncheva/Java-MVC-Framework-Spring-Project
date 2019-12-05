@@ -1,9 +1,14 @@
 package softuni.artgallery.services.services.impl;
 
+import org.apache.tomcat.util.bcel.Const;
 import softuni.artgallery.constants.artistMessages.ArtistErrorMessages;
+import softuni.artgallery.constants.common.CommonConstants;
 import softuni.artgallery.error.ArtistIllegalArgumentsException;
 import softuni.artgallery.services.models.ArtistCreateServiceModel;
 import softuni.artgallery.services.services.ArtistValidationService;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ArtistValidationServiceImpl implements ArtistValidationService {
     @Override
@@ -25,11 +30,17 @@ public class ArtistValidationServiceImpl implements ArtistValidationService {
         if(livesIn==null||livesIn.equals("")||livesIn.length()<3||livesIn.length()>30){
             throw new ArtistIllegalArgumentsException(ArtistErrorMessages.ARTIST_INVALID_LIVES_IN);
         }
+        return true;
     }
 
     private boolean isEmailValid(String email) {
-        if(livesIn==null||livesIn.equals("")||livesIn.length()<3||livesIn.length()>30){
-            throw new ArtistIllegalArgumentsException(ArtistErrorMessages.ARTIST_INVALID_LIVES_IN);
+
+        String ePattern = CommonConstants.EMAIL_PATTERN;
+        Pattern pattern = Pattern.compile(ePattern);
+        Matcher m = pattern.matcher(email);
+
+        if(!m.matches()){
+            throw new ArtistIllegalArgumentsException(ArtistErrorMessages.ARTIST_INVALID_EMAIL);
         }
         return true;
     }

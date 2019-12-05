@@ -59,6 +59,7 @@ public class Artwork extends BaseEntity {
     }
 
     @Column(name = "description", nullable = false)
+    @Length(min=10, max=100)
     public String getDescription() {
         return description;
     }

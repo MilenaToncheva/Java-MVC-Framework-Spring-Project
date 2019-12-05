@@ -1,5 +1,7 @@
 package softuni.artgallery.data.models;
 
+import softuni.artgallery.web.validations.EmailValidation;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -71,7 +73,7 @@ public class Artist extends BaseEntity {
     }
 
 
-
+@EmailValidation
     @Column(name = "email", nullable = false, unique = true)
     public String getEmail() {
         return email;
