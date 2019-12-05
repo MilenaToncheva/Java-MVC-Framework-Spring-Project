@@ -11,7 +11,7 @@ import softuni.artgallery.error.EventNotFoundException;
 import softuni.artgallery.services.models.EventCreateServiceModel;
 import softuni.artgallery.services.models.EventServiceModel;
 import softuni.artgallery.services.services.EventService;
-import softuni.artgallery.services.services.EventValidationService;
+import softuni.artgallery.services.services.validations.EventValidationService;
 
 import java.util.Arrays;
 import java.util.List;

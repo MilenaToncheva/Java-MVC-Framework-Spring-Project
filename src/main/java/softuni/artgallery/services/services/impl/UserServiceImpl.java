@@ -11,10 +11,8 @@ import softuni.artgallery.data.repository.UserRepository;
 import softuni.artgallery.error.UserIllegalArgumentsException;
 import softuni.artgallery.error.UserNotDeletedException;
 import softuni.artgallery.error.UserNotFoundException;
-import softuni.artgallery.services.models.UserRegisterServiceModel;
 import softuni.artgallery.services.models.UserServiceModel;
 import softuni.artgallery.services.services.ArtworkService;
-import softuni.artgallery.services.services.AuthValidationService;
 import softuni.artgallery.services.services.RoleService;
 import softuni.artgallery.services.services.UserService;
 
@@ -29,31 +27,30 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final ArtworkService artworkService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final AuthValidationService authValidationService;
+
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, ArtworkService artworkService, BCryptPasswordEncoder bCryptPasswordEncoder, AuthValidationService authValidationService) {
+    public UserServiceImpl(UserRepository userRepository, RoleService roleService,
+                           ModelMapper modelMapper, ArtworkService artworkService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleService = roleService;
-
         this.modelMapper = modelMapper;
         this.artworkService = artworkService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.authValidationService = authValidationService;
     }
 
     @Override
     public UserServiceModel findById(String id) {
         User user = this.userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND_Message));
+                .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND));
         return this.modelMapper.map(user, UserServiceModel.class);
     }
 
     @Override
     public UserServiceModel findByUsername(String username) {
 
-        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(UserErrorMessages.USER_NOT_FOUND_Message));
+        User user = this.userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(UserErrorMessages.USER_NOT_FOUND));
 
         return this.modelMapper.map(user, UserServiceModel.class);
 
@@ -63,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserServiceModel editUserProfile(String oldPassword, UserServiceModel userServiceModel) {
-        User user = this.userRepository.findByUsername(userServiceModel.getUsername()).orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND_Message));
+        User user = this.userRepository.findByUsername(userServiceModel.getUsername()).orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND));
         if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
             throw new UserIllegalArgumentsException(UserErrorMessages.USER_PASSWORDS_DO_NOT_MATCH);
         }
@@ -77,7 +74,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userServiceModel.getLastName());
         userServiceModel.setLastName(userServiceModel.getLastName());
         user.setEmail(userServiceModel.getEmail());
-      
+
         this.userRepository.saveAndFlush(user);
 
         return userServiceModel;
@@ -85,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(String id) throws UserNotDeletedException {
-        User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND_Message));
+        User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND));
         try {
             this.userRepository.delete(user);
         } catch (Exception e) {
@@ -101,7 +98,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void setUserRole(String id, String role) {
         User user = this.userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND_Message));
+                .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND));
         UserServiceModel userServiceModel = this.modelMapper.map(user, UserServiceModel.class);
         userServiceModel.getAuthorities().clear();
         switch (role) {

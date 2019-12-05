@@ -1,12 +1,11 @@
-package softuni.artgallery.services.services.impl;
+package softuni.artgallery.services.services.validations;
 
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.stereotype.Service;
 import softuni.artgallery.constants.artistMessages.ArtistErrorMessages;
 import softuni.artgallery.constants.common.CommonConstants;
 import softuni.artgallery.error.ArtistIllegalArgumentsException;
 import softuni.artgallery.services.models.ArtistCreateServiceModel;
-import softuni.artgallery.services.services.ArtistValidationService;
+import softuni.artgallery.services.services.validations.ArtistValidationService;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

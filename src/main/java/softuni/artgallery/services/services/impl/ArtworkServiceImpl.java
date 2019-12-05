@@ -15,7 +15,7 @@ import softuni.artgallery.services.models.ArtworkCreateServiceModel;
 import softuni.artgallery.services.models.ArtworkServiceModel;
 import softuni.artgallery.services.services.ArtistService;
 import softuni.artgallery.services.services.ArtworkService;
-import softuni.artgallery.services.services.ArtworkValidationService;
+import softuni.artgallery.services.services.validations.ArtworkValidationService;
 
 import java.util.Arrays;
 import java.util.List;

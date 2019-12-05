@@ -1,7 +1,6 @@
-package softuni.artgallery.services.services.impl;
+package softuni.artgallery.services.services.validations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import softuni.artgallery.constants.common.CommonConstants;
 import softuni.artgallery.constants.userMessages.UserErrorMessages;
@@ -9,7 +8,7 @@ import softuni.artgallery.constants.userMessages.UserRegistrationViolationMessag
 import softuni.artgallery.error.UserIllegalArgumentsException;
 import softuni.artgallery.error.UserRegistrationException;
 import softuni.artgallery.services.models.UserRegisterServiceModel;
-import softuni.artgallery.services.services.AuthValidationService;
+import softuni.artgallery.services.services.validations.AuthValidationService;
 import softuni.artgallery.services.services.UserService;
 
 import java.util.regex.Matcher;

@@ -13,7 +13,7 @@ import softuni.artgallery.error.UserIllegalArgumentsException;
 import softuni.artgallery.services.models.ArtistCreateServiceModel;
 import softuni.artgallery.services.models.ArtistServiceModel;
 import softuni.artgallery.services.services.ArtistService;
-import softuni.artgallery.services.services.ArtistValidationService;
+import softuni.artgallery.services.services.validations.ArtistValidationService;
 
 import java.util.Arrays;
 import java.util.List;

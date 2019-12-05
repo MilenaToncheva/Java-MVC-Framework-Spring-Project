@@ -1,7 +1,7 @@
 package softuni.artgallery.constants.userMessages;
 
 public class UserErrorMessages {
-    public static final String USER_NOT_FOUND_Message="User was not found!";
+    public static final String USER_NOT_FOUND ="User was not found!";
     public static final String USER_PASSWORDS_DO_NOT_MATCH = "User password and confirm password don't match!";
     public static final String USER_INCORRECT_PASSWORD = "Incorrect password! Password should contain at least 1 lowercase letter," +
                                                          " 1 digit, 1 special symbol(@#$%^&+=)," +

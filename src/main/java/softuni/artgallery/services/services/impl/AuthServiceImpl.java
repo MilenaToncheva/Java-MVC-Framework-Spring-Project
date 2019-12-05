@@ -14,7 +14,7 @@ import softuni.artgallery.error.UserRegistrationException;
 import softuni.artgallery.services.models.UserRegisterServiceModel;
 import softuni.artgallery.services.models.UserServiceModel;
 import softuni.artgallery.services.services.AuthService;
-import softuni.artgallery.services.services.AuthValidationService;
+import softuni.artgallery.services.services.validations.AuthValidationService;
 import softuni.artgallery.services.services.RoleService;
 
 import java.util.LinkedHashSet;
@@ -66,7 +66,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(UserErrorMessages.USER_NOT_FOUND_Message));
+                .orElseThrow(() -> new UsernameNotFoundException(UserErrorMessages.USER_NOT_FOUND));
 
         return user;
     }

@@ -1,10 +1,10 @@
-package softuni.artgallery.services.services.impl;
+package softuni.artgallery.services.services.validations;
 
 import org.springframework.stereotype.Service;
 import softuni.artgallery.constants.eventMessages.EventErrorMessages;
 import softuni.artgallery.error.EventIllegalArgumentException;
 import softuni.artgallery.services.models.EventCreateServiceModel;
-import softuni.artgallery.services.services.EventValidationService;
+import softuni.artgallery.services.services.validations.EventValidationService;
 
 import java.time.LocalDateTime;
 
