@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         if (!authValidationService.isValid(userRegisterServiceModel)) {
-            throw new UserRegistrationException(UserErrorMessages.USER_REGISTER_INCORRECT_INPUT);
+            throw new UserRegistrationException(UserErrorMessages.USER_INCORRECT_INPUT);
       }
 
             User user = this.modelMapper.map(userRegisterServiceModel, User.class);

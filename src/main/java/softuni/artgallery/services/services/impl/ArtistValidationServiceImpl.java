@@ -1,6 +1,7 @@
 package softuni.artgallery.services.services.impl;
 
 import org.apache.tomcat.util.bcel.Const;
+import org.springframework.stereotype.Service;
 import softuni.artgallery.constants.artistMessages.ArtistErrorMessages;
 import softuni.artgallery.constants.common.CommonConstants;
 import softuni.artgallery.error.ArtistIllegalArgumentsException;
@@ -9,7 +10,7 @@ import softuni.artgallery.services.services.ArtistValidationService;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@Service
 public class ArtistValidationServiceImpl implements ArtistValidationService {
     @Override
     public boolean isValid(ArtistCreateServiceModel artistModel) {

@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 import softuni.artgallery.constants.userMessages.UserErrorMessages;
 import softuni.artgallery.data.models.User;
 import softuni.artgallery.data.repository.UserRepository;
+import softuni.artgallery.error.UserIllegalArgumentsException;
 import softuni.artgallery.error.UserNotDeletedException;
 import softuni.artgallery.error.UserNotFoundException;
+import softuni.artgallery.services.models.UserRegisterServiceModel;
 import softuni.artgallery.services.models.UserServiceModel;
 import softuni.artgallery.services.services.ArtworkService;
+import softuni.artgallery.services.services.AuthValidationService;
 import softuni.artgallery.services.services.RoleService;
 import softuni.artgallery.services.services.UserService;
 
@@ -26,16 +29,18 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final ArtworkService artworkService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthValidationService authValidationService;
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, ArtworkService artworkService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, ArtworkService artworkService, BCryptPasswordEncoder bCryptPasswordEncoder, AuthValidationService authValidationService) {
         this.userRepository = userRepository;
         this.roleService = roleService;
 
         this.modelMapper = modelMapper;
         this.artworkService = artworkService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.authValidationService = authValidationService;
     }
 
     @Override
@@ -60,7 +65,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceModel editUserProfile(String oldPassword, UserServiceModel userServiceModel) {
         User user = this.userRepository.findByUsername(userServiceModel.getUsername()).orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND_Message));
         if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new IllegalArgumentException(UserErrorMessages.USER_INCORRECT_PASSWORD);
+            throw new UserIllegalArgumentsException(UserErrorMessages.USER_PASSWORDS_DO_NOT_MATCH);
         }
         if (userServiceModel.getPassword().equals("")) {   //it will never be "" as there is passwords validation with @
             user.setPassword(this.bCryptPasswordEncoder.encode(oldPassword));
@@ -72,7 +77,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userServiceModel.getLastName());
         userServiceModel.setLastName(userServiceModel.getLastName());
         user.setEmail(userServiceModel.getEmail());
-
+      
         this.userRepository.saveAndFlush(user);
 
         return userServiceModel;

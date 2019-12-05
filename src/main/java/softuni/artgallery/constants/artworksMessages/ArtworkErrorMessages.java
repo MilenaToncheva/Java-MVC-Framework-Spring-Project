@@ -8,5 +8,5 @@ public class ArtworkErrorMessages  {
     public static final String ARTWORK_INVALID_IMAGE_URL ="Invalid artwork image URL!" ;
     public static final String ARTWORK_INVALID_PRICE ="Artwork price should be at least 0.01 BGN!" ;
     public static final String ARTWORK_INVALID_DESCRIPTION ="Artwork description should be between 10 and 100 symbols!" ;
-    public static final String ARTWORK_INVALID_CATEGORY = "Artwork category cannot ne null!";
+    public static final String ARTWORK_INVALID_INPUT = "Artwork invalid input!";
 }
