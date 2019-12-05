@@ -46,7 +46,7 @@ public class Event extends BaseEntity {
 
     @NotEmpty
     @Column(name = "description", nullable = false)
-    @Length(min = 5, max = 30)
+    @Length(min = 5, max = 200)
     public String getDescription() {
         return description;
     }
@@ -66,9 +66,8 @@ public class Event extends BaseEntity {
     }
 
 
-    @NotEmpty
-    @Column(name = "starts_on", nullable = false)
 
+    @Column(name = "starts_on", nullable = false)
     public LocalDateTime getStartsOn() {
         return startsOn;
     }
@@ -77,7 +76,7 @@ public class Event extends BaseEntity {
         this.startsOn = startsOn;
     }
 
-    @NotEmpty
+
     @Column(name = "ends_on", nullable = false)
     public LocalDateTime getEndsOn() {
         return endsOn;
