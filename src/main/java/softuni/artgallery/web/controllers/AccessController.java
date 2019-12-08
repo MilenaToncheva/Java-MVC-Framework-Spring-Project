@@ -11,8 +11,7 @@ import java.security.Principal;
 public class AccessController {
 
     @GetMapping("/unauthorized")
-    public ModelAndView unauthorized(Principal principal, ModelAndView modelAndView){
-        modelAndView.addObject("principal",principal);
+    public ModelAndView unauthorized( ModelAndView modelAndView){
         modelAndView.setViewName("unauthorized");
         return modelAndView;
     }

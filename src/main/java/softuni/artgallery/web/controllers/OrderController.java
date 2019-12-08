@@ -38,7 +38,7 @@ public class OrderController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView getAllOrders(Principal principal, ModelAndView modelAndView) {
+    public ModelAndView getAllOrders( ModelAndView modelAndView) {
         List<OrderAllViewModel> orders = this.orderService.findAll().stream().map(o -> {
             OrderAllViewModel orderAllViewModel = this.modelMapper.map(o, OrderAllViewModel.class);
             orderAllViewModel.setUsername(o.getUser().getUsername());
@@ -46,7 +46,6 @@ public class OrderController {
         }).collect(Collectors.toList());
 
         modelAndView.addObject("orders", orders);
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName("orders/orders-all");
         return modelAndView;
     }
@@ -62,14 +61,13 @@ public class OrderController {
                 }).collect(Collectors.toList());
 
         modelAndView.addObject("orders", orders);
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName("orders/orders-all");
         return modelAndView;
     }
 
     @GetMapping("/details/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView getOrderDetails(@PathVariable String id, Principal principal, ModelAndView modelAndView) {
+    public ModelAndView getOrderDetails(@PathVariable String id,  ModelAndView modelAndView) {
         OrderServiceModel orderServiceModel = this.orderService.findById(id);
         OrderDetailsViewModel order = this.modelMapper.map(orderServiceModel, OrderDetailsViewModel.class);
         order.setUsername(orderServiceModel.getUser().getUsername());
@@ -77,7 +75,6 @@ public class OrderController {
         order.setLastName(orderServiceModel.getUser().getLastName());
         modelAndView.setViewName("orders/order-details");
         modelAndView.addObject("order", order);
-        modelAndView.addObject("principal", principal);
         return modelAndView;
     }
 
@@ -98,18 +95,15 @@ public class OrderController {
         order.setFirstName(orderServiceModel.getUser().getFirstName());
         order.setLastName(orderServiceModel.getUser().getLastName());
         modelAndView.addObject("order", order);
-        modelAndView.addObject("principal", principal);
-
         modelAndView.setViewName("orders/order-details");
         return modelAndView;
     }
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView deleteArtwork(Principal principal, @PathVariable String id, ModelAndView modelAndView) throws OrderNotFoundException, OrderNotDeletedException {
+    public ModelAndView deleteArtwork( @PathVariable String id, ModelAndView modelAndView) throws OrderNotFoundException, OrderNotDeletedException {
 
         this.orderService.delete(id);
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName("redirect:/orders/all");
         return modelAndView;
     }

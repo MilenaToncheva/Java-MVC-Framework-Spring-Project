@@ -8,7 +8,6 @@ import softuni.artgallery.constants.artworksMessages.ArtworkErrorMessages;
 import softuni.artgallery.error.*;
 
 import java.nio.file.AccessDeniedException;
-import java.security.Principal;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -29,93 +28,82 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UserIllegalArgumentsException.class)
-        public ModelAndView handleUserIllegalArgumentException (RuntimeException ex, Principal principal){
+        public ModelAndView handleUserIllegalArgumentException (RuntimeException ex){
             ModelAndView modelAndView = new ModelAndView("error");
             modelAndView.addObject("message", ex.getMessage());
-            modelAndView.addObject("principal", principal);
             return modelAndView;
         }
 
 
         @ExceptionHandler(ArtworkNotFoundException.class)
-        public ModelAndView handleArtworkNotFoundException (RuntimeException ex, Principal principal){
+        public ModelAndView handleArtworkNotFoundException (RuntimeException ex){
             ModelAndView modelAndView = new ModelAndView("error");
-            modelAndView.addObject("principal", principal);
             modelAndView.addObject("message", ArtworkErrorMessages.ARTWORK_WITH_ID_NOT_FOUND);
             return modelAndView;
         }
 
         @ExceptionHandler(ArtworkIllegalArgumentsException.class)
-        public ModelAndView handleArtworkIllegalArgumentException (RuntimeException ex, Principal principal){
+        public ModelAndView handleArtworkIllegalArgumentException (RuntimeException ex){
             ModelAndView modelAndView = new ModelAndView("error");
-            modelAndView.addObject("principal", principal);
             modelAndView.addObject("message", ex.getMessage());
             return modelAndView;
         }
 
         @ExceptionHandler(ArtistNotFoundException.class)
-        public ModelAndView handleArtistNotFoundException (RuntimeException ex, Principal principal){
+        public ModelAndView handleArtistNotFoundException (RuntimeException ex){
             ModelAndView modelAndView = new ModelAndView("error");
-            modelAndView.addObject("principal", principal);
             modelAndView.addObject("message", ArtistErrorMessages.ARTIST_NOT_FOUND);
             return modelAndView;
         }
 
         @ExceptionHandler(ArtistIllegalArgumentsException.class)
-        public ModelAndView handleArtistIllegalArgumentException (RuntimeException ex, Principal principal){
+        public ModelAndView handleArtistIllegalArgumentException (RuntimeException ex){
             ModelAndView modelAndView = new ModelAndView("error");
-            modelAndView.addObject("principal", principal);
             modelAndView.addObject("message", ex.getMessage());
             return modelAndView;
         }
 
         @ExceptionHandler(EventIllegalArgumentException.class)
-        public ModelAndView handleEventIllegalArgumentException (RuntimeException ex, Principal principal){
+        public ModelAndView handleEventIllegalArgumentException (RuntimeException ex){
             ModelAndView modelAndView = new ModelAndView("error");
-            modelAndView.addObject("principal", principal);
             modelAndView.addObject("message", ex.getMessage());
             return modelAndView;
         }
 
         @ExceptionHandler(EventNotFoundException.class)
-        public ModelAndView handleEventNotFoundException (RuntimeException ex, Principal principal){
+        public ModelAndView handleEventNotFoundException (RuntimeException ex){
             ModelAndView modelAndView = new ModelAndView("error");
-            modelAndView.addObject("principal", principal);
             modelAndView.addObject("message", ex.getMessage());
             return modelAndView;
         }
 
         @ExceptionHandler(IllegalArgumentException.class)
-        public ModelAndView handleIncorrectDataInput (RuntimeException ex, Principal principal){
+        public ModelAndView handleIncorrectDataInput (RuntimeException ex){
             ModelAndView modelAndView = new ModelAndView("error");
-            modelAndView.addObject("principal", principal);
             modelAndView.addObject("message", ex.getMessage());
             return modelAndView;
         }
 
         @ExceptionHandler(Throwable.class)
-        public ModelAndView handleSQLException (Throwable e, Principal principal){
+        public ModelAndView handleSQLException (Throwable e){
             Throwable throwable = e;
             while (throwable.getCause() != null) {
                 throwable = throwable.getCause();
             }
             ModelAndView modelAndView = new ModelAndView("error");
-            modelAndView.addObject("principal", principal);
             modelAndView.addObject("message", throwable.getMessage());
             return modelAndView;
         }
 
         @ExceptionHandler(AccessDeniedException.class)
-        public ModelAndView handleAccessException (AccessDeniedException e, Principal principal){
-            ModelAndView modelAndView = new ModelAndView("unauthorized");
-            modelAndView.addObject("principal", principal);
+        public ModelAndView handleAccessException (AccessDeniedException e,ModelAndView modelAndView){
+             modelAndView.setViewName("unauthorized");
             return modelAndView;
         }
 
         @ExceptionHandler(ArtistNotDeletedException.class)
-        public ModelAndView handleArtistNotDeletedException (Throwable e, Principal principal){
-            ModelAndView modelAndView = new ModelAndView("error");
-            modelAndView.addObject("principal", principal);
+        public ModelAndView handleArtistNotDeletedException (Throwable e,ModelAndView modelAndView){
+            modelAndView.setViewName("error");
             modelAndView.addObject("message", ArtistErrorMessages.ARTIST_NOT_DELETED);
             return modelAndView;
         }

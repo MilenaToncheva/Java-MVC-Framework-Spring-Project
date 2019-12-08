@@ -20,7 +20,7 @@ import softuni.artgallery.services.services.RoleService;
 import java.util.LinkedHashSet;
 
 @Service
-public class AuthServiceImpl implements AuthService {
+public class AuthServiceImpl implements AuthService  {
     private final UserRepository userRepository;
     private final RoleService roleService;
     private final ModelMapper modelMapper;

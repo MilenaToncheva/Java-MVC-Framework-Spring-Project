@@ -1083,3 +1083,6 @@ h1> a.top-button{
     font-size: 20px;
 
 }
+#div-btn-events > a ,#div-btn-events > button{
+    display:inline-block;
+}

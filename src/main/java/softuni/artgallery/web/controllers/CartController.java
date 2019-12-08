@@ -37,11 +37,11 @@ public class CartController {
 
     @PostMapping("/add-artwork/{artworkId}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView addArtworkToCart(@PathVariable String  artworkId, HttpSession httpSession,Principal principal) {
+    public ModelAndView addArtworkToCart(@PathVariable String  artworkId, HttpSession httpSession) {
         this.cartService.addArtworkToCart(httpSession, artworkId);
 
         ModelAndView modelAndView = new ModelAndView("redirect:/home");
-        modelAndView.addObject("principal",principal);
+
 
 
         return modelAndView;
@@ -57,12 +57,10 @@ public class CartController {
 
     @GetMapping("/details")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ModelAndView getCart(Principal principal, HttpSession session, ModelAndView modelAndView) {
+    public ModelAndView getCart( HttpSession session, ModelAndView modelAndView) {
      List<ArtworkCartViewModel> cart = Arrays.stream(this.modelMapper.map(this.cartService.retrieveCartContent(session),
             ArtworkCartViewModel[].class)).collect(Collectors.toList());
     BigDecimal totalCartPrice = (BigDecimal) session.getAttribute("totalPrice");
-    modelAndView.addObject("principal", principal);
-
     modelAndView.addObject("totalPrice", totalCartPrice);
         modelAndView.setViewName("cart/cart-details");
         return modelAndView;
@@ -70,10 +68,8 @@ public class CartController {
 
     @PostMapping("/checkout")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView checkOUtCart(HttpSession httpSession, Principal principal, ModelAndView modelAndView) throws Exception {
+    public ModelAndView checkOUtCart(HttpSession httpSession, ModelAndView modelAndView) throws Exception {
         List<ArtworkCartServiceModel> cart = this.cartService.cartCheckout(httpSession);
-
-        this.orderService.generateOrder(cart, principal);
         modelAndView.setViewName("redirect:/home");
         return modelAndView;
     }

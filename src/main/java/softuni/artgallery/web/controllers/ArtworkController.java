@@ -65,18 +65,16 @@ public class ArtworkController {
 
     @GetMapping("/create")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView getArtworkCreateForm(Principal principal, @ModelAttribute("artworkCreateModel") ArtworkCreateModel artworkCreateModel,
+    public ModelAndView getArtworkCreateForm( @ModelAttribute("artworkCreateModel") ArtworkCreateModel artworkCreateModel,
                                              ModelAndView modelAndView) {
-        modelAndView.addObject("principal",principal);
         modelAndView.setViewName("artworks/artworks-create");
         return modelAndView;
     }
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView createArtwork(Principal principal,@Valid @ModelAttribute("artworkCreateModel") ArtworkCreateModel artworkCreateModel,
+    public ModelAndView createArtwork(@Valid @ModelAttribute("artworkCreateModel") ArtworkCreateModel artworkCreateModel,
                                 BindingResult bindingResult, ModelAndView modelAndView) throws IOException {
-        modelAndView.addObject("principal",principal);
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("artworks/artworks-create");
             return modelAndView;
@@ -92,24 +90,22 @@ public class ArtworkController {
 
     @GetMapping("/all")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getArtworkCreateForm(Principal principal,ModelAndView modelAndView) {
+    public ModelAndView getArtworkCreateForm(ModelAndView modelAndView) {
         List<ArtworkViewModel> artworks = Arrays.stream(this.modelMapper.map(this.artworkService.findAll(), ArtworkViewModel[].class))
                 .collect(Collectors.toList());
         modelAndView.addObject("artworks", artworks);
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName("artworks/artworks-all");
         return modelAndView;
     }
 
     @GetMapping("/details/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getArtworkDetails(Principal principal,@PathVariable String id, @ModelAttribute("artworkDetailsModel") ArtworkDetailsModel artworkDetailsModel,
+    public ModelAndView getArtworkDetails(@PathVariable String id, @ModelAttribute("artworkDetailsModel") ArtworkDetailsModel artworkDetailsModel,
                                           ModelAndView modelAndView) {
         try {
             ArtworkServiceModel artworkServiceModel = this.artworkService.findById(id);
             artworkDetailsModel = this.modelMapper.map(artworkServiceModel, ArtworkDetailsModel.class);
             ArtistViewModel artistViewModel = this.modelMapper.map(artworkServiceModel.getArtist(), ArtistViewModel.class);
-            modelAndView.addObject("principal", principal);
             artworkDetailsModel.setArtist(artistViewModel);
             artworkDetailsModel.setArtistId(artworkServiceModel.getArtist().getId());
             modelAndView.addObject("artwork", artworkDetailsModel);
@@ -127,10 +123,9 @@ public class ArtworkController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView getEditForm(Principal principal,@PathVariable String id, @ModelAttribute("artworkEditModel") ArtworkEditModel artworkEditModel, ModelAndView modelAndView) throws Exception, ArtworkNotFoundException {
+    public ModelAndView getEditForm(@PathVariable String id, @ModelAttribute("artworkEditModel") ArtworkEditModel artworkEditModel, ModelAndView modelAndView) throws Exception, ArtworkNotFoundException {
         ArtworkServiceModel artworkServiceModel = this.artworkService.findById(id);
         artworkEditModel = this.modelMapper.map(artworkServiceModel, ArtworkEditModel.class);
-        modelAndView.addObject("principal", principal);
         modelAndView.addObject("artwork", artworkEditModel);
         modelAndView.addObject("artworkId", id);
         modelAndView.setViewName("artworks/artwork-edit");
@@ -141,10 +136,8 @@ public class ArtworkController {
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editArtwork(Principal principal,@PathVariable String id, @Valid @ModelAttribute("artworkEditModel") ArtworkEditModel artworkEditModel, BindingResult bindingResult,
+    public ModelAndView editArtwork(@PathVariable String id, @Valid @ModelAttribute("artworkEditModel") ArtworkEditModel artworkEditModel, BindingResult bindingResult,
                                     ModelAndView modelAndView) throws IOException {
-
-        modelAndView.addObject("principal", principal);
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("artwork", artworkEditModel);
             modelAndView.setViewName("artworks/artwork-edit");
@@ -159,11 +152,10 @@ public class ArtworkController {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView getArtworkDeleteForm(Principal principal,@PathVariable String id, @ModelAttribute("artworkDeleteModel") ArtworkDeleteModel artworkDeleteModel, ModelAndView modelAndView) throws Exception, ArtworkNotFoundException {
+    public ModelAndView getArtworkDeleteForm(@PathVariable String id, @ModelAttribute("artworkDeleteModel") ArtworkDeleteModel artworkDeleteModel, ModelAndView modelAndView) throws Exception, ArtworkNotFoundException {
         ArtworkServiceModel artworkServiceModel = this.artworkService.findById(id);
         artworkDeleteModel = this.modelMapper.map(artworkServiceModel, ArtworkDeleteModel.class);
         artworkDeleteModel.setArtistName(artworkServiceModel.getArtist().getName());
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName("artworks/artwork-delete");
         modelAndView.addObject("artwork", artworkDeleteModel);
         return modelAndView;
@@ -181,13 +173,13 @@ public class ArtworkController {
 
     @GetMapping("/artworks-by-artist/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getAllArtworksByArtist(Principal principal,@PathVariable String id, ModelAndView modelAndView) {
+    public ModelAndView getAllArtworksByArtist(@PathVariable String id, ModelAndView modelAndView) {
 
         List<ArtworkServiceModel> artworkServiceModels = this.artworkService.findAllArtworksByArtistId(id);
         List<ArtworkViewModel> artworks = Arrays.stream(this.modelMapper.map(artworkServiceModels, ArtworkViewModel[].class))
                 .collect(Collectors.toList());
         String artistName = this.artistService.findById(id).getName();
-        modelAndView.addObject("principal", principal);        modelAndView.addObject("artistName", artistName);
+        modelAndView.addObject("artistName", artistName);
         modelAndView.addObject("artworks", artworks);
         modelAndView.addObject("artistId", id);
         modelAndView.setViewName("artworks/artworks-by-artist");
@@ -196,10 +188,9 @@ public class ArtworkController {
 
     @PostMapping("/delete/all-by-artist/{artistId}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView deleteAllArtworksByArtistId(Principal principal,@PathVariable(value = "artistId") String artistId,
+    public ModelAndView deleteAllArtworksByArtistId(@PathVariable(value = "artistId") String artistId,
                                                     ModelAndView modelAndView) {
         this.artworkService.deleteAllArtworksByArtist(artistId);
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName( "redirect:/artworks/all");
         return modelAndView;
     }
@@ -207,11 +198,10 @@ public class ArtworkController {
 
     @GetMapping("/artworks-by-category/{category}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getArtworksByCategory(Principal principal,@PathVariable String category, ModelAndView modelAndView) {
+    public ModelAndView getArtworksByCategory(@PathVariable String category, ModelAndView modelAndView) {
         List<ArtworkViewModel> artworksByCategory = Arrays.stream(this.modelMapper.map(this.artworkService.findAllByCategory(category),
                                                                                                             ArtworkViewModel[].class))
                 .collect(Collectors.toList());
-        modelAndView.addObject("principal", principal);
         modelAndView.addObject("artworks", artworksByCategory);
         modelAndView.addObject("category", category);
         modelAndView.setViewName("artworks/artworks-by-category");

@@ -11,11 +11,11 @@
             <div class="event-details-parent">
                 <div id="event-name" class="col-md-12">
                     <h2 class="event-name">[[${event.name}]]</h2>
-                    <h3>by [[${artist.name}]]</h3>
+
                     <hr class="hr-2"/>
                 </div>
                 <div id="event-img" class="col-md-6">
-                    <img th:src="@{${event.imageUrl}}" class="border border-secondary" height="590px"/><br/></div>
+                    <img th:src="@{${event.imageUrl}}" class="border border-secondary"  width="590px"/><br/></div>
                 <div id="event-details" class="col-md-5 col-md-offset-1">
                     <br/>
                     <br/>
@@ -28,21 +28,21 @@
                     <div id="event-location">
                           <p>[[${event.name}]] will take place at [[${event.location}]]</p>
                         <br/>
-                        <p>The Grand opening is on [[${events.startsOn}]].</p>
+                        <p>Opening: <span th:text="${event.startsOn}"></span>.</p>
                         <br/>
-                        <p>The closing ceremony will take place on [[${event.endsOn}]]</p>
+                        <p>Closing ceremony:  <span th:text="${event.endsOn}"></span>.</p>
                     </div>
-
-                    </div><br/>
-
-                    <br/>
                     <div id="div-btn-events">
-
-                        <form th:action="@{/events/events-all}" th:method="get">
-                            <button class="btn-artworks" >Close</button>
-                        </form>
-
+                        <a class="btn-artworks" th:href="@{/events/all}">Close</a>
+                        <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
+                            <a class="btn-artworks" th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
+                            <form th:action="@{/events/delete/{id}(id=${event.id})}" th:method="post">
+                                <button type="submit" class="btn-artworks">Delete</button>
+                            </form>
+                        </th:block>
                     </div>
+                    </div>
+
                 </div>
             </div>
         </div>

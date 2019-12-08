@@ -40,7 +40,7 @@
         <div class="form-group" th:classappend="${#fields.hasErrors('${eventModel.startsOn}')}?'text-danger'">
             <p style="text-align: center">
                 <label for="startsOn" class="floatLabel">Starts On</label>
-                <input placeholder="Starts on..." type="text" class="form-control getDate" id="startsOn" name="startsOn"
+                <input placeholder="yyyy-MM-dd HH:mm" type="text" class="form-control getDate" id="startsOn" name="startsOn"
                        th:field="*{startsOn}">
             </p>
             <small th:each="err:${#fields.errors('${eventModel.startsOn}')}" th:text="${err}"></small>
@@ -48,7 +48,7 @@
         <div class="form-group" th:classappend="${#fields.hasErrors('${eventModel.endsOn}')}?'text-danger'">
             <p style="text-align: center">
                 <label for="endsOn" class="floatLabel">Ends On</label>
-                <input placeholder="Ends on..." type="text" class="form-control getDate" id="endsOn" name="endsOn"
+                <input placeholder="yyyy-MM-dd HH:mm" type="text" class="form-control getDate" id="endsOn" name="endsOn"
                        th:field="*{endsOn}">
             </p>
             <small th:each="err:${#fields.errors('${eventModel.endsOn}')}" th:text="${err}"></small>

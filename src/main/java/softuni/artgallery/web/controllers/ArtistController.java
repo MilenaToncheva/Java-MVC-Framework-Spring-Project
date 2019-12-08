@@ -51,18 +51,16 @@ public class ArtistController {
 
     @GetMapping("/create")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView getArtistCreateForm(Principal principal, @ModelAttribute("artistCreateModel") ArtistCreateModel artistCreateModel,
+    public ModelAndView getArtistCreateForm( @ModelAttribute("artistCreateModel") ArtistCreateModel artistCreateModel,
                                             ModelAndView modelAndView) {
         modelAndView.setViewName("artists/artist-create");
-        modelAndView.addObject("principal", principal);
         return modelAndView;
     }
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView artistCreate(Principal principal, @ModelAttribute("artistCreateModel") ArtistCreateModel artistCreateModel,
+    public ModelAndView artistCreate(@ModelAttribute("artistCreateModel") ArtistCreateModel artistCreateModel,
                                      BindingResult bindingResult, ModelAndView modelAndView) throws IOException {
-        modelAndView.addObject("principal",principal);
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("artists/artists-create");
             return modelAndView;
@@ -76,10 +74,9 @@ public class ArtistController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView getArtistEditForm(Principal principal,@PathVariable String id, @ModelAttribute("artistEditModel") ArtistEditModel artistEditModel, ModelAndView modelAndView) {
+    public ModelAndView getArtistEditForm(@PathVariable String id, @ModelAttribute("artistEditModel") ArtistEditModel artistEditModel, ModelAndView modelAndView) {
         ArtistServiceModel artistServiceModel = this.artistService.findById(id);
         artistEditModel = this.modelMapper.map(artistServiceModel, ArtistEditModel.class);
-        modelAndView.addObject("principal",principal);
         modelAndView.addObject("artist", artistEditModel);
         modelAndView.addObject("artistId", id);
         modelAndView.setViewName("artists/artist-edit");
@@ -88,8 +85,7 @@ public class ArtistController {
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView editArtist(Principal principal,@PathVariable String id, @ModelAttribute("artistEditModel") ArtistEditModel artistEditModel, ModelAndView modelAndView, BindingResult bindingResult) {
-        modelAndView.addObject("principal",principal);
+    public ModelAndView editArtist(@PathVariable String id, @ModelAttribute("artistEditModel") ArtistEditModel artistEditModel, ModelAndView modelAndView, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("artist", artistEditModel);
             modelAndView.addObject("artistId", id);
@@ -105,10 +101,9 @@ public class ArtistController {
 
     @GetMapping("/details/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getArtistDetails(Principal principal,@PathVariable String id, ModelAndView modelAndView) {
+    public ModelAndView getArtistDetails(@PathVariable String id, ModelAndView modelAndView) {
         ArtistServiceModel artistServiceModel = this.artistService.findById(id);
         ArtistViewModel artistViewModel = this.modelMapper.map(artistServiceModel, ArtistViewModel.class);
-        modelAndView.addObject("principal",principal);
         modelAndView.addObject("artist", artistViewModel);
         modelAndView.setViewName("artists/artist-details");
         return modelAndView;
@@ -116,10 +111,9 @@ public class ArtistController {
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView getAllArtists(Principal principal,ModelAndView modelAndView) {
+    public ModelAndView getAllArtists(ModelAndView modelAndView) {
         List<ArtistViewAllModel> artists = Arrays.stream(this.modelMapper.map(this.artistService.findAll(), ArtistViewAllModel[].class))
                 .collect(Collectors.toList());
-        modelAndView.addObject("principal",principal);
         modelAndView.addObject("artists", artists);
         modelAndView.setViewName("/artists/artists-all");
         return modelAndView;
@@ -127,10 +121,9 @@ public class ArtistController {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView getDeleteForm(Principal principal,@PathVariable String id, ModelAndView modelAndView) {
+    public ModelAndView getDeleteForm(@PathVariable String id, ModelAndView modelAndView) {
         ArtistServiceModel artistServiceModel = this.artistService.findById(id);
         ArtistViewModel artistViewModel = this.modelMapper.map(artistServiceModel, ArtistViewModel.class);
-        modelAndView.addObject("principal",principal);
         modelAndView.addObject("artist", artistViewModel);
         modelAndView.setViewName("artists/artist-delete");
         return modelAndView;
@@ -138,9 +131,8 @@ public class ArtistController {
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView deleteArtist(Principal principal,@PathVariable String id,ModelAndView modelAndView) throws ArtistNotDeletedException {
+    public ModelAndView deleteArtist(@PathVariable String id,ModelAndView modelAndView) throws ArtistNotDeletedException {
         this.artistService.delete(id);
-        modelAndView.addObject("principal",principal);
         modelAndView.setViewName("redirect:/artists/all");
         return modelAndView;
     }

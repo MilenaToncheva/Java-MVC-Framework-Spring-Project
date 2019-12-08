@@ -50,7 +50,7 @@
                         <th:block th:if="${artwork.isAvailable()==true}">
                             <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
                                 <a class="btn-artworks" th:href="@{/artworks/edit/{id}(id=${artwork.id})}">Edit</a>
-                                <a class="btn-artworks" th:href="@{/artworks/delete/{id}(id=${artwork.id})}">Delete</a>
+                                <a class="btn-artworks" th:href="@{/events/delete/{id}(id=${artwork.id})}">Delete</a>
                             </th:block>
                         </th:block>
 

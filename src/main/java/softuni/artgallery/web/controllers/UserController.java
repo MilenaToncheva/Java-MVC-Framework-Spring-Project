@@ -56,7 +56,6 @@ public class UserController {
         UserProfileViewModel user = this.modelMapper.map(this.userService.findByUsername(principal.getName()),
                                                             UserProfileViewModel.class);
         modelAndView.addObject("user", user);
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName("/users/user-profile");
         return modelAndView;
     }
@@ -71,7 +70,6 @@ public class UserController {
                                                                     UserProfileEditModel.class);
 
         modelAndView.addObject("user", user);
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName("users/user-profile-edit");
         return modelAndView;
     }
@@ -82,7 +80,6 @@ public class UserController {
                                                                         UserProfileEditModel userProfileEditModel,
                                         BindingResult bindingResult, ModelAndView modelAndView) {
         if (bindingResult.hasErrors() || !userProfileEditModel.getPassword().equals(userProfileEditModel.getConfirmPassword())) {
-            modelAndView.addObject("principal", principal);
             modelAndView.addObject("user",userProfileEditModel);
             modelAndView.setViewName("users/user-profile-edit");
             return modelAndView;
@@ -98,35 +95,32 @@ public class UserController {
 
     @GetMapping("delete/{id}")
     @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
-    public ModelAndView getDeleteForm(Principal principal,@PathVariable String id, @ModelAttribute("userDeleteModel") UserDeleteModel userDeleteModel,
+    public ModelAndView getDeleteForm(@PathVariable String id, @ModelAttribute("userDeleteModel") UserDeleteModel userDeleteModel,
                                       ModelAndView modelAndView) {
 
         userDeleteModel = this.modelMapper.map(this.userService.findById(id), UserDeleteModel.class);
         modelAndView.addObject("user", userDeleteModel);
         modelAndView.setViewName("users/user-delete");
-        modelAndView.addObject("principal",principal);
         return modelAndView;
     }
 
     @PostMapping("delete/{id}")
     @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
-    public ModelAndView deleteUser(Principal principal,@PathVariable String id,ModelAndView modelAndView) throws UserNotDeletedException {
+    public ModelAndView deleteUser(@PathVariable String id,ModelAndView modelAndView) throws UserNotDeletedException {
         this.userService.delete(id);
-        modelAndView.addObject("principal",principal);
         modelAndView.setViewName("redirect:/users/all");
         return modelAndView;
     }
 
     @GetMapping("/all")
     @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
-    public ModelAndView getAllUsers(Principal principal, ModelAndView modelAndView) {
+    public ModelAndView getAllUsers( ModelAndView modelAndView) {
         List<UserAllViewModel> users = this.userService.findAll().stream().map(u -> {
             UserAllViewModel uvm = this.modelMapper.map(u, UserAllViewModel.class);
             uvm.setAuthorities(u.getAuthorities().stream().map(a -> a.getAuthority()).collect(Collectors.toSet()));
             return uvm;
         })
                 .collect(Collectors.toList());
-        modelAndView.addObject("principal", principal);
         modelAndView.addObject("users", users);
         modelAndView.setViewName("users/users-all");
         return modelAndView;
@@ -134,27 +128,24 @@ public class UserController {
 
     @PostMapping("/set-role-user/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView setUserRole(Principal principal, @PathVariable String id, ModelAndView modelAndView) {
+    public ModelAndView setUserRole( @PathVariable String id, ModelAndView modelAndView) {
         this.userService.setUserRole(id, CommonConstants.ROLE_NAME_USER);
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName("redirect:/users/all");
         return modelAndView;
     }
 
     @PostMapping("/set-role-moderator/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView setModeratorRole(Principal principal, @PathVariable String id,ModelAndView modelAndView) {
+    public ModelAndView setModeratorRole( @PathVariable String id,ModelAndView modelAndView) {
         this.userService.setUserRole(id,CommonConstants.ROLE_NAME_MODERATOR);
-        modelAndView.addObject("principal",principal);
         modelAndView.setViewName("redirect:/users/all");
         return modelAndView;
     }
 
     @PostMapping("/set-role-admin/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView setAdminRole(Principal principal, @PathVariable String id ,ModelAndView modelAndView) {
+    public ModelAndView setAdminRole( @PathVariable String id ,ModelAndView modelAndView) {
         this.userService.setUserRole(id,CommonConstants.ROLE_NAME_ADMIN);
-        modelAndView.addObject("principal",principal);
         modelAndView.setViewName("redirect:/users/all");
         return modelAndView;
     }

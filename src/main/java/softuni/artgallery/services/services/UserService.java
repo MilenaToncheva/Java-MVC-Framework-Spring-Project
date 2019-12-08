@@ -17,7 +17,7 @@ public interface UserService {
 
     List<UserServiceModel> findAll();
 
-    void setUserRole(String id,String role);
+    UserServiceModel setUserRole(String id,String role);
 UserServiceModel isUsernameUnique(String username);
 
     UserServiceModel isEmailUnique(String email);

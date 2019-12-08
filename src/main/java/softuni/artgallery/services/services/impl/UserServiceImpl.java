@@ -12,7 +12,6 @@ import softuni.artgallery.error.UserIllegalArgumentsException;
 import softuni.artgallery.error.UserNotDeletedException;
 import softuni.artgallery.error.UserNotFoundException;
 import softuni.artgallery.services.models.UserServiceModel;
-import softuni.artgallery.services.services.ArtworkService;
 import softuni.artgallery.services.services.RoleService;
 import softuni.artgallery.services.services.UserService;
 
@@ -25,18 +24,16 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
     private final ModelMapper modelMapper;
-    private final ArtworkService artworkService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleService roleService,
-                           ModelMapper modelMapper, ArtworkService artworkService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+                           ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
-        this.artworkService = artworkService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -96,7 +93,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void setUserRole(String id, String role) {
+    public UserServiceModel setUserRole(String id, String role) {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND));
         UserServiceModel userServiceModel = this.modelMapper.map(user, UserServiceModel.class);
@@ -115,8 +112,8 @@ public class UserServiceImpl implements UserService {
                 userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_ADMIN"));
                 break;
         }
-
-        this.userRepository.saveAndFlush(this.modelMapper.map(userServiceModel, User.class));
+user=this.modelMapper.map(userServiceModel, User.class);
+     return  this.modelMapper.map(this.userRepository.saveAndFlush(user),UserServiceModel.class);
     }
 
 
