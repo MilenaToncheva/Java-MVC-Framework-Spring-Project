@@ -12,6 +12,7 @@ public class UserServiceModel {
     private String lastName;
     private String email;
     private String password;
+    private boolean  isEnabled;
 
     private Set<RoleServiceModel> authorities;
 
@@ -75,5 +76,13 @@ public class UserServiceModel {
 
     public void setAuthorities(Set<RoleServiceModel> authorities) {
         this.authorities = authorities;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }

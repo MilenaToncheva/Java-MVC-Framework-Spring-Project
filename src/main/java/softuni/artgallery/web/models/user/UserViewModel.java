@@ -7,6 +7,7 @@ public class UserViewModel {
     private String lastName;
     private String email;
 
+
     public UserViewModel() {
     }
 
@@ -49,4 +50,6 @@ public class UserViewModel {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

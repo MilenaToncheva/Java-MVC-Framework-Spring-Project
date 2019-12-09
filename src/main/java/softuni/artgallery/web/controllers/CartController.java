@@ -68,8 +68,9 @@ public class CartController {
 
     @PostMapping("/checkout")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView checkOUtCart(HttpSession httpSession, ModelAndView modelAndView) throws Exception {
+    public ModelAndView checkOUtCart(HttpSession httpSession, ModelAndView modelAndView,Principal principal) throws Exception {
         List<ArtworkCartServiceModel> cart = this.cartService.cartCheckout(httpSession);
+        this.orderService.generateOrder(cart,principal);
         modelAndView.setViewName("redirect:/home");
         return modelAndView;
     }

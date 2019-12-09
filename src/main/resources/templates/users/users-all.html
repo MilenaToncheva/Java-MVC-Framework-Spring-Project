@@ -14,7 +14,7 @@
     <div id="users-all" class="jumbotron-fluid mainBody my-4">
         <h1 class="text-center">All Users</h1>
         <hr class="hr-2 bg-dark">
-        <table id="table-users-all" class="customTable table-hover mx-auto">
+        <table id="table-users-all" class="table table-striped w-auto">
             <thead>
             <tr class="row mx-auto mb-4 font-weight-bold">
                 <th class="col-md-1 text-center">#</th>
@@ -45,12 +45,23 @@
                                 <form th:action="@{/users/set-role-moderator/{id}(id=${user.id})}" th:method="post">
                                     <button class="btn top-button btn-sm">Moderator</button>
                                 </form>
-                                <form th:action="@{/users/set-role-admin/{id}(id=${user.id})}" th:method="post">
-                                    <button class="btn top-button btn-sm">Admin</button>
-                                </form>
-                                <div class="button-holder d-flex justify-content-center">
-                                    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn top-button btn-sm" >Delete</a>
-                                </div>
+                                <th:block sec:authorize="hasRole('ROLE_ROOT')">
+                                    <form th:action="@{/users/set-role-admin/{id}(id=${user.id})}" th:method="post">
+                                        <button class="btn top-button btn-sm">Admin</button>
+                                    </form>
+                                </th:block>
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <th:block th:if="${user.isEnabled()}==true">
+                                        <form th:action="@{/users/disable/{id}(id=${user.id})}" th:method="post">
+                                            <button type="submit" class="btn top-button btn-sm">Disable</button>
+                                        </form>
+                                    </th:block>
+                                    <th:block th:if="${user.isEnabled()}==false">
+                                        <form th:action="@{/users/enable/{id}(id=${user.id})}" th:method="post">
+                                            <button type="submit" class="btn top-button btn-sm">Enable</button>
+                                        </form>
+                                    </th:block>
+                                </th:block>
                             </div>
                         </th:block>
                         <th:block th:if="${#lists.contains(user.authorities,'ROLE_USER') &&
@@ -60,29 +71,51 @@
                                 <form th:action="@{/users/set-role-user/{id}(id=${user.id})}" th:method="post">
                                     <button class="btn top-button btn-sm">User</button>
                                 </form>
-                                <form th:action="@{/users/set-role-admin/{id}(id=${user.id})}" th:method="post">
-                                    <button class="btn top-button btn-sm">Admin</button>
-                                </form>
-                                <div class="button-holder d-flex justify-content-center">
-                                    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn top-button btn-sm" >Delete</a>
-                                </div>
+                                <th:block sec:authorize="hasRole('ROLE_ROOT')">
+                                    <form th:action="@{/users/set-role-admin/{id}(id=${user.id})}" th:method="post">
+                                        <button class="btn top-button btn-sm">Admin</button>
+                                    </form>
+                                </th:block>
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <th:block th:if="${user.isEnabled()}==true">
+                                        <form th:action="@{/users/disable/{id}(id=${user.id})}" th:method="post">
+                                            <button type="submit" class="btn top-button btn-sm">Disable</button>
+                                        </form>
+                                    </th:block>
+                                    <th:block th:if="${user.isEnabled()}==false">
+                                        <form th:action="@{/users/enable/{id}(id=${user.id})}" th:method="post">
+                                            <button type="submit" class="btn top-button btn-sm">Enable</button>
+                                        </form>
+                                    </th:block>
+                                </th:block>
+
                             </div>
                         </th:block>
                         <th:block th:if="${#lists.contains(user.authorities,'ROLE_USER') &&
                               #lists.contains(user.authorities,'ROLE_MODERATOR') &&
                               #lists.contains(user.authorities, 'ROLE_ADMIN') &&
                                 !#lists.contains(user.authorities,'ROLE_ROOT')}">
-                            <div class="btn-roles-management">
-                                <form th:action="@{/users/set-role-user/{id}(id=${user.id})}" th:method="post">
-                                    <button class="btn top-button btn-sm">User</button>
-                                </form>
-                                <form th:action="@{/users/set-role-moderator/{id}(id=${user.id})}" th:method="post">
-                                    <button class="btn top-button btn-sm">Moderator</button>
-                                </form>
-                                <div class="button-holder d-flex justify-content-center">
-                                    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn top-button btn-sm" >Delete</a>
+                            <th:block sec:authorize="hasRole('ROLE_ROOT')">
+                                <div class="btn-roles-management">
+                                    <form th:action="@{/users/set-role-user/{id}(id=${user.id})}" th:method="post">
+                                        <button class="btn top-button btn-sm">User</button>
+                                    </form>
+                                    <form th:action="@{/users/set-role-moderator/{id}(id=${user.id})}" th:method="post">
+                                        <button class="btn top-button btn-sm">Moderator</button>
+                                    </form>
+                                    <th:block th:if="${user.isEnabled()}==true">
+                                        <form th:action="@{/users/disable/{id}(id=${user.id})}" th:method="post">
+                                            <button type="submit" class="btn top-button btn-sm">Disable</button>
+                                        </form>
+                                    </th:block>
+                                    <th:block th:if="${user.isEnabled()}==false">
+                                        <form th:action="@{/users/enable/{id}(id=${user.id})}" th:method="post">
+                                            <button type="submit" class="btn top-button btn-sm">Enable</button>
+                                        </form>
+                                    </th:block>
+
                                 </div>
-                            </div>
+                            </th:block>
                         </th:block>
                     </td>
                 </tr>

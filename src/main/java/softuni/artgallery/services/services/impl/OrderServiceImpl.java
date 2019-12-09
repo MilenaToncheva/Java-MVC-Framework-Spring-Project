@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository,  UserService userService,
+    public OrderServiceImpl(OrderRepository orderRepository, UserService userService,
                             ArtworkService artworkService, ModelMapper modelMapper) {
         this.orderRepository = orderRepository;
         this.userService = userService;
@@ -47,21 +47,19 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-        public void generateOrder(List<ArtworkCartServiceModel> cart, Principal principal) throws Exception {
-        List<ArtworkServiceModel>artworkServiceModels=this.generateOrderedList(cart);
-        Order order =new Order();
-
-
+    public void generateOrder(List<ArtworkCartServiceModel> cart, Principal principal) throws Exception {
+        List<ArtworkServiceModel> artworkServiceModels = this.generateOrderedList(cart);
+        Order order = new Order();
         User user = this.modelMapper.map(this.userService.findByUsername(principal.getName()), User.class);
         order.setUser(user);
         order.setPlacedOn(LocalDateTime.now());
-        BigDecimal totalPrice =artworkServiceModels.stream().map(a -> a.getPrice())
+        BigDecimal totalPrice = artworkServiceModels.stream().map(a -> a.getPrice())
                 .reduce(new BigDecimal("0"), (p1, p2) -> p1.add(p2));
         order.setTotalPrice(totalPrice);
-        order=   this.orderRepository.saveAndFlush(order);
+        order = this.orderRepository.saveAndFlush(order);
 
-List<Artwork>artworks=Arrays.stream(this.modelMapper.map(artworkServiceModels, Artwork[].class))
-        .collect(Collectors.toList());
+        List<Artwork> artworks = Arrays.stream(this.modelMapper.map(artworkServiceModels, Artwork[].class))
+                .collect(Collectors.toList());
         for (Artwork artwork : artworks) {
             artwork.setOrder(order);
 
@@ -73,13 +71,13 @@ List<Artwork>artworks=Arrays.stream(this.modelMapper.map(artworkServiceModels, A
 
     }
 
-
-    public List<ArtworkServiceModel> generateOrderedList(List<ArtworkCartServiceModel> cart) throws Exception {
+    //for cart --writeOff artwork and map it toArtworkServiceModel
+    private List<ArtworkServiceModel> generateOrderedList(List<ArtworkCartServiceModel> cart) throws Exception {
         List<ArtworkServiceModel> orderedList = new ArrayList<>();
         for (ArtworkCartServiceModel artworkCartServiceModel : cart) {
             this.artworkService.writeOffArtwork(artworkCartServiceModel.getId());
             ArtworkServiceModel artworkServiceModel = this.artworkService.findById(artworkCartServiceModel.getId());
-           orderedList.add(artworkServiceModel);
+            orderedList.add(artworkServiceModel);
         }
         return orderedList;
     }
@@ -102,18 +100,16 @@ List<Artwork>artworks=Arrays.stream(this.modelMapper.map(artworkServiceModels, A
         return this.modelMapper.map(order, OrderServiceModel.class);
     }
 
-   @Override
-   public void delete(String id) throws OrderNotDeletedException {
-       Order order = this.orderRepository.findById(id)
-               .orElseThrow(() -> new OrderNotFoundException(OrderErrorMessages.ORDER_NOT_FOUND));
-       try {
-           this.orderRepository.delete(order);
-       } catch (Exception e) {
-
-           e.printStackTrace();
-           throw new OrderNotDeletedException(OrderErrorMessages.ORDER_NOT_DELETED);
-
-       }
-   }
+  @Override
+  public void delete(String id) throws OrderNotDeletedException {
+      Order order = this.orderRepository.findById(id)
+              .orElseThrow(() -> new OrderNotFoundException(OrderErrorMessages.ORDER_NOT_FOUND));
+      try {
+          this.orderRepository.delete(order);
+      } catch (Exception e) {
+          e.printStackTrace();
+          throw new OrderNotDeletedException(OrderErrorMessages.ORDER_NOT_DELETED);
+      }
+  }
 
 }

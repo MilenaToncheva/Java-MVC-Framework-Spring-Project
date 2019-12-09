@@ -135,4 +135,15 @@ user=this.modelMapper.map(userServiceModel, User.class);
         return
                 this.modelMapper.map(this.userRepository.findByEmail(email), UserServiceModel.class);
     }
+
+    public void disableUser(String id){
+        User user=this.userRepository.findById(id).orElseThrow(()->new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND));
+        user.setEnabled(false);
+        this.userRepository.saveAndFlush(user);
+    }
+    public void enableUser(String id){
+        User user=this.userRepository.findById(id).orElseThrow(()->new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND));
+        user.setEnabled(true);
+        this.userRepository.saveAndFlush(user);
+    }
 }

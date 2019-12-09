@@ -42,7 +42,7 @@ public class AuthController {
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
     public String registerUser(@Valid @ModelAttribute("userRegisterModel") UserRegisterModel userRegisterModel,
-                                                                                    BindingResult bindingResult) {
+                               BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "auth/register";
@@ -51,7 +51,7 @@ public class AuthController {
             return "auth/register";
         }
         UserRegisterServiceModel userRegisterServiceModel = this.modelMapper.map(userRegisterModel,
-                                                                                    UserRegisterServiceModel.class);
+                UserRegisterServiceModel.class);
 
         this.authService.register(userRegisterServiceModel);
 
@@ -60,8 +60,8 @@ public class AuthController {
 
     @GetMapping("/login")
     @PreAuthorize("isAnonymous()")
-    public String login( ) {
-         return "auth/login";
+    public String login() {
+        return "auth/login";
 
     }
 

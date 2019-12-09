@@ -36,7 +36,7 @@ public class AuthServiceImpl implements AuthService  {
         this.authValidationService = authValidationService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 
-    }
+            }
 
     @Override
     public UserServiceModel register(UserRegisterServiceModel userRegisterServiceModel) {
@@ -58,7 +58,7 @@ public class AuthServiceImpl implements AuthService  {
 
 
             return this.modelMapper.map(this.userRepository.saveAndFlush(user),
-                    UserServiceModel.class);
+                UserServiceModel.class);
 
 
     }

@@ -93,21 +93,36 @@ public class UserController {
     }
 
 
-    @GetMapping("delete/{id}")
-    @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
-    public ModelAndView getDeleteForm(@PathVariable String id, @ModelAttribute("userDeleteModel") UserDeleteModel userDeleteModel,
-                                      ModelAndView modelAndView) {
+  //  @GetMapping("delete/{id}")
+  //  @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
+  //  public ModelAndView getDeleteForm(@PathVariable String id, @ModelAttribute("userDeleteModel") UserDeleteModel userDeleteModel,
+  //                                    ModelAndView modelAndView) {
+//
+  //      userDeleteModel = this.modelMapper.map(this.userService.findById(id), UserDeleteModel.class);
+  //      modelAndView.addObject("user", userDeleteModel);
+  //      modelAndView.setViewName("users/user-delete");
+  //      return modelAndView;
+  //  }
 
-        userDeleteModel = this.modelMapper.map(this.userService.findById(id), UserDeleteModel.class);
-        modelAndView.addObject("user", userDeleteModel);
-        modelAndView.setViewName("users/user-delete");
+  //   @PostMapping("delete/{id}")
+  //  @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
+  //  public ModelAndView deleteUser(@PathVariable String id,ModelAndView modelAndView) throws UserNotDeletedException {
+  //      this.userService.delete(id);
+  //      modelAndView.setViewName("redirect:/users/all");
+  //      return modelAndView;
+  //  }
+
+    @PostMapping("disable/{id}")
+    @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
+    public ModelAndView disableUser(@PathVariable String id,ModelAndView modelAndView) throws UserNotDeletedException {
+        this.userService.disableUser(id);
+        modelAndView.setViewName("redirect:/users/all");
         return modelAndView;
     }
-
-    @PostMapping("delete/{id}")
+    @PostMapping("enable/{id}")
     @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
-    public ModelAndView deleteUser(@PathVariable String id,ModelAndView modelAndView) throws UserNotDeletedException {
-        this.userService.delete(id);
+    public ModelAndView enableUser(@PathVariable String id,ModelAndView modelAndView) throws UserNotDeletedException {
+        this.userService.enableUser(id);
         modelAndView.setViewName("redirect:/users/all");
         return modelAndView;
     }

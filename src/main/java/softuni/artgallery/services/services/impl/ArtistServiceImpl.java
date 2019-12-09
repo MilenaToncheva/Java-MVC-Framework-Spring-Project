@@ -37,7 +37,7 @@ public class ArtistServiceImpl implements ArtistService {
         if (!this.artistValidationService.isValid(artistCreateServiceModel)) {
             throw new UserIllegalArgumentsException(UserErrorMessages.USER_INCORRECT_INPUT);
         }
-        this.artistRepository.saveAndFlush(this.modelMapper.map(artistCreateServiceModel, Artist.class));
+            this.artistRepository.saveAndFlush(this.modelMapper.map(artistCreateServiceModel, Artist.class));
 
     }
 

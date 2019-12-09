@@ -19,10 +19,10 @@ public class User extends BaseEntity implements UserDetails {
     private String password;
     private List<Order> orders;
     private Set<Role> authorities;
-    private boolean isAccountNonExpired;
-    private boolean isAccountNonLocked;
-    private boolean isCredentialsNonExpired;
-    private boolean isEnabled;
+    private boolean isAccountNonExpired=true;
+    private boolean isAccountNonLocked=true;
+    private boolean isCredentialsNonExpired=true;
+    private boolean isEnabled=true;
 
 
     public User() {
@@ -108,7 +108,7 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     @Column(name="is_account_non_expired")
     public boolean isAccountNonExpired() {
-        return true;
+        return isAccountNonExpired;
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {
@@ -118,7 +118,7 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     @Column(name="is_account_non_locked")
     public boolean isAccountNonLocked() {
-        return true;
+        return isAccountNonLocked;
     }
 
     public void setAccountNonLocked(boolean accountNonLocked) {
@@ -128,7 +128,7 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     @Column(name="is_credential_non_expired")
     public boolean isCredentialsNonExpired() {
-        return true;
+        return isCredentialsNonExpired;
     }
 
     public void setCredentialsNonExpired(boolean credentialsNonExpired) {
@@ -139,7 +139,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name="is_enabled")
 
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 
     public void setEnabled(boolean enabled) {

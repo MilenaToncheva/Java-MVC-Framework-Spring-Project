@@ -10,6 +10,7 @@ public class UserAllViewModel {
     private String lastName;
     private String email;
     private Set<String> authorities;
+    private boolean  isEnabled;
 
     public UserAllViewModel() {
         this.authorities=new HashSet<>();
@@ -61,5 +62,13 @@ public class UserAllViewModel {
 
     public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }

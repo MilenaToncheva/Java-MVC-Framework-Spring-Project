@@ -104,7 +104,7 @@ if(!this.artworkValidationService.isValid(this.modelMapper.map(artwork,ArtworkCr
         return Arrays.stream(this.modelMapper.map(this.artworkRepository.findAllArtworksByArtistId(artistId),
                                                                                 ArtworkServiceModel[].class))
                                                                          .collect(Collectors.toList());
-        //todo
+
     }
 
     @Override

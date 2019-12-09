@@ -26,14 +26,14 @@ public class ArtistValidationServiceImpl implements ArtistValidationService {
         return true;
     }
 
-    private boolean isLivesInValid(String livesIn) {
+     private boolean isLivesInValid(String livesIn) {
         if(livesIn==null||livesIn.equals("")||livesIn.length()<3||livesIn.length()>30){
             throw new ArtistIllegalArgumentsException(ArtistErrorMessages.ARTIST_INVALID_LIVES_IN);
         }
         return true;
     }
 
-    private boolean isEmailValid(String email) {
+     private boolean isEmailValid(String email) {
 
         String ePattern = CommonConstants.EMAIL_PATTERN;
         Pattern pattern = Pattern.compile(ePattern);
@@ -45,21 +45,21 @@ public class ArtistValidationServiceImpl implements ArtistValidationService {
         return true;
     }
 
-    private boolean isHistoryValid(String history) {
+     private boolean isHistoryValid(String history) {
         if(history==null||history.equals("")||history.length()<15||history.length()>200){
             throw new ArtistIllegalArgumentsException(ArtistErrorMessages.ARTIST_INVALID_HISTORY);
         }
         return true;
     }
 
-    private boolean isEducationValid(String education) {
+     private boolean isEducationValid(String education) {
         if(education==null||education.equals("")||education.length()<2||education.length()>30){
             throw new ArtistIllegalArgumentsException(ArtistErrorMessages.ARTIST_INVALID_EDUCATION);
         }
         return true;
     }
 
-    private boolean isImageUrlValid(String imageUrl) {
+     private boolean isImageUrlValid(String imageUrl) {
         if(imageUrl==null||imageUrl.equals("")){
             throw new ArtistIllegalArgumentsException(ArtistErrorMessages.ARTIST_INVALID_IMAGE_URL);
         }
