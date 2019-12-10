@@ -17,6 +17,7 @@ import softuni.artgallery.services.services.CloudinaryService;
 import softuni.artgallery.web.models.artist.ArtistViewModel;
 import softuni.artgallery.web.models.artwork.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
@@ -90,13 +91,24 @@ public class ArtworkController {
 
     @GetMapping("/all")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getArtworkCreateForm(ModelAndView modelAndView) {
+    public ModelAndView getAllArtworks(ModelAndView modelAndView) {
         List<ArtworkViewModel> artworks = Arrays.stream(this.modelMapper.map(this.artworkService.findAll(), ArtworkViewModel[].class))
                 .collect(Collectors.toList());
         modelAndView.addObject("artworks", artworks);
         modelAndView.setViewName("artworks/artworks-all");
         return modelAndView;
     }
+    @GetMapping("/fetch")
+    @PreAuthorize("isAuthenticated()")
+    @ResponseBody
+    public    List<ArtworkViewModel> getArtworks() {
+        List<ArtworkViewModel>  artworks = Arrays.stream(this.modelMapper.map(this.artworkService.findAll(), ArtworkViewModel[].class))
+                .collect(Collectors.toList());
+        return artworks;
+    }
+
+
+
 
     @GetMapping("/details/{id}")
     @PreAuthorize("isAuthenticated()")

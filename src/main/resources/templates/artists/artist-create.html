@@ -6,7 +6,7 @@
 <th:block th:include="~{fragments/navbar}"/>
 <div class="container-fluid w-15">
     <form id="user-register-form" style="margin-top: 110px" th:action="@{/artists/create}" enctype="multipart/form-data" th:method="post" th:object="${artistCreateModel}">
-        <h2 style="text-align: center;color: #563D7C">Register Artist</h2>
+        <h2 style="text-align: center;color: #563D7C">Create Artist</h2>
         <hr id="my-hr"/>
         <div class="form-group " th:classappend="${#fields.hasErrors('${artistCreateModel.name}')}?'text-danger'">
             <p style="text-align: center">
@@ -52,7 +52,7 @@
             <small th:each="err:${#fields.errors('${artistCreateModel.email}')}" th:text="${err}"></small>
         </div>
         <p style="text-align: center">
-            <input class="inputSubmit" type="submit" value="Register Artist" id="registerArtist"/>
+            <input class="inputSubmit" type="submit" value="Create Artist" id="registerArtist"/>
         </p>
     </form>
 

@@ -4,6 +4,7 @@ public class ArtworkViewModel {
 private String id;
 private String name;
 private String imageUrl;
+private boolean isAvailable;
 
     public ArtworkViewModel() {
     }
@@ -31,5 +32,13 @@ private String imageUrl;
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 }

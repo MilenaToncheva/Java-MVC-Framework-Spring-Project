@@ -17,7 +17,7 @@ public interface OrderService {
 
     OrderServiceModel findById(String id);
 
-    void delete(String id) throws OrderNotDeletedException;
+ //   void delete(String id) throws OrderNotDeletedException;
 
 
 }

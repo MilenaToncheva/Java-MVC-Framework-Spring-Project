@@ -3,12 +3,11 @@ package softuni.artgallery.services.services.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import softuni.artgallery.constants.OrderMessages.OrderErrorMessages;
+import softuni.artgallery.constants.orderMessages.OrderErrorMessages;
 import softuni.artgallery.data.models.Artwork;
 import softuni.artgallery.data.models.Order;
 import softuni.artgallery.data.models.User;
 import softuni.artgallery.data.repository.OrderRepository;
-import softuni.artgallery.error.OrderNotDeletedException;
 import softuni.artgallery.error.OrderNotFoundException;
 import softuni.artgallery.services.models.ArtworkCartServiceModel;
 import softuni.artgallery.services.models.ArtworkServiceModel;
@@ -17,7 +16,6 @@ import softuni.artgallery.services.services.ArtworkService;
 import softuni.artgallery.services.services.OrderService;
 import softuni.artgallery.services.services.UserService;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -60,15 +58,18 @@ public class OrderServiceImpl implements OrderService {
 
         List<Artwork> artworks = Arrays.stream(this.modelMapper.map(artworkServiceModels, Artwork[].class))
                 .collect(Collectors.toList());
+
         for (Artwork artwork : artworks) {
             artwork.setOrder(order);
 
         }
-        order.setArtworks(artworks);
+order.setArtworks(artworks);
 
+
+        var a=5;
 
         this.orderRepository.saveAndFlush(order);
-
+var m=0;
     }
 
     //for cart --writeOff artwork and map it toArtworkServiceModel
@@ -100,16 +101,16 @@ public class OrderServiceImpl implements OrderService {
         return this.modelMapper.map(order, OrderServiceModel.class);
     }
 
-  @Override
-  public void delete(String id) throws OrderNotDeletedException {
-      Order order = this.orderRepository.findById(id)
-              .orElseThrow(() -> new OrderNotFoundException(OrderErrorMessages.ORDER_NOT_FOUND));
-      try {
-          this.orderRepository.delete(order);
-      } catch (Exception e) {
-          e.printStackTrace();
-          throw new OrderNotDeletedException(OrderErrorMessages.ORDER_NOT_DELETED);
-      }
-  }
+// @Override
+// public void delete(String id) throws OrderNotDeletedException {
+//     Order order = this.orderRepository.findById(id)
+//             .orElseThrow(() -> new OrderNotFoundException(OrderErrorMessages.ORDER_NOT_FOUND));
+//     try {
+//         this.orderRepository.delete(order);
+//     } catch (Exception e) {
+//         e.printStackTrace();
+//         throw new OrderNotDeletedException(OrderErrorMessages.ORDER_NOT_DELETED);
+//     }
+// }
 
 }

@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
     ArtistService artistService;
 
     @Test
-     void registerArtist_withCorrectData_shouldSave() {
+     void createArtist_withCorrectData_shouldSave() {
         ArtistCreateServiceModel artistModel = new ArtistCreateServiceModel();
         artistModel.setName("");
         artistModel.setEmail("mara@abv.bg");
@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         artistModel.setHistory(" yuyui yui yiy ui");
         Mockito.when(artistValidationService.isValid(artistModel)).thenReturn(true);
 
-        artistService.register(artistModel);
+        artistService.create(artistModel);
 
         ArgumentCaptor<Artist> argument = ArgumentCaptor.forClass(Artist.class);
         Mockito.verify(artistRepository).saveAndFlush(argument.capture());
@@ -56,7 +56,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
     }
 
     @Test
-     void registerArtist_withIncorrectData_shouldThrowException() {
+     void createArtist_withIncorrectData_shouldThrowException() {
         ArtistCreateServiceModel artistModel = new ArtistCreateServiceModel();
         artistModel.setName("Maria");
         artistModel.setEmail("mara@abv.bg");
@@ -69,7 +69,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         Mockito.when(artistValidationService.isValid(artistModel)).thenReturn(false);
 
         assertThrows(RuntimeException.class,
-                () -> artistService.register(artistModel));
+                () -> artistService.create(artistModel));
 
     }
 

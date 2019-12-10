@@ -57,7 +57,7 @@ public class EventServiceTest extends ServiceTestBase {
     //     eventModel.setEndsOn(date);
 //
     //     Mockito.when(eventValidationService.isValid(eventModel)).thenReturn(true);
-    //     eventService.register(eventModel);
+    //     eventService.create(eventModel);
 //
     //     ArgumentCaptor<Event> argument = ArgumentCaptor.forClass(Event.class);
     //     Mockito.verify(eventRepository).saveAndFlush(argument.capture());

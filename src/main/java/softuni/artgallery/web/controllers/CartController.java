@@ -37,13 +37,9 @@ public class CartController {
 
     @PostMapping("/add-artwork/{artworkId}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView addArtworkToCart(@PathVariable String  artworkId, HttpSession httpSession) {
+    public ModelAndView addArtworkToCart(@PathVariable String  artworkId, HttpSession httpSession, ModelAndView modelAndView) {
         this.cartService.addArtworkToCart(httpSession, artworkId);
-
-        ModelAndView modelAndView = new ModelAndView("redirect:/home");
-
-
-
+        modelAndView.setViewName("redirect:/home");
         return modelAndView;
 
     }

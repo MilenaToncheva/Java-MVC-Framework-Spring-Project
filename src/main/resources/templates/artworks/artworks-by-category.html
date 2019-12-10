@@ -20,8 +20,12 @@
                         <div>[[${artwork.name}]]</div>
                         <div id="div-btn-artworks">
                             <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
-                                <a  class="btn-artworks" th:href="@{/artworks/edit/{id}(id=${artwork.id})}">Update</a>
-                                <a class="btn-artworks" th:href="@{/artworks/delete/{id}(id=${artwork.id})}">Delete</a>
+
+                                <th:block th:if="${artwork.isAvailable()==true}">
+                                    <a class="btn-artworks" th:href="@{/artworks/edit/{id}(id=${artwork.id})}">Update</a>
+                                    <a class="btn-artworks" th:href="@{/artworks/delete/{id}(id=${artwork.id})}">Delete</a>
+                            </th:block>
+
                             </th:block>
                             <th:block sec:authorize="isAuthenticated()">
                                 <a class="btn-artworks" th:href="@{/artworks/details/{id}(id=${artwork.id})}">Details</a>
@@ -31,14 +35,6 @@
                     </div>
                 </div>
                 <br/>
-                <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
-                    <form th:action="@{/artworks/delete/all-by-artist/{id}(id=${artistId})}" th:method="DELETE">
-                        <div id="div-delete-all-artworks-btn" class="col-md-12">
-                            <button type="submit" class="btn-delete-all-artworks">Delete All</button>
-                        </div>
-                    </form>
-                </th:block>
-
             </div>
         </div>
 

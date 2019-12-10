@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public interface ArtistService {
-    void register(ArtistCreateServiceModel artistCreateServiceModel);
+    void create(ArtistCreateServiceModel artistCreateServiceModel);
 
     void edit(String id,ArtistServiceModel artistServiceModel);
 

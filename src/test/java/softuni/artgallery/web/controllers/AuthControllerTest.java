@@ -44,9 +44,9 @@ public class AuthControllerTest extends ControllerTestBase {
     @Test
     public void register_shouldReturnCorrectView() throws Exception {
         this.mockMvc
-                .perform(get("/users/register"))
+                .perform(get("/users/create"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("auth/register.html"));
+                .andExpect(view().name("auth/create.html"));
 
 
     }

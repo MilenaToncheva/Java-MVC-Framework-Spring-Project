@@ -33,7 +33,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public void register(ArtistCreateServiceModel artistCreateServiceModel) {
+    public void create(ArtistCreateServiceModel artistCreateServiceModel) {
         if (!this.artistValidationService.isValid(artistCreateServiceModel)) {
             throw new UserIllegalArgumentsException(UserErrorMessages.USER_INCORRECT_INPUT);
         }

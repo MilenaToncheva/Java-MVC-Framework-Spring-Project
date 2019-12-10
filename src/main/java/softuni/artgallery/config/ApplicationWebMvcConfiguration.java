@@ -24,8 +24,8 @@ public class ApplicationWebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(this.faviconInterceptor).addPathPatterns("/","/users/register","/users/login");
-        registry.addInterceptor(this.welcomeInterceptor).excludePathPatterns("/","/users/login","/users/register");
+        registry.addInterceptor(this.faviconInterceptor).addPathPatterns("/","/users/create","/users/login");
+        registry.addInterceptor(this.welcomeInterceptor).excludePathPatterns("/","/users/login","/users/create");
     }
 
 }

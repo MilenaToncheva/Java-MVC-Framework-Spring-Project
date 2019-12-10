@@ -99,12 +99,12 @@ public class OrderController {
         return modelAndView;
     }
 
-    @PostMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView deleteArtwork( @PathVariable String id, ModelAndView modelAndView) throws OrderNotFoundException, OrderNotDeletedException {
-
-        this.orderService.delete(id);
-        modelAndView.setViewName("redirect:/orders/all");
-        return modelAndView;
-    }
+  //  @PostMapping("/delete/{id}")
+  //  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //  public ModelAndView deleteArtwork( @PathVariable String id, ModelAndView modelAndView) throws OrderNotFoundException, OrderNotDeletedException {
+//
+  //      this.orderService.delete(id);
+  //      modelAndView.setViewName("redirect:/orders/all");
+  //      return modelAndView;
+  //  }
 }
