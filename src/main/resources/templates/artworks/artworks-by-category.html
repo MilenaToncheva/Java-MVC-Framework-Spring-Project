@@ -16,7 +16,7 @@
             <div id="artworks-by-category-parent" class="row  d-flex justify-content-around">
                 <div th:each="artwork:${artworks}">
                     <div id="artworks-by-category" class="col-md-5">
-                        <img th:src="@{${artwork.imageUrl}}" class="border border-secondary" height="300px"/><br/>
+                        <img th:src="@{${artwork.imageUrl}}" class="border border-secondary" width="650px"/><br/>
                         <div>[[${artwork.name}]]</div>
                         <div id="div-btn-artworks">
                             <th:block sec:authorize="hasRole('ROLE_MODERATOR')">

@@ -18,7 +18,7 @@
             <th:block th:unless="${orders.size()==0&& orders==null}">
                 <div id="users-all" class="jumbotron-fluid mainBody my-4">
                     <hr class="hr-2 bg-dark">
-                    <table id="table-cart" class="customTable table-hover mx-auto">
+                    <table id="table-cart" class="customTable table-hover mx-auto  ">
                         <thead>
                         <tr class="row mx-auto mb-4 font-weight-bold">
                             <th class="col-md-1 text-center">#</th>
@@ -43,17 +43,9 @@
                                 </td>
                                 <td class="col-md-2 customRow text-center" th:text="${order.username}"></td>
                                 <td class="col-md-2 customRow text-center">
-                                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                                        <form th:action="@{/orders/details/{id}(id=${order.id})}" th:method="get">
+                                        <form th:action="@{/orders/all/details/{id}(id=${order.id})}" th:method="get">
                                             <button type="submit" class="btn top-button btn-sm">Details</button>
                                         </form>
-                                    </th:block>
-                                    <th:block sec:authorize="!hasRole('ROLE_ADMIN')">
-                                        <form th:action="@{/orders/my-orders/details/{orderId}(orderId=${order.id})}" th:method="get">
-                                            <button type="submit" class="btn top-button btn-sm">Details</button>
-                                        </form>
-                                    </th:block>
-
                                 </td>
                         </th:block>
                         </tbody>

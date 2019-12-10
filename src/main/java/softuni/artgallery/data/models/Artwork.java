@@ -96,7 +96,7 @@ public class Artwork extends BaseEntity {
     public void setCategory(Category category) {
         this.category = category;
     }
-@ManyToOne
+@ManyToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 @JoinColumn(name="order_id",referencedColumnName = "id")
     public Order getOrder() {
         return order;

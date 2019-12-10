@@ -38,7 +38,7 @@ public class OrderController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView getAllOrders( ModelAndView modelAndView) {
+    public ModelAndView getAllOrders(ModelAndView modelAndView) {
         List<OrderAllViewModel> orders = this.orderService.findAll().stream().map(o -> {
             OrderAllViewModel orderAllViewModel = this.modelMapper.map(o, OrderAllViewModel.class);
             orderAllViewModel.setUsername(o.getUser().getUsername());
@@ -51,7 +51,7 @@ public class OrderController {
     }
 
     @GetMapping("/my-orders")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView getMyOrders(Principal principal, ModelAndView modelAndView) {
         List<OrderAllViewModel> orders = this.orderService.findAllByUsername(principal.getName()).stream()
                 .map(o -> {
@@ -61,37 +61,41 @@ public class OrderController {
                 }).collect(Collectors.toList());
 
         modelAndView.addObject("orders", orders);
-        modelAndView.setViewName("orders/orders-all");
+        modelAndView.setViewName("orders/orders-my");
         return modelAndView;
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/all/details/{orderId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView getOrderDetails(@PathVariable String id,  ModelAndView modelAndView) {
-        OrderServiceModel orderServiceModel = this.orderService.findById(id);
+    public ModelAndView getOrderDetails(@PathVariable String orderId, ModelAndView modelAndView,Principal principal) {
+        // нещо се бъгнаха нещата... когато  съм user и направя заявка findById ми връща order с  list от 1 artwork,
+       // но ако съм moderator/admin /root ми връща list съответно с 2/3/4 еднакви artworks.
+
+      //  OrderServiceModel orderServiceModel1 = this.orderService.findByUsernameAndId(principal.getName(),orderId);
+        OrderServiceModel orderServiceModel = this.orderService.findAll().stream().filter(o->o.getId().equals(orderId))
+                .collect(Collectors.toList()).get(0);
+
         OrderDetailsViewModel order = this.modelMapper.map(orderServiceModel, OrderDetailsViewModel.class);
+
         order.setUsername(orderServiceModel.getUser().getUsername());
         order.setFirstName(orderServiceModel.getUser().getFirstName());
         order.setLastName(orderServiceModel.getUser().getLastName());
         modelAndView.setViewName("orders/order-details");
         modelAndView.addObject("order", order);
         return modelAndView;
+
     }
 
     @GetMapping("/my-orders/details/{orderId}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView getMyOrderDetails(@PathVariable String orderId, Principal principal,
                                           ModelAndView modelAndView) {
-        OrderServiceModel orderServiceModel = this.orderService
-                .findAllByUsername(principal.getName())
-                .stream()
-                .filter(o -> o.getId().equals(orderId))
-                .collect(Collectors.toList())
-                .get(0);
+//без ред 95 не работи...(виж коментар ред 71)
+        OrderServiceModel orderServiceModel1 = this.orderService.findByUsernameAndId(principal.getName(),orderId);
+        OrderServiceModel orderServiceModel = this.orderService.findById(orderId);
+
         OrderDetailsViewModel order = this.modelMapper.map(orderServiceModel, OrderDetailsViewModel.class);
         order.setUsername(principal.getName());
-
-
         order.setFirstName(orderServiceModel.getUser().getFirstName());
         order.setLastName(orderServiceModel.getUser().getLastName());
         modelAndView.addObject("order", order);
@@ -99,12 +103,12 @@ public class OrderController {
         return modelAndView;
     }
 
-  //  @PostMapping("/delete/{id}")
-  //  @PreAuthorize("hasRole('ROLE_ADMIN')")
-  //  public ModelAndView deleteArtwork( @PathVariable String id, ModelAndView modelAndView) throws OrderNotFoundException, OrderNotDeletedException {
+    // @PostMapping("/delete/{id}")
+    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    // public ModelAndView deleteArtwork( @PathVariable String id, ModelAndView modelAndView) throws OrderNotFoundException, OrderNotDeletedException {
 //
-  //      this.orderService.delete(id);
-  //      modelAndView.setViewName("redirect:/orders/all");
-  //      return modelAndView;
-  //  }
+    //     this.orderService.delete(id);
+    //     modelAndView.setViewName("redirect:/orders/all");
+    //     return modelAndView;
+    // }
 }

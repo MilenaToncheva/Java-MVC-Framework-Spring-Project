@@ -55,21 +55,23 @@ public class OrderServiceImpl implements OrderService {
                 .reduce(new BigDecimal("0"), (p1, p2) -> p1.add(p2));
         order.setTotalPrice(totalPrice);
         order = this.orderRepository.saveAndFlush(order);
-
         List<Artwork> artworks = Arrays.stream(this.modelMapper.map(artworkServiceModels, Artwork[].class))
                 .collect(Collectors.toList());
-
-        for (Artwork artwork : artworks) {
+for (Artwork artwork : artworks) {
             artwork.setOrder(order);
 
         }
-order.setArtworks(artworks);
+
+        order.getArtworks().addAll(artworks);
+
+       this.orderRepository.saveAndFlush(order);
 
 
-        var a=5;
 
-        this.orderRepository.saveAndFlush(order);
-var m=0;
+
+
+
+
     }
 
     //for cart --writeOff artwork and map it toArtworkServiceModel
@@ -101,6 +103,11 @@ var m=0;
         return this.modelMapper.map(order, OrderServiceModel.class);
     }
 
+    @Override
+    public OrderServiceModel findByUsernameAndId(String name, String orderId) {
+        Order order = this.orderRepository.findAllByUsername(name).stream().filter(o->o.getId().equals(orderId)).collect(Collectors.toList()).get(0);
+        return this.modelMapper.map(order, OrderServiceModel.class);
+    }
 // @Override
 // public void delete(String id) throws OrderNotDeletedException {
 //     Order order = this.orderRepository.findById(id)

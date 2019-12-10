@@ -58,14 +58,11 @@
                                 >Shopping Cart
                                 </button>
                             </form>
-                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                                <a type="button" class="top-button btn-lg" id="btn-order-history"
-                                   th:href="@{/orders/all}">Order History</a>
-                            </th:block>
-                            <th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+
+
                                 <a type="button" class="top-button btn-lg" id="btn-order-history-non-admin"
-                                   th:href="@{/orders/my-orders}">Order History</a>
-                            </th:block>
+                                   th:href="@{/orders/my-orders}">My Orders</a>
+
 
                             <div class="btn-group">
                                 <a type="button" class="btn dropdown-toggle top-button btn-lg"
@@ -103,6 +100,10 @@
                                     <li><a type="button" style="text-align: center" class="dropdown-item"
                                            id="btn-users-all"
                                            th:href="@{/users/all}">All Users</a></li>
+                                    <li>
+                                        <a type="button" style="text-align: center" class="dropdown-item" id="btn-all-orders"
+                                           th:href="@{/orders/all}">All Orders</a>
+                                    </li>
                                 </ul>
                             </div>
 
