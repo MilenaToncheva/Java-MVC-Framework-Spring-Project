@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"><!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/navbar}"/>
+<main>
+    <hr class="hr-2"/>
+    <div class="container-fluid">
+        <div id="artworks-in-shopping-cart-parent" class="row  d-flex justify-content-around">
+            <br/>
+            <br/>
+            <br/>
+            <h2>My Orders</h2>
+            <th:block th:if="${orders.size()==0|| orders==null}">
+                <h2>No Orders in database!</h2>
+            </th:block>
+            <th:block th:unless="${orders.size()==0&& orders==null}">
+                <div id="users-all" class="jumbotron-fluid mainBody my-4">
+                    <hr class="hr-2 bg-dark">
+                    <table id="table-cart" class="customTable table-hover mx-auto  ">
+                        <thead>
+                        <tr class="row mx-auto mb-4 font-weight-bold">
+                            <th class="col-md-1 text-center">#</th>
+                            <th class="col-md-1 text-center">id</th>
+                            <th class="col-md-1 text-center">Placed On
+                            </th>
+                            <th class="col-md-2 text-center">Total Price</th>
+                            <th class="col-md-2 text-center">Customer</th>
+                            <th class="col-md-2 text-center">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="order, iter : ${orders}" th:object="${orders}">
+
+                            <tr class="row mx-auto">
+                                <th class="col-md-1 customRow text-center" th:text="${iter.index+1}"></th>
+                                <td class="col-md-1 customRow text-center" th:text="${order.id}"></td>
+                                <td class="col-md-2 customRow text-center"
+                                    th:text="${order.placedOn}"></td>
+                                <td class="col-md-2 customRow text-center" th:text="${order.totalPrice}">
+                                    [[${order.totalPrice}]]BGN
+                                </td>
+                                <td class="col-md-2 customRow text-center" th:text="${order.username}"></td>
+                                <td class="col-md-2 customRow text-center">
+                                        <form th:action="@{/orders/my-orders/details/{orderId}(orderId=${order.id})}" th:method="get">
+                                            <button type="submit" class="btn top-button btn-sm">Details</button>
+                                        </form>
+                                </td>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</main>
+<th:block th:include="fragments/footer"/>
+</body>
+</html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
