@@ -47,10 +47,9 @@ public class EventController {
 
     @GetMapping("/create")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView getEventCreateForm(Principal principal, ModelAndView modelAndView,
+    public ModelAndView getEventCreateForm( ModelAndView modelAndView,
                                            @ModelAttribute(name = "eventCreateModel") EventCreateModel eventCreateModel) {
 
-        modelAndView.addObject("principal", principal);
         modelAndView.addObject("eventModel", eventCreateModel);
 
         modelAndView.setViewName("events/event-create");
@@ -59,33 +58,31 @@ public class EventController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView createEvent(Principal principal, @ModelAttribute(name = "eventCreateModel") EventCreateModel eventCreateModel,
+    public ModelAndView createEvent( @ModelAttribute(name = "eventCreateModel") EventCreateModel eventCreateModel,
                                     ModelAndView modelAndView) throws IOException {
         EventCreateServiceModel eventCreateServiceModel = this.modelMapper.map(eventCreateModel, EventCreateServiceModel.class);
         eventCreateServiceModel.setImageUrl(cloudinaryService.uploadImage(eventCreateModel.getImage()));
         this.eventService.register(eventCreateServiceModel);
-        modelAndView.addObject("principal", principal);
+
         modelAndView.setViewName("redirect:/events/all");
         return modelAndView;
     }
 
     @GetMapping("/all")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getAllEvents(Principal principal, ModelAndView modelAndView) {
+    public ModelAndView getAllEvents( ModelAndView modelAndView) {
         List<EventAllViewModel> events = Arrays.stream(this.modelMapper.map(this.eventService.findAll(), EventAllViewModel[].class))
                 .collect(Collectors.toList());
         modelAndView.addObject("events", events);
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName("events/events-all");
         return modelAndView;
     }
 
     @GetMapping("/details/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getEventDetails(@PathVariable String id, ModelAndView modelAndView, Principal principal) {
+    public ModelAndView getEventDetails(@PathVariable String id, ModelAndView modelAndView) {
         EventViewModel eventViewModel = this.modelMapper.map(this.eventService.findById(id), EventViewModel.class);
         modelAndView.setViewName("events/event-details");
-        modelAndView.addObject("principal", principal);
         modelAndView.addObject("event", eventViewModel);
 
         return modelAndView;
@@ -93,9 +90,8 @@ public class EventController {
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView deleteEvent(@PathVariable String id, ModelAndView modelAndView, Principal principal) {
+    public ModelAndView deleteEvent(@PathVariable String id, ModelAndView modelAndView) {
         this.eventService.delete(id);
-        modelAndView.addObject("principal", principal);
         modelAndView.setViewName("redirect:/events/all");
         return modelAndView;
     }

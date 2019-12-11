@@ -2,12 +2,14 @@ package softuni.artgallery.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import softuni.artgallery.web.interceptors.LogoInterceptor;
 import softuni.artgallery.web.interceptors.WelcomeInterceptor;
 
 @Configuration
+@EnableScheduling
 public class ApplicationWebMvcConfiguration implements WebMvcConfigurer {
 
 
