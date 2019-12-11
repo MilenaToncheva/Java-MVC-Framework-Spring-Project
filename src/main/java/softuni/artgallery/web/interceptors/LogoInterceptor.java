@@ -7,15 +7,15 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 @Component
-public class FaviconInterceptor extends HandlerInterceptorAdapter {
+public class LogoInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response, Object handler, ModelAndView modelAndView) {
 
-        String favicon = "/images/logo1.ico";
+        String logo = "/images/logo1.ico";
 
         if (modelAndView != null) {
-            modelAndView.addObject("favicon", favicon);
+            modelAndView.addObject("logo", logo);
         }
     }
 }

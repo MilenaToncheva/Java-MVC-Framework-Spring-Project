@@ -4,27 +4,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import softuni.artgallery.web.interceptors.FaviconInterceptor;
+import softuni.artgallery.web.interceptors.LogoInterceptor;
 import softuni.artgallery.web.interceptors.WelcomeInterceptor;
 
 @Configuration
 public class ApplicationWebMvcConfiguration implements WebMvcConfigurer {
 
 
-    private final FaviconInterceptor faviconInterceptor;
+    private final LogoInterceptor logoInterceptor;
     private final WelcomeInterceptor welcomeInterceptor;
 
     @Autowired
-    public ApplicationWebMvcConfiguration(FaviconInterceptor faviconInterceptor, WelcomeInterceptor welcomeInterceptor) {
+    public ApplicationWebMvcConfiguration(LogoInterceptor logoInterceptor, WelcomeInterceptor welcomeInterceptor) {
 
-        this.faviconInterceptor = faviconInterceptor;
+        this.logoInterceptor = logoInterceptor;
         this.welcomeInterceptor = welcomeInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(this.faviconInterceptor).addPathPatterns("/","/users/register","/users/login");
+        registry.addInterceptor(this.logoInterceptor).addPathPatterns("/","/users/register","/users/login");
         registry.addInterceptor(this.welcomeInterceptor).excludePathPatterns("/","/users/register","/users/login");
     }
 
