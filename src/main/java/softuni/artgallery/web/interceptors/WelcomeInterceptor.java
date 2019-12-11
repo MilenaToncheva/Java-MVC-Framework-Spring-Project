@@ -42,11 +42,7 @@ public class WelcomeInterceptor extends HandlerInterceptorAdapter {
 
     private boolean isRedirectView(ModelAndView modelAndView) {
         String viewName = modelAndView.getViewName();
-        if (viewName.startsWith("redirect:/")) {
-            return true;
-        }
-        View view = modelAndView.getView();
-        return view instanceof SmartView && ((SmartView) view).isRedirectView();
+       return viewName.startsWith("redirect:/");
     }
 
 
