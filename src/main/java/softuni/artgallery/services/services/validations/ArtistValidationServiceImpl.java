@@ -5,6 +5,7 @@ import softuni.artgallery.constants.artistMessages.ArtistErrorMessages;
 import softuni.artgallery.constants.common.CommonConstants;
 import softuni.artgallery.error.ArtistIllegalArgumentsException;
 import softuni.artgallery.services.models.ArtistCreateServiceModel;
+import softuni.artgallery.services.models.ArtistServiceModel;
 import softuni.artgallery.services.services.validations.ArtistValidationService;
 
 import java.util.regex.Matcher;
@@ -65,6 +66,8 @@ public class ArtistValidationServiceImpl implements ArtistValidationService {
         }
         return true;
     }
+
+
 }
 
 

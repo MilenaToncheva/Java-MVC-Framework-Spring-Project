@@ -7,6 +7,7 @@ import softuni.artgallery.constants.artistMessages.ArtistErrorMessages;
 import softuni.artgallery.constants.userMessages.UserErrorMessages;
 import softuni.artgallery.data.models.Artist;
 import softuni.artgallery.data.repository.ArtistRepository;
+import softuni.artgallery.error.ArtistAlreadyExistsException;
 import softuni.artgallery.error.ArtistNotDeletedException;
 import softuni.artgallery.error.ArtistNotFoundException;
 import softuni.artgallery.error.UserIllegalArgumentsException;
@@ -34,7 +35,7 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     public void create(ArtistCreateServiceModel artistCreateServiceModel) {
-        if (!this.artistValidationService.isValid(artistCreateServiceModel)) {
+        if (!this.artistValidationService.isValid(artistCreateServiceModel)||!isUnique(artistCreateServiceModel)) {
             throw new UserIllegalArgumentsException(UserErrorMessages.USER_INCORRECT_INPUT);
         }
             this.artistRepository.saveAndFlush(this.modelMapper.map(artistCreateServiceModel, Artist.class));
@@ -87,5 +88,13 @@ public class ArtistServiceImpl implements ArtistService {
         public List<ArtistServiceModel> findAll () {
             return Arrays.stream(this.modelMapper.map(this.artistRepository.findAll(),
                     ArtistServiceModel[].class)).collect(Collectors.toList());
+        }
+        private boolean isUnique(ArtistCreateServiceModel artistCreateServiceModel){
+        Artist artist=this.artistRepository.findByName(artistCreateServiceModel.getName());
+        if(artist!=null){
+            throw new ArtistAlreadyExistsException(ArtistErrorMessages.ARTIST_ALREADY_EXISTS);
+        }
+         return true;
+
         }
     }

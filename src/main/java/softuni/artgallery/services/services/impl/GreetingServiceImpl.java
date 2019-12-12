@@ -2,8 +2,10 @@ package softuni.artgallery.services.services.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import softuni.artgallery.constants.greetingMessages.GreetingErrorMessages;
 import softuni.artgallery.data.models.Greeting;
 import softuni.artgallery.data.repository.GreetingRepository;
+import softuni.artgallery.error.GreetingAlreadyExistsException;
 import softuni.artgallery.services.models.GreetingCreateServiceModel;
 import softuni.artgallery.services.models.GreetingServiceModel;
 import softuni.artgallery.services.services.GreetingService;
@@ -20,8 +22,8 @@ public class GreetingServiceImpl implements GreetingService {
 
     @Override
     public void reduceDuration(String name) {
-        Greeting greeting=this.greetingRepository.findByName(name);
-        if(greeting!=null&&greeting.getDuration()>0) {
+        Greeting greeting = this.greetingRepository.findByName(name);
+        if (greeting != null && greeting.getDuration() > 0) {
             greeting.setDuration(greeting.getDuration() - 1);
             this.greetingRepository.saveAndFlush(greeting);
         }
@@ -29,18 +31,24 @@ public class GreetingServiceImpl implements GreetingService {
 
     @Override
     public GreetingServiceModel findByName(String name) {
-        try{
-        Greeting greeting=this.greetingRepository.findByName(name);}
-        catch(Exception ex){
-           return null;
+        try {
+            Greeting greeting = this.greetingRepository.findByName(name);
+        } catch (Exception ex) {
+            return null;
         }
-        return this.modelMapper.map(this.greetingRepository.findByName(name),GreetingServiceModel.class);
+        return this.modelMapper.map(this.greetingRepository.findByName(name), GreetingServiceModel.class);
     }
 
     @Override
     public void createGreeting(GreetingServiceModel greetingServiceModel) {
-        Greeting greeting=this.modelMapper.map(greetingServiceModel,Greeting.class);
+        if(!this.isUnique(greetingServiceModel.getName())){
+            throw new GreetingAlreadyExistsException(GreetingErrorMessages.GREETIN_ALREADY_EXISTS);
+        }
+        Greeting greeting = this.modelMapper.map(greetingServiceModel, Greeting.class);
         this.greetingRepository.saveAndFlush(greeting);
     }
 
+    private boolean isUnique(String name) {
+        return this.greetingRepository.findByName(name) == null;
+    }
 }

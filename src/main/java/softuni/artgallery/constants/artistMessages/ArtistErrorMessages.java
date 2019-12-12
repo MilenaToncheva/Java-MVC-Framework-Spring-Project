@@ -9,4 +9,5 @@ public class ArtistErrorMessages {
     public static final String ARTIST_INVALID_EDUCATION = "Artist education should be between  3 and 30 symbols!";
     public static final String ARTIST_INVALID_IMAGE_URL = "Invalid image url!";
     public static final String ARTIST_INVALID_EMAIL ="Artist has invalid email!" ;
+    public static final String ARTIST_ALREADY_EXISTS = "Artist already exists!";
 }
