@@ -24,7 +24,7 @@ public class GreetingScheduledJob implements ScheduledJob {
 
 
     @Override
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 1000)
     public void scheduledJob() {
        this.greetingService.reduceDuration(CommonConstants.GREETING_NAME);
 

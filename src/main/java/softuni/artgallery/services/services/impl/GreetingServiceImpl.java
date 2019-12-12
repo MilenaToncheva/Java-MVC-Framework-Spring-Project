@@ -21,7 +21,7 @@ public class GreetingServiceImpl implements GreetingService {
     @Override
     public void reduceDuration(String name) {
         Greeting greeting=this.greetingRepository.findByName(name);
-        if(greeting!=null&&greeting.getDuration()>=0) {
+        if(greeting!=null&&greeting.getDuration()>0) {
             greeting.setDuration(greeting.getDuration() - 1);
             this.greetingRepository.saveAndFlush(greeting);
         }

@@ -20,9 +20,21 @@
                 <label for="duration" class="floatLabel">Duration</label>
                 <input placeholder="Duration..." id="duration" name="duration" th:field="*{duration}" type="number">
             </p>
+        </div>
+        <div class="form-group " >
+            <p style="text-align: center">
+                <label for="message1" class="floatLabel">Message1</label>
+                <input placeholder="Message..." id="message1" th:field="*{message1}" name="message1" type="text">
+            </p>
 
         </div>
+        <div class="form-group " >
+            <p style="text-align: center">
+                <label for="message2" class="floatLabel">Message2</label>
+                <input placeholder="Message..." id="message2" th:field="*{message2}" name="message2" type="text">
+            </p>
 
+        </div>
         <p style="text-align: center">
             <input class="inputSubmit" type="submit" value="Create Greeting" id="createGreeting"/>
         </p>
