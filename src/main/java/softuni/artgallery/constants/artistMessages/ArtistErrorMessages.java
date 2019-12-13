@@ -10,4 +10,5 @@ public class ArtistErrorMessages {
     public static final String ARTIST_INVALID_IMAGE_URL = "Invalid image url!";
     public static final String ARTIST_INVALID_EMAIL ="Artist has invalid email!" ;
     public static final String ARTIST_ALREADY_EXISTS = "Artist already exists!";
+    public static final String ARTIST_INCORRECT_INPUT ="Artist invalid input" ;
 }

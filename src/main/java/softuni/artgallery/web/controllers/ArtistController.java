@@ -49,8 +49,7 @@ public class ArtistController {
 
     @GetMapping("/create")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView getArtistCreateForm( @ModelAttribute("artistCreateModel") ArtistCreateModel artistCreateModel,
-                                            ModelAndView modelAndView) {
+    public ModelAndView getArtistCreateForm(ModelAndView modelAndView) {
         modelAndView.setViewName("artists/artist-create");
         return modelAndView;
     }

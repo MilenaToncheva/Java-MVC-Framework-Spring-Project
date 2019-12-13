@@ -1,21 +1,24 @@
-package softuni.artgallery.data.models;
+package softuni.artgallery.web.models.greeting;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="greetings")
-public class Greeting extends BaseEntity {
+public class GreetingViewModel {
+    private String id;
     private String name;
     private int duration;
     private String message1;
     private String message2;
-    private boolean isEnabled=false;
+    private boolean  isEnabled;
 
-    public Greeting() {
+    public GreetingViewModel() {
     }
-@Column
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -23,7 +26,7 @@ public class Greeting extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
-@Column
+
     public int getDuration() {
         return duration;
     }
@@ -31,7 +34,7 @@ public class Greeting extends BaseEntity {
     public void setDuration(int duration) {
         this.duration = duration;
     }
-@Column
+
     public String getMessage1() {
         return message1;
     }
@@ -39,7 +42,7 @@ public class Greeting extends BaseEntity {
     public void setMessage1(String message1) {
         this.message1 = message1;
     }
-@Column
+
     public String getMessage2() {
         return message2;
     }
@@ -47,7 +50,7 @@ public class Greeting extends BaseEntity {
     public void setMessage2(String message2) {
         this.message2 = message2;
     }
-@Column
+
     public boolean isEnabled() {
         return isEnabled;
     }

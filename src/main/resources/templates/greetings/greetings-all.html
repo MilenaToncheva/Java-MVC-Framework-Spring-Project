@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <div id="users-all" class="jumbotron-fluid mainBody my-4">
+        <h1 class="text-center" style="color: #9971a0">All Greetings</h1>
+        <hr class="hr-2 bg-dark">
+        <table id="table-users-all" class="table table-striped w-auto">
+            <thead>
+            <tr class="row mx-auto mb-4 font-weight-bold">
+                <th class="col-md-1 text-center">#</th>
+                <th class="col-md-1 text-center">Name</th>
+                <th class="col-md-2 text-center">Duration</th>
+                <th class="col-md-2 text-center">Message 1</th>
+                <th class="col-md-2 text-center">Message 2</th>
+                <th class="col-md-2 text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="greeting, iter : ${greetings}">
+                <tr class="row mx-auto">
+                    <th class="col-md-1 customRow text-center" th:text="${iter.index+1}"></th>
+                    <td class="col-md-1 customRow text-center" th:text="${greeting.name}"></td>
+                    <td class="col-md-2 customRow text-center" th:text="${greeting.duration}"></td>
+                    <td class="col-md-2 customRow text-center" th:text="${greeting.message1}"></td>
+                    <td class="col-md-2 customRow text-center" th:text="${greeting.message2}"></td>
+                    <td class="col-md-2 customRow text-center">
+                        <div class="btn-greeting-management">
+                                <form th:action="@{/greetings/disable/{id}(id=${greeting.id})}" th:method="post">
+                                    <button type="submit" class="btn top-button btn-sm">Disable</button>
+                                </form>
+                                <form th:action="@{/greetings/enable/{id}(id=${greeting.id})}" th:method="post">
+                                    <button type="submit" class="btn top-button btn-sm">Enable</button>
+                                </form>
+                                <form th:action="@{/greetings/delete/{id}(id=${greeting.id})}" th:method="post">
+                                    <button type="submit" class="btn top-button btn-sm">Delete</button>
+                                </form>
+                        </div>
+                    </td>
+            </th:block>
+            </tbody>
+        </table>
+        <hr class="hr-2 bg-dark">
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+</html>

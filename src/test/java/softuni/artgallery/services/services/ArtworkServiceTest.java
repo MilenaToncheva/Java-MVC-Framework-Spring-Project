@@ -86,7 +86,7 @@ public class ArtworkServiceTest extends ServiceTestBase {
     void saveArtwork_whenValidInput_shouldSave() {
         String artistName = "Misho";
         ArtworkCreateServiceModel artworkCreateModel = new ArtworkCreateServiceModel();
-        artworkCreateModel.setImageUrl("/rr/rrr/rrrr/rrrr.jpg");
+        artworkCreateModel.setImageUrl("https://res.cloudinary.com/mt-art-gallery/image/upload/v1576099099/ptr2esthbq64lz0jjnhz.jpg");
         artworkCreateModel.setArtistName(artistName);
         artworkCreateModel.setCategory(Category.CERAMICS);
         artworkCreateModel.setDescription("wwe qwoei oqweq e wieoqwep qwe eq ");

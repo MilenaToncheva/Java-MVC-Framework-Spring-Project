@@ -6,5 +6,5 @@ public class CommonConstants {
     public static final String ROLE_NAME_USER="user";
     public static final String ROLE_NAME_MODERATOR="moderator";
     public static final String ROLE_NAME_ADMIN="admin";
-    public static final String GREETING_NAME = "Christmas";
+   // public static final String GREETING_NAME = "Christmas";
 }

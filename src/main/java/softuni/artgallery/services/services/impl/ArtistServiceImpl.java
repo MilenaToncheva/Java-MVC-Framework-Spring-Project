@@ -7,10 +7,7 @@ import softuni.artgallery.constants.artistMessages.ArtistErrorMessages;
 import softuni.artgallery.constants.userMessages.UserErrorMessages;
 import softuni.artgallery.data.models.Artist;
 import softuni.artgallery.data.repository.ArtistRepository;
-import softuni.artgallery.error.ArtistAlreadyExistsException;
-import softuni.artgallery.error.ArtistNotDeletedException;
-import softuni.artgallery.error.ArtistNotFoundException;
-import softuni.artgallery.error.UserIllegalArgumentsException;
+import softuni.artgallery.error.*;
 import softuni.artgallery.services.models.ArtistCreateServiceModel;
 import softuni.artgallery.services.models.ArtistServiceModel;
 import softuni.artgallery.services.services.ArtistService;
@@ -51,8 +48,9 @@ public class ArtistServiceImpl implements ArtistService {
         artist.setEmail(artistServiceModel.getEmail());
         artist.setHistory(artistServiceModel.getHistory());
         artist.setImageUrl(artistServiceModel.getImageUrl());
-        if (!this.artistValidationService.isValid(this.modelMapper.map(artist, ArtistCreateServiceModel.class))) {
-            throw new UserIllegalArgumentsException(UserErrorMessages.USER_INCORRECT_INPUT);
+        ArtistCreateServiceModel artistModel=this.modelMapper.map(artist, ArtistCreateServiceModel.class);
+        if (!this.artistValidationService.isValid(artistModel)) {
+            throw new ArtistIllegalArgumentsException(ArtistErrorMessages.ARTIST_INCORRECT_INPUT);
         }
         this.artistRepository.save(artist);
 

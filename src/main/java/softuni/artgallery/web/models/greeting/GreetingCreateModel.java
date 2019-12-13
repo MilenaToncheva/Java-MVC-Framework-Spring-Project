@@ -6,6 +6,7 @@ public class GreetingCreateModel {
     private String message1;
     private String message2;
 
+
     public GreetingCreateModel() {
     }
 

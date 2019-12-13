@@ -42,20 +42,23 @@ public class AuthControllerTest extends ControllerTestBase {
     AuthController authController;
 
     @Test
-    public void register_shouldReturnCorrectView() throws Exception {
+    void register_shouldReturnCorrectView() throws Exception {
         this.mockMvc
-                .perform(get("/users/create"))
+                .perform(get("/users/register"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("auth/create.html"));
+                .andExpect(view().name("auth/register.html"));
 
 
     }
-
 
     @Test
-    public void login_withCorrectData_shouldRedirectHome(){
-
+    void login_shouldReturnCorrectView() throws Exception {
+        this.mockMvc
+                .perform(get("/users/login"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("auth/login"));
     }
+
 
 
 }
