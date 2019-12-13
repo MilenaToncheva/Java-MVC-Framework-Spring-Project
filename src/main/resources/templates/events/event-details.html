@@ -15,7 +15,7 @@
                     <hr class="hr-2"/>
                 </div>
                 <div id="event-img" class="col-md-6">
-                    <img th:src="@{${event.imageUrl}}" class="border border-secondary"  width="590px"/><br/></div>
+                    <img th:src="@{${event.imageUrl}}" class="border border-secondary"  width="590px" style="margin-top: 60px"/><br/></div>
                 <div id="event-details" class="col-md-5 col-md-offset-1">
                     <br/>
                     <br/>
@@ -32,7 +32,7 @@
                         <br/>
                         <p>Closing ceremony:  <span th:text="${event.endsOn}"></span>.</p>
                     </div>
-                    <div id="div-btn-events">
+                    <div id="div-btn-events-details" class="btn-events">
                         <a class="btn-artworks" th:href="@{/events/all}">Close</a>
                         <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
                             <a class="btn-artworks" th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>

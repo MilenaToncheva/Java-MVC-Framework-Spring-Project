@@ -18,7 +18,7 @@
                         <img th:src="@{${artwork.imageUrl}}" class="border border-secondary" height="300px"/><br/>
                         <div>[[${artwork.name}]]</div>
                         <div id="div-btn-artworks">
-                            <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
+                            <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')" th:if="${artwork.isAvailable()}==true">
                                 <a class="btn-artworks" th:href="@{/artworks/edit/{id}(id=${artwork.id})}">Update</a>
                                 <a class="btn-artworks" th:href="@{/artworks/delete/{id}(id=${artwork.id})}">Delete</a>
                             </th:block>
@@ -28,13 +28,13 @@
                     </div>
                 </div>
                 <br/>
-                <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
+              <!--  <th:block sec:authorize="hasAuthority('ROLE_MODERATOR')">
                     <form th:action="@{/artworks/delete/all-by-artist/{id}(id=${artistId})}" th:method="DELETE">
                         <div id="div-delete-all-artworks-btn" class="col-md-12">
                             <button type="submit" class="btn-delete-all-artworks">Delete All</button>
                         </div>
                     </form>
-                </th:block>
+                </th:block> -->
             </th:block>
 
         </div>

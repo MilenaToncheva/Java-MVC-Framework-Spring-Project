@@ -19,7 +19,7 @@ public interface ArtworkService {
 
     List<ArtworkServiceModel> findAllArtworksByArtistId(String artistId);
 
-    void deleteAllArtworksByArtist(String artistId);
+   // void deleteAllArtworksByArtist(String artistId);
 
     List<ArtworkServiceModel> findAllByCategory(String category);
 

@@ -107,18 +107,18 @@ if(!this.artworkValidationService.isValid(this.modelMapper.map(artwork,ArtworkCr
 
     }
 
-    @Override
-    public void deleteAllArtworksByArtist(String artistId) {
-        this.artworkRepository.findAllArtworksByArtistId(artistId).forEach(this.artworkRepository::delete);
-    }
+  // @Override
+  // public void deleteAllArtworksByArtist(String artistId) {
+  //     this.artworkRepository.findAllArtworksByArtistId(artistId).forEach(this.artworkRepository::delete);
+  // }
 
-    @Override
-    public List<ArtworkServiceModel> findAllByCategory(String category) {
-        List<Artwork> artworks = this.artworkRepository.findByCategory(Category.valueOf(category));
+  @Override
+  public List<ArtworkServiceModel> findAllByCategory(String category) {
+      List<Artwork> artworks = this.artworkRepository.findByCategory(Category.valueOf(category));
 
-        return Arrays.stream(this.modelMapper.map(artworks, ArtworkServiceModel[].class))
-                                                                                .collect(Collectors.toList());
-    }
+      return Arrays.stream(this.modelMapper.map(artworks, ArtworkServiceModel[].class))
+                                                                              .collect(Collectors.toList());
+  }
 
     @Override
     public void writeOffArtwork(String id) {

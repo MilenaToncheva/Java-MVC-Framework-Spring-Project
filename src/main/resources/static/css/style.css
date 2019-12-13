@@ -1060,13 +1060,14 @@ select#artistName-drop-down ,select#category{
 
 h1> a.top-button{
     position: absolute;
-    margin-left: 174px;
+    margin-top: 125px;
+    margin-left: 300px;
 }
 #event-name{
     text-transform: uppercase;
     text-align: center;
 }
-#event-details{
+#event-details-parent{
     margin-top: 120px;
     padding-left: 100px;
 }
@@ -1083,6 +1084,17 @@ h1> a.top-button{
     font-size: 20px;
 
 }
-#div-btn-events > a ,#div-btn-events > button{
+#div-btn-events-details > .btn-artworks{
     display:inline-block;
+}
+.btn-events{
+
+    width: 532.662px;
+}
+#event-description{
+    background-color: white;
+}
+
+#artworks-by-category-parent{
+    margin-top: 100px;
 }

@@ -198,14 +198,14 @@ public class ArtworkController {
         return modelAndView;
     }
 
-    @PostMapping("/delete/all-by-artist/{artistId}")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView deleteAllArtworksByArtistId(@PathVariable(value = "artistId") String artistId,
-                                                    ModelAndView modelAndView) {
-        this.artworkService.deleteAllArtworksByArtist(artistId);
-        modelAndView.setViewName( "redirect:/artworks/all");
-        return modelAndView;
-    }
+   // @PostMapping("/delete/all-by-artist/{artistId}")
+   // @PreAuthorize("hasRole('ROLE_MODERATOR')")
+   // public ModelAndView deleteAllArtworksByArtistId(@PathVariable(value = "artistId") String artistId,
+   //                                                 ModelAndView modelAndView) {
+   //     this.artworkService.deleteAllArtworksByArtist(artistId);
+   //     modelAndView.setViewName( "redirect:/artworks/all");
+   //     return modelAndView;
+   // }
 
 
     @GetMapping("/artworks-by-category/{category}")
