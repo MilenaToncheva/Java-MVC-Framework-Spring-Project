@@ -77,21 +77,21 @@ public class UserServiceImpl implements UserService {
         return userServiceModel;
     }
 
-    @Override
-    public void delete(String id) throws UserNotDeletedException {
-        User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND));
-        try {
-            this.userRepository.delete(user);
-        } catch (Exception e) {
-            throw new UserNotDeletedException(UserErrorMessages.USER_NOT_DELETED);
-        }
-    }
+   //@Override
+   //public void delete(String id) throws UserNotDeletedException {
+   //    User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(UserErrorMessages.USER_NOT_FOUND));
+   //    try {
+   //        this.userRepository.delete(user);
+   //    } catch (Exception e) {
+   //        throw new UserNotDeletedException(UserErrorMessages.USER_NOT_DELETED);
+   //    }
+   //}
 
     @Override
     public List<UserServiceModel> findAll() {
         return Arrays.stream(this.modelMapper.map(this.userRepository.findAll(), UserServiceModel[].class)).collect(Collectors.toList());
     }
-
+//for role management
     @Override
     public UserServiceModel setUserRole(String id, String role) {
         User user = this.userRepository.findById(id)
@@ -118,7 +118,7 @@ user=this.modelMapper.map(userServiceModel, User.class);
 
 
     @Override
-    public UserServiceModel isUsernameUnique(String username) {
+    public UserServiceModel checkIfUsernameExists(String username) {
         User user = this.userRepository.findByUsername(username).orElse(null);
         if (user == null) {
             return null;
@@ -127,7 +127,7 @@ user=this.modelMapper.map(userServiceModel, User.class);
     }
 
     @Override
-    public UserServiceModel isEmailUnique(String email) {
+    public UserServiceModel checkIfEmailExists(String email) {
         User user = this.userRepository.findByEmail(email);
         if (user == null) {
             return null;

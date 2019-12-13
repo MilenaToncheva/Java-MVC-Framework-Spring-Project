@@ -6,7 +6,7 @@ import softuni.artgallery.constants.greetingMessages.GreetingErrorMessages;
 import softuni.artgallery.data.models.Greeting;
 import softuni.artgallery.data.repository.GreetingRepository;
 import softuni.artgallery.error.GreetingAlreadyExistsException;
-import softuni.artgallery.services.models.GreetingCreateServiceModel;
+import softuni.artgallery.error.GreetingNotFoundException;
 import softuni.artgallery.services.models.GreetingServiceModel;
 import softuni.artgallery.services.services.GreetingService;
 
@@ -34,21 +34,23 @@ public class GreetingServiceImpl implements GreetingService {
         try {
             Greeting greeting = this.greetingRepository.findByName(name);
         } catch (Exception ex) {
-            return null;
+            throw new GreetingNotFoundException(GreetingErrorMessages.GREETING_NOT_FOUND);
         }
         return this.modelMapper.map(this.greetingRepository.findByName(name), GreetingServiceModel.class);
     }
 
     @Override
     public void createGreeting(GreetingServiceModel greetingServiceModel) {
-        if(!this.isUnique(greetingServiceModel.getName())){
-            throw new GreetingAlreadyExistsException(GreetingErrorMessages.GREETIN_ALREADY_EXISTS);
+        if (!this.isUnique(greetingServiceModel.getName())) {
+            throw new GreetingAlreadyExistsException(GreetingErrorMessages.GREETING_ALREADY_EXISTS);
         }
         Greeting greeting = this.modelMapper.map(greetingServiceModel, Greeting.class);
         this.greetingRepository.saveAndFlush(greeting);
     }
 
-    private boolean isUnique(String name) {
-        return this.greetingRepository.findByName(name) == null;
+    @Override
+    public boolean isUnique(String name) {
+        Greeting greeting=this.greetingRepository.findByName(name);
+        return greeting == null;
     }
 }

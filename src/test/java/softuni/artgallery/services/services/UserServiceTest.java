@@ -2,20 +2,24 @@ package softuni.artgallery.services.services;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import softuni.artgallery.data.models.Artwork;
+import softuni.artgallery.data.models.Role;
 import softuni.artgallery.data.models.User;
 import softuni.artgallery.data.repository.UserRepository;
 import softuni.artgallery.error.UserNotFoundException;
 import softuni.artgallery.services.base.ServiceTestBase;
+import softuni.artgallery.services.models.RoleServiceModel;
 import softuni.artgallery.services.models.UserServiceModel;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest extends ServiceTestBase {
     @MockBean
@@ -23,11 +27,13 @@ public class UserServiceTest extends ServiceTestBase {
 
     @MockBean
     RoleService roleService;
-private final ModelMapper modelMapper;
+
+    private final ModelMapper modelMapper;
     private User user;
     @Autowired
     private UserService userService;
-@Autowired
+
+    @Autowired
     public UserServiceTest(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
@@ -44,7 +50,7 @@ private final ModelMapper modelMapper;
     }
 
     @Test
-    void userService_findUserByIdWhenValidId_shouldReturnUser() {
+    void findUserById_whenValidId_shouldReturnUser() {
 
 
         Mockito.when(this.userRepository.findById(user.getId()))
@@ -58,7 +64,7 @@ private final ModelMapper modelMapper;
     }
 
     @Test
-    void userService_findUserByIdWhenInvalidId_shouldThrowException() {
+    void findUserById_whenInvalidId_shouldThrowException() {
         String id = "2";
         Mockito.when(this.userRepository.findById("2"))
                 .thenReturn(Optional.empty());
@@ -69,7 +75,7 @@ private final ModelMapper modelMapper;
     }
 
     @Test
-    void userService_findUserByUsernameWhenValidUsername_shouldReturnUser() {
+    void findUserByUsername_whenValidUsername_shouldReturnUser() {
         Mockito.when(this.userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
 
@@ -88,7 +94,7 @@ private final ModelMapper modelMapper;
 
 
     @Test
-    void userService_findAllUsersWithCorrectData_shouldReturnCorrect() {
+    void findAllUsers_withCorrectData_shouldReturnCorrect() {
         User user2 = new User();
         user.setUsername("Gosho");
         user.setFirstName("Gosho");
@@ -107,10 +113,66 @@ private final ModelMapper modelMapper;
     }
 
     @Test
-    void userService_findAllUsersWithNoUsers_shouldReturnCorrect() {
+    void findAllUsers_withNoUsers_shouldReturnCorrect() {
         List<User> users = new ArrayList<>();
         Mockito.when(userRepository.findAll()).thenReturn(users);
         Assert.assertEquals(0, userService.findAll().size());
     }
 
+    @Test
+    void checkIfUsernameExists_ifExists_shouldReturnUserServiceModel() {
+        String username = "morgana";
+        User user = new User();
+        user.setUsername(username);
+
+        Mockito.when(this.userRepository.findByUsername(username)).thenReturn(Optional.of(user));
+
+        UserServiceModel result = this.userService.checkIfUsernameExists(username);
+        assertEquals(user.getUsername(), result.getUsername());
+    }
+
+    @Test
+    void checkIfUsernameExists_ifNoUser_shouldReturnNull() {
+        String username = "morgana";
+        Mockito.when(this.userRepository.findByUsername(username)).thenReturn(Optional.empty());
+
+        assertNull(this.userService.checkIfUsernameExists(username));
+
+
+    }
+
+ // @Test
+ // void setUserRole_whenUserExistsAndRollValid_ShouldReturnCorrect() {
+ //     String id = "1";
+ //     User user = new User();
+ //     user.setId(id);
+
+ //     Mockito.when(this.userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+ //     RoleServiceModel role = new RoleServiceModel();
+ //     role.setAuthority("ROLE_USER");
+ //     Mockito.when(this.roleService.findByAuthority("ROLE_USER")).thenReturn(role);
+
+
+ //     ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);
+ //     Mockito.verify(userRepository).saveAndFlush(argument.capture());
+ //     User user1 = argument.getValue();
+ //     assertNotNull(user1);
+
+
+ // }
+
+    @Test
+    void disableUser_whenNoUser_ShouldThrowException(){
+        String id="invalid Id";
+        Mockito.when(this.userRepository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(RuntimeException.class,
+                ()->this.userService.disableUser(id));
+    }
+    @Test
+    void enableUser_whenNoUser_ShouldThrowException(){
+        String id="invalid Id";
+        Mockito.when(this.userRepository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(RuntimeException.class,
+                ()->this.userService.enableUser(id));
+    }
 }

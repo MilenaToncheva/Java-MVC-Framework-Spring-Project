@@ -10,4 +10,5 @@ public interface GreetingService {
     GreetingServiceModel findByName(String name);
 
     void createGreeting(GreetingServiceModel greetingCreateServiceModel);
+    boolean isUnique(String name);
 }

@@ -60,7 +60,9 @@ public class EventServiceImpl implements EventService {
     public void delete(String id) {
         Event event = this.eventRepository.findById(id).orElseThrow(() ->
                 new EventNotFoundException(EventErrorMessages.EVENT_NOT_FOUND));
-        this.eventRepository.delete(event);
+
+         this.eventRepository.delete(event);
+
     }
 
     @Override

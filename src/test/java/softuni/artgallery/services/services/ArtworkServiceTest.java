@@ -11,9 +11,11 @@ import org.mockito.stubbing.OngoingStubbing;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import softuni.artgallery.data.models.Artist;
 import softuni.artgallery.data.models.Artwork;
 import softuni.artgallery.data.models.Category;
+import softuni.artgallery.data.models.Event;
 import softuni.artgallery.data.repository.ArtworkRepository;
 import softuni.artgallery.services.base.ServiceTestBase;
 import softuni.artgallery.services.models.ArtistCreateServiceModel;
@@ -36,10 +38,13 @@ public class ArtworkServiceTest extends ServiceTestBase {
     List<Artwork> artworks;
     @MockBean
     ArtworkRepository artworkRepository;
+
     @MockBean
     ArtworkValidationService artworkValidationService;
+
     @MockBean
     ArtistService artistService;
+
     @Autowired
     ArtworkService artworkService;
 
@@ -76,6 +81,33 @@ public class ArtworkServiceTest extends ServiceTestBase {
 
         Assert.assertEquals(0, actualArtworks.size());
     }
+
+    @Test
+    void saveArtwork_whenValidInput_shouldSave() {
+        String artistName = "Misho";
+        ArtworkCreateServiceModel artworkCreateModel = new ArtworkCreateServiceModel();
+        artworkCreateModel.setImageUrl("/rr/rrr/rrrr/rrrr.jpg");
+        artworkCreateModel.setArtistName(artistName);
+        artworkCreateModel.setCategory(Category.CERAMICS);
+        artworkCreateModel.setDescription("wwe qwoei oqweq e wieoqwep qwe eq ");
+        artworkCreateModel.setName("birds");
+        artworkCreateModel.setPrice(new BigDecimal("200"));
+        ArtistCreateServiceModel artistModel = new ArtistCreateServiceModel();
+        ArtistServiceModel artist = new ArtistServiceModel();
+        artist.setName(artistName);
+        artistModel.setName(artistName);
+        artworkCreateModel.setArtistName(artistName);
+
+        Mockito.when(artistService.findByName(artistName)).thenReturn(artist);
+        Mockito.when(artworkValidationService.isValid(artworkCreateModel)).thenReturn(true);
+        this.artworkService.save(artworkCreateModel);
+
+        ArgumentCaptor<Artwork> argument = ArgumentCaptor.forClass(Artwork.class);
+        Mockito.verify(artworkRepository).save(argument.capture());
+        Artwork artwork = argument.getValue();
+        assertNotNull(artwork);
+    }
+
 
     @Test
     void saveArtwork_whenInvalidInput_shouldThrowException() {
@@ -164,20 +196,7 @@ public class ArtworkServiceTest extends ServiceTestBase {
         assertEquals(0, actualArtworks.size());
 
     }
-//@Test
-//void delete_whenExists_shouldBeDeleted(){
-//    ArgumentCaptor<Artwork>argument=ArgumentCaptor.forClass(Artwork.class);
-//    String id="1";
-//    Artwork artwork=new Artwork();
-//    artwork.setId(id);
-//    Mockito.when(artworkRepository.findById(id)).thenReturn(Optional.of(artwork));
-//
-//
-//    artistService.delete(id);
-//   Mockito.verify(artworkRepository).delete(argument.capture());
-//   Artwork captured=argument.getValue();
-//      Mockito.verify(artworkRepository,times(1)).delete(artwork);
-//}
+
 
     @Test
     void findAllByCategory_whenArtworksExists_shouldReturnArtworks() {
@@ -210,6 +229,19 @@ public class ArtworkServiceTest extends ServiceTestBase {
         Mockito.when(artworkRepository.findById(id)).thenReturn(Optional.of(artwork));
 
         artworkService.writeOffArtwork(id);
-        assertEquals(false,artwork.isAvailable());
+        assertFalse(artwork.isAvailable());
     }
-}
+
+    @Test
+    void delete_whenExist_shouldDelete(){
+
+            String id="1";
+            Artwork artwork=new Artwork();
+            artwork.setId(id);
+            Mockito.when(artworkRepository.findById(id)).thenReturn(Optional.of(artwork)).thenThrow(RuntimeException.class);
+            this.artworkService.delete(id);
+            assertThrows(RuntimeException.class,
+                    ()->this.artworkService.delete(id));
+        }
+    }
+

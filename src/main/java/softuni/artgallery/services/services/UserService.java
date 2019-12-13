@@ -13,15 +13,15 @@ public interface UserService {
 
     UserServiceModel editUserProfile(String oldPassword, UserServiceModel userServiceModel);
 
-    void delete(String id) throws UserNotDeletedException;
+   // void delete(String id) throws UserNotDeletedException; -->replaced with enable/disable
 
     List<UserServiceModel> findAll();
 
     UserServiceModel setUserRole(String id, String role);
 
-    UserServiceModel isUsernameUnique(String username);
+    UserServiceModel checkIfUsernameExists(String username);
 
-    UserServiceModel isEmailUnique(String email);
+    UserServiceModel checkIfEmailExists(String email);
 
     void disableUser(String id);
     void enableUser(String id);

@@ -74,7 +74,7 @@ for (Artwork artwork : artworks) {
 
     }
 
-    //for cart --writeOff artwork and map it toArtworkServiceModel
+    //for cart --writeOff artwork and map it toArtworkServiceModel,list of purchases
     private List<ArtworkServiceModel> generateOrderedList(List<ArtworkCartServiceModel> cart) throws Exception {
         List<ArtworkServiceModel> orderedList = new ArrayList<>();
         for (ArtworkCartServiceModel artworkCartServiceModel : cart) {

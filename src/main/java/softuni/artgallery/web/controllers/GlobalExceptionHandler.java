@@ -91,6 +91,12 @@ public class GlobalExceptionHandler {
         return modelAndView;
     }
 
+    @ExceptionHandler(GreetingNotFoundException.class)
+    public ModelAndView HandleGreetingNotFoundException(RuntimeException ex){
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("message", ex.getMessage());
+        return modelAndView;
+    }
     @ExceptionHandler(IllegalArgumentException.class)
     public ModelAndView handleIncorrectDataInput(RuntimeException ex) {
         ModelAndView modelAndView = new ModelAndView("error");

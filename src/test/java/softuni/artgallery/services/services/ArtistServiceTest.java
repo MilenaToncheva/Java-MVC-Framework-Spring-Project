@@ -7,6 +7,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import softuni.artgallery.data.models.Artist;
+import softuni.artgallery.data.models.Event;
 import softuni.artgallery.data.repository.ArtistRepository;
 import softuni.artgallery.services.base.ServiceTestBase;
 import softuni.artgallery.services.models.ArtistCreateServiceModel;
@@ -133,6 +134,22 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
     }
+@Test
+     void delete_whenExistAndNoArtworks_shouldDelete(){
 
+        String id="1";
+        Artist artist=new Artist();
+        artist.setId(id);
+        Mockito.when(artistRepository.findById(id)).thenReturn(Optional.of(artist)).thenThrow(RuntimeException.class);
+        this.artistService.delete(id);
+        assertThrows(RuntimeException.class,
+                ()->this.artistService.delete(id));
+    }
 
+    @Test
+     void edit_whenExistAdnValidInput_shouldEdit(){
+        
+    }
 }
+
+

@@ -45,28 +45,28 @@ public class EventServiceTest extends ServiceTestBase {
 
 
 
-   // @Test
-    // void registerEvent_whenAllIsValid_shouldRegister() {
-    //     EventCreateServiceModel eventModel = new EventCreateServiceModel();
-    //     eventModel.setName("The swimmer");
-    //     eventModel.setLocation("Sofia");
-    //     eventModel.setImageUrl("/www/w///w///w////w/");
-    //     eventModel.setDescription("qwoei p qweo pwei weoqi pweip qweip");
-    //     LocalDateTime date = LocalDateTime.now();
-    //     eventModel.setStartsOn(date);
-    //     eventModel.setEndsOn(date);
-//
-    //     Mockito.when(eventValidationService.isValid(eventModel)).thenReturn(true);
-    //     eventService.create(eventModel);
-//
-    //     ArgumentCaptor<Event> argument = ArgumentCaptor.forClass(Event.class);
-    //     Mockito.verify(eventRepository).saveAndFlush(argument.capture());
-//
-    //     Event event = argument.getValue();
-    //     assertNotNull(event);
-//
-//
-    // }
+  @Test
+   void registerEvent_whenAllIsValid_shouldRegister() {
+       EventCreateServiceModel eventModel = new EventCreateServiceModel();
+       eventModel.setName("The swimmer");
+       eventModel.setLocation("Sofia");
+       eventModel.setImageUrl("/www/w///w///w////w/");
+       eventModel.setDescription("qwoei p qweo pwei weoqi pweip qweip");
+       LocalDateTime date = LocalDateTime.now();
+       eventModel.setStartsOn(date);
+       eventModel.setEndsOn(date);
+
+       Mockito.when(eventValidationService.isValid(eventModel)).thenReturn(true);
+       eventService.register(eventModel);
+
+       ArgumentCaptor<Event> argument = ArgumentCaptor.forClass(Event.class);
+       Mockito.verify(eventRepository).saveAndFlush(argument.capture());
+
+       Event event = argument.getValue();
+       assertNotNull(event);
+
+
+   }
 
     @Test
     void registerEvent_whenInvalid_shouldThrowException() {
@@ -137,25 +137,34 @@ public class EventServiceTest extends ServiceTestBase {
     }
 
     @Test
-    void findAllArtist_whenArtistsExist_shouldReturnArtists(){
+    void findAllEvents_whenEventsExist_shouldReturnEvents(){
         Event event1=new Event();
         Event event2=new Event();
         events.add(event1);
         events.add(event2);
 
         Mockito.when(eventRepository.findAll()).thenReturn(events);
-        List<EventServiceModel> artistsAll=eventService.findAll();
-        Assert.assertEquals(events.size(),artistsAll.size());
+        List<EventServiceModel> eventsAll=eventService.findAll();
+        Assert.assertEquals(events.size(),eventsAll.size());
 
 
     }
     @Test
-    void delete_whenNotExist_shouldThrowException(){
-        String id="4";
+    void delete_whenNotExist_shouldThrowException() {
+        String id = "4";
         Mockito.when(eventRepository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class,
-                ()->eventService.delete(id));
-
+                () -> eventService.delete(id));
+    }
+    @Test
+    void delete_whenExist_shouldDelete(){
+        String id="1";
+        Event event=new Event();
+        event.setId(id);
+Mockito.when(eventRepository.findById(id)).thenReturn(Optional.of(event)).thenThrow(RuntimeException.class);
+this.eventService.delete(id);
+assertThrows(RuntimeException.class,
+        ()->this.eventService.delete(id));
     }
 }

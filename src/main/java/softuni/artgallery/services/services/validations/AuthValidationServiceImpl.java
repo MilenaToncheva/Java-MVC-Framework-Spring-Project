@@ -8,7 +8,6 @@ import softuni.artgallery.constants.userMessages.UserRegistrationViolationMessag
 import softuni.artgallery.error.UserIllegalArgumentsException;
 import softuni.artgallery.error.UserRegistrationException;
 import softuni.artgallery.services.models.UserRegisterServiceModel;
-import softuni.artgallery.services.services.validations.AuthValidationService;
 import softuni.artgallery.services.services.UserService;
 
 import java.util.regex.Matcher;
@@ -43,7 +42,7 @@ public class AuthValidationServiceImpl implements AuthValidationService {
     }
 
     private boolean isUsernameFree(String username) {
-        if (this.userService.isUsernameUnique(username) != null) {
+        if (this.userService.checkIfUsernameExists(username) != null) {
             throw new UserRegistrationException(UserErrorMessages.USER_WITH_USERNAME_ALREADY_EXISTS);
         }
         return true;
@@ -51,7 +50,7 @@ public class AuthValidationServiceImpl implements AuthValidationService {
 
     private boolean isEmailFree(String email) {
 
-        if (this.userService.isEmailUnique(email) != null) {
+        if (this.userService.checkIfEmailExists(email) != null) {
             throw new UserRegistrationException(UserErrorMessages.USER_EMAIL_ALREADY_EXISTS);
         }
         return true;
