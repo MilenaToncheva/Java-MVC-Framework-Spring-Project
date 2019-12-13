@@ -15,6 +15,7 @@ import softuni.artgallery.services.models.RoleServiceModel;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.times;
 
 public class RoleServiceTest extends ServiceTestBase {
 @MockBean
@@ -28,8 +29,7 @@ void seedRolesInBase_whenNoRoles_ShouldSeed(){
     this.roleService.seedRolesInDb();
 
     ArgumentCaptor<Role> argument = ArgumentCaptor.forClass(Role.class);
-    Mockito.verify(roleRepository).saveAndFlush(argument.capture());
-
+    Mockito.verify(roleRepository,times(4)).saveAndFlush(argument.capture());
 
     List<Role> roles = argument.getAllValues();
     Assert.assertEquals(4,roles.size());

@@ -141,25 +141,27 @@ public class UserServiceTest extends ServiceTestBase {
 
     }
 
- // @Test
- // void setUserRole_whenUserExistsAndRollValid_ShouldReturnCorrect() {
- //     String id = "1";
- //     User user = new User();
- //     user.setId(id);
+  @Test
+  void setUserRole_whenUserExistsAndRollValid_ShouldReturnCorrect() {
+      String id = "1";
+      User user = new User();
+      user.setId(id);
+  user.setAuthorities(new HashSet<>());
+  user.getAuthorities().add(new Role("ROLE_USER"));
 
- //     Mockito.when(this.userRepository.findById(user.getId())).thenReturn(Optional.of(user));
- //     RoleServiceModel role = new RoleServiceModel();
- //     role.setAuthority("ROLE_USER");
- //     Mockito.when(this.roleService.findByAuthority("ROLE_USER")).thenReturn(role);
-
-
- //     ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);
- //     Mockito.verify(userRepository).saveAndFlush(argument.capture());
- //     User user1 = argument.getValue();
- //     assertNotNull(user1);
+      Mockito.when(this.userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+      RoleServiceModel role = new RoleServiceModel();
+      role.setAuthority("ROLE_MODERATOR");
+      Mockito.when(this.roleService.findByAuthority("ROLE_MODERATOR")).thenReturn(role);
 
 
- // }
+      ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);
+      Mockito.verify(userRepository).saveAndFlush(argument.capture());
+      User user1 = argument.getValue();
+      assertNotNull(user1);
+
+
+  }
 
     @Test
     void disableUser_whenNoUser_ShouldThrowException(){
