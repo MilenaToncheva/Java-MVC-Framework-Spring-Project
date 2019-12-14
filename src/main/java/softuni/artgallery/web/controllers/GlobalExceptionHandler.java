@@ -97,24 +97,10 @@ public class GlobalExceptionHandler {
         modelAndView.addObject("message", ex.getMessage());
         return modelAndView;
     }
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ModelAndView handleIncorrectDataInput(RuntimeException ex) {
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("message", ex.getMessage());
-        return modelAndView;
-    }
 
 
-    @ExceptionHandler(Throwable.class)
-    public ModelAndView handleSQLException(Throwable e) {
-        Throwable throwable = e;
-        while (throwable.getCause() != null) {
-            throwable = throwable.getCause();
-        }
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("message", throwable.getMessage());
-        return modelAndView;
-    }
+
+
 
     @ExceptionHandler(AccessDeniedException.class)
     public ModelAndView handleAccessException(AccessDeniedException e, ModelAndView modelAndView) {
@@ -126,6 +112,22 @@ public class GlobalExceptionHandler {
     public ModelAndView handleArtistNotDeletedException(Throwable e, ModelAndView modelAndView) {
         modelAndView.setViewName("error");
         modelAndView.addObject("message", ArtistErrorMessages.ARTIST_NOT_DELETED);
+        return modelAndView;
+    }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ModelAndView handleIncorrectDataInput(RuntimeException ex) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("message", ex.getMessage());
+        return modelAndView;
+    }
+    @ExceptionHandler(Throwable.class)
+    public ModelAndView handleSQLException(Throwable e) {
+        Throwable throwable = e;
+        while (throwable.getCause() != null) {
+            throwable = throwable.getCause();
+        }
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("message", throwable.getMessage());
         return modelAndView;
     }
 }

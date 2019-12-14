@@ -12,11 +12,9 @@ import softuni.artgallery.services.services.CloudinaryService;
 import softuni.artgallery.services.services.EventService;
 import softuni.artgallery.web.models.event.EventAllViewModel;
 import softuni.artgallery.web.models.event.EventCreateModel;
-import softuni.artgallery.web.models.event.EventDeleteModel;
 import softuni.artgallery.web.models.event.EventViewModel;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

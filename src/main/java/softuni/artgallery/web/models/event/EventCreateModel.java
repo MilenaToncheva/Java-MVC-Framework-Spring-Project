@@ -3,9 +3,6 @@ package softuni.artgallery.web.models.event;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import java.time.LocalDateTime;
 
 public class EventCreateModel {
