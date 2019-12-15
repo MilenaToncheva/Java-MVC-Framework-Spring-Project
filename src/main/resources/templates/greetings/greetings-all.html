@@ -44,12 +44,16 @@
                     <td class="col-md-2 customRow text-center" th:text="${greeting.message2}"></td>
                     <td class="col-md-2 customRow text-center">
                         <div class="btn-greeting-management">
+                            <th:block th:if="${greeting.isEnabled()==true}">
                                 <form th:action="@{/greetings/disable/{id}(id=${greeting.id})}" th:method="post">
                                     <button type="submit" class="btn top-button btn-sm">Disable</button>
                                 </form>
-                               <form th:action="@{/greetings/enable/{id}(id=${greeting.id})}" th:method="post">
-                                   <button type="submit" class="btn top-button btn-sm">Enable</button>
-                               </form>
+                            </th:block>
+                              <th:block th:unless="${greeting.isEnabled()==true}">
+                                  <form th:action="@{/greetings/enable/{id}(id=${greeting.id})}" th:method="post">
+                                      <button type="submit" class="btn top-button btn-sm">Enable</button>
+                                  </form>
+                              </th:block>
                             <a th:href="@{/greetings/edit/{id}(id=${greeting.id})}"
                                class="btn top-button btn-sm">Edit</a>
                             <form th:action="@{/greetings/delete/{id}(id=${greeting.id})}" th:method="post">

@@ -83,4 +83,15 @@ class GreetingServiceTest extends ServiceTestBase {
         Boolean result=this.greetingService.isUnique(name);
         assertEquals(true,result);
     }
+
+    @Test
+    void findById_whenGreetingExists_shouldReturnGreeting() {
+
+        String id="1";
+        Greeting greeting = new Greeting();
+        greeting.setId(id);
+        Mockito.when(this.greetingRepository.findById(id)).thenReturn(Optional.of(greeting));
+        GreetingServiceModel result = this.greetingService.findById(id);
+        Assert.assertEquals(greeting.getName(), result.getName());
+    }
 }
