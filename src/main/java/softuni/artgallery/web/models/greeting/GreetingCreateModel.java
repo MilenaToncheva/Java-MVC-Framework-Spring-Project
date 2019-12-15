@@ -10,6 +10,7 @@ public class GreetingCreateModel {
     public GreetingCreateModel() {
     }
 
+
     public String getName() {
         return name;
     }

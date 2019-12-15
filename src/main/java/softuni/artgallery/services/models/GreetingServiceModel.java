@@ -6,6 +6,7 @@ public class GreetingServiceModel {
     private int duration;
     private String message1;
     private String message2;
+    private boolean isEnabled;
 
     public GreetingServiceModel() {
     }
@@ -48,5 +49,13 @@ public class GreetingServiceModel {
 
     public void setMessage2(String message2) {
         this.message2 = message2;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }

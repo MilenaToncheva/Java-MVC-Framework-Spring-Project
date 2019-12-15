@@ -71,11 +71,12 @@ public class GreetingController {
         return greetingServiceModel;
     }
 
-    @GetMapping("/edit/{name}")
+    @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('ROLE_MODERATOR')")
-    public ModelAndView getGreetingEditForm(@PathVariable String name, ModelAndView modelAndView) {
+    public ModelAndView getGreetingEditForm(@PathVariable String id,@ModelAttribute(name="greetingEditModel")GreetingEditModel greeting,  ModelAndView modelAndView) {
+greeting=this.modelMapper.map(this.greetingService.findById(id),GreetingEditModel.class);
         modelAndView.setViewName("greetings/greeting-edit");
-        modelAndView.addObject("greeting");
+        modelAndView.addObject("greeting" ,greeting);
         return modelAndView;
     }
 

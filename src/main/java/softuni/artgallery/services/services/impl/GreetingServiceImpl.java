@@ -74,7 +74,8 @@ public class GreetingServiceImpl implements GreetingService {
 
     @Override
     public List<GreetingServiceModel> findAll() {
-        return Arrays.stream(this.modelMapper.map(this.greetingRepository.findAll(), GreetingServiceModel[].class))
+        List<Greeting>greetings=this.greetingRepository.findAll();
+        return Arrays.stream(this.modelMapper.map(greetings, GreetingServiceModel[].class))
                 .collect(Collectors.toList());
     }
 
@@ -103,5 +104,12 @@ public class GreetingServiceImpl implements GreetingService {
                 .orElseThrow(()->new GreetingNotFoundException(GreetingErrorMessages.GREETING_NOT_FOUND));
         this.greetingRepository.delete(greeting);
 
+    }
+
+    @Override
+    public GreetingServiceModel findById(String id) {
+        Greeting greeting=this.greetingRepository.findById(id)
+                .orElseThrow(()->new GreetingNotFoundException(GreetingErrorMessages.GREETING_NOT_FOUND));
+        return this.modelMapper.map(greeting,GreetingServiceModel.class);
     }
 }

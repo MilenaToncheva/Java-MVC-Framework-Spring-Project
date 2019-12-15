@@ -23,4 +23,6 @@ public interface GreetingService {
 
     void disableGreeting(String id);
     void deleteGreeting(String id);
+
+    GreetingServiceModel findById(String id);
 }

@@ -47,12 +47,14 @@
                                 <form th:action="@{/greetings/disable/{id}(id=${greeting.id})}" th:method="post">
                                     <button type="submit" class="btn top-button btn-sm">Disable</button>
                                 </form>
-                                <form th:action="@{/greetings/enable/{id}(id=${greeting.id})}" th:method="post">
-                                    <button type="submit" class="btn top-button btn-sm">Enable</button>
-                                </form>
-                                <form th:action="@{/greetings/delete/{id}(id=${greeting.id})}" th:method="post">
-                                    <button type="submit" class="btn top-button btn-sm">Delete</button>
-                                </form>
+                               <form th:action="@{/greetings/enable/{id}(id=${greeting.id})}" th:method="post">
+                                   <button type="submit" class="btn top-button btn-sm">Enable</button>
+                               </form>
+                            <a th:href="@{/greetings/edit/{id}(id=${greeting.id})}"
+                               class="btn top-button btn-sm">Edit</a>
+                            <form th:action="@{/greetings/delete/{id}(id=${greeting.id})}" th:method="post">
+                                <button type="submit" class="btn top-button btn-sm">Delete</button>
+                            </form>
                         </div>
                     </td>
             </th:block>

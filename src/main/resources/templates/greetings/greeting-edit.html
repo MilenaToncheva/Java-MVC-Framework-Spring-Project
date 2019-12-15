@@ -5,13 +5,13 @@
 <body>
 <th:block th:include="~{fragments/navbar}"/>
 <div class="container-fluid w-15">
-    <form id="greeting-create-form" style="margin-top: 110px" th:action="@{/greetings/create}" th:method="post" th:object="${greeting}">
+    <form id="greeting-create-form" style="margin-top: 110px" th:action="@{/greetings/edit/{id}(id=${greeting.id})}" th:method="post" th:object="${greeting}">
         <h2 style="text-align: center;color: #563D7C">Edit Greeting</h2>
         <hr id="my-hr"/>
         <div class="form-group " >
             <p style="text-align: center">
                 <label for="name" class="floatLabel">Name</label>
-                <input placeholder="Name..." id="name" th:field="*{name}" name="name" type="text">
+                <input placeholder="Name..." id="name" th:field="*{name}" name="name" type="text" readonly>
             </p>
 
         </div>
@@ -36,7 +36,7 @@
 
         </div>
         <p style="text-align: center">
-            <input class="inputSubmit" type="submit" value="Create Greeting" id="createGreeting"/>
+            <input class="inputSubmit" type="submit" value="Edit Greeting" id="createGreeting"/>
         </p>
     </form>
 
