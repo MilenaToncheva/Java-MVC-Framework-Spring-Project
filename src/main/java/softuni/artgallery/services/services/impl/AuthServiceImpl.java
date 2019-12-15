@@ -16,6 +16,7 @@ import softuni.artgallery.services.models.UserServiceModel;
 import softuni.artgallery.services.services.AuthService;
 import softuni.artgallery.services.services.validations.AuthValidationService;
 import softuni.artgallery.services.services.RoleService;
+import softuni.artgallery.services.services.validations.EscapeHtmlService;
 
 import java.util.LinkedHashSet;
 
@@ -26,17 +27,19 @@ public class AuthServiceImpl implements AuthService  {
     private final ModelMapper modelMapper;
     private final AuthValidationService authValidationService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final EscapeHtmlService escapeHtmlService;
 
 
     @Autowired
-    public AuthServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, AuthValidationService authValidationService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AuthServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, AuthValidationService authValidationService, BCryptPasswordEncoder bCryptPasswordEncoder, EscapeHtmlService escapeHtmlService) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
         this.authValidationService = authValidationService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 
-            }
+        this.escapeHtmlService = escapeHtmlService;
+    }
 
     @Override
     public UserServiceModel register(UserRegisterServiceModel userRegisterServiceModel) {
@@ -51,10 +54,11 @@ public class AuthServiceImpl implements AuthService  {
 
         if (!authValidationService.isValid(userRegisterServiceModel)) {
             throw new UserRegistrationException(UserErrorMessages.USER_INCORRECT_INPUT);
-      }
+        }
 
-            User user = this.modelMapper.map(userRegisterServiceModel, User.class);
-            user.setPassword(this.bCryptPasswordEncoder.encode(userRegisterServiceModel.getPassword()));
+      // escapeHtmlInput(userRegisterServiceModel);
+           User user = this.modelMapper.map(userRegisterServiceModel, User.class);
+           user.setPassword(this.bCryptPasswordEncoder.encode(userRegisterServiceModel.getPassword()));
 
 
             return this.modelMapper.map(this.userRepository.saveAndFlush(user),
@@ -62,6 +66,16 @@ public class AuthServiceImpl implements AuthService  {
 
 
     }
+
+ // private void escapeHtmlInput(UserRegisterServiceModel userModel) {
+ //     userModel.setUsername(this.escapeHtmlService.escapeHtml(userModel.getUsername()));
+ //     userModel.setFirstName(this.escapeHtmlService.escapeHtml(userModel.getFirstName()));
+ //     userModel.setLastName(this.escapeHtmlService.escapeHtml(userModel.getLastName()));
+ //     userModel.setEmail(this.escapeHtmlService.escapeHtml(userModel.getEmail()));
+ //     userModel.setPassword(this.escapeHtmlService.escapeHtml(userModel.getPassword()));
+ //     userModel.setConfirmPassword(this.escapeHtmlService.escapeHtml(userModel.getConfirmPassword()));
+
+ // }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

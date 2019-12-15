@@ -34,6 +34,8 @@ public class AuthValidationServiceImpl implements AuthValidationService {
     }
 
 
+
+
     private boolean arePasswordsMatching(String password, String confirmPassword) {
         if (!password.equals(confirmPassword)) {
             throw new UserRegistrationException(UserErrorMessages.USER_PASSWORDS_DO_NOT_MATCH);

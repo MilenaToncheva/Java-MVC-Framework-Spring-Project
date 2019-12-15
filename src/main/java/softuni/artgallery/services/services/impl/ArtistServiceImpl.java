@@ -12,6 +12,7 @@ import softuni.artgallery.services.models.ArtistCreateServiceModel;
 import softuni.artgallery.services.models.ArtistServiceModel;
 import softuni.artgallery.services.services.ArtistService;
 import softuni.artgallery.services.services.validations.ArtistValidationService;
+import softuni.artgallery.services.services.validations.EscapeHtmlService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,11 +24,13 @@ public class ArtistServiceImpl implements ArtistService {
     private final ModelMapper modelMapper;
     private final ArtistValidationService artistValidationService;
 
+
     @Autowired
     public ArtistServiceImpl(ArtistRepository artistRepository, ModelMapper modelMapper, ArtistValidationService artistValidationService) {
         this.artistRepository = artistRepository;
         this.modelMapper = modelMapper;
         this.artistValidationService = artistValidationService;
+
     }
 
     @Override
@@ -35,9 +38,14 @@ public class ArtistServiceImpl implements ArtistService {
         if (!this.artistValidationService.isValid(artistCreateServiceModel)||!isUnique(artistCreateServiceModel)) {
             throw new UserIllegalArgumentsException(UserErrorMessages.USER_INCORRECT_INPUT);
         }
+
+
+
+
             this.artistRepository.saveAndFlush(this.modelMapper.map(artistCreateServiceModel, Artist.class));
 
     }
+
 
     @Override
     public void edit(String id, ArtistServiceModel artistServiceModel) {
@@ -52,6 +60,7 @@ public class ArtistServiceImpl implements ArtistService {
         if (!this.artistValidationService.isValid(artistModel)) {
             throw new ArtistIllegalArgumentsException(ArtistErrorMessages.ARTIST_INCORRECT_INPUT);
         }
+
         this.artistRepository.save(artist);
 
     }
