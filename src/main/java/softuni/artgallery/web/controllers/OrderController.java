@@ -68,8 +68,7 @@ public class OrderController {
     @GetMapping("/all/details/{orderId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView getOrderDetails(@PathVariable String orderId, ModelAndView modelAndView,Principal principal) {
-        // нещо се бъгнаха нещата... когато  съм user и направя заявка findById ми връща order с  list от 1 artwork,
-       // но ако съм moderator/admin /root ми връща list съответно с 2/3/4 еднакви artworks.
+        
 
       //  OrderServiceModel orderServiceModel1 = this.orderService.findByUsernameAndId(principal.getName(),orderId);
         OrderServiceModel orderServiceModel = this.orderService.findAll().stream().filter(o->o.getId().equals(orderId))
@@ -90,7 +89,7 @@ public class OrderController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView getMyOrderDetails(@PathVariable String orderId, Principal principal,
                                           ModelAndView modelAndView) {
-//без ред 95 не работи...(виж коментар ред 71)
+
         OrderServiceModel orderServiceModel1 = this.orderService.findByUsernameAndId(principal.getName(),orderId);
         OrderServiceModel orderServiceModel = this.orderService.findById(orderId);
 
